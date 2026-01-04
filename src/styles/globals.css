@@ -1,0 +1,59 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+input,
+select {
+  all: unset; /* kills browser defaults */
+  box-sizing: border-box;
+
+  background: rgba(255, 255, 255, 0.08);
+  color: #eaeaea;
+
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+
+  padding: 6px 10px;
+  height: 32px;
+
+  font-size: 14px;
+}
+
+input[type="number"] {
+  text-align: center;
+}
+
+select {
+  cursor: pointer;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #7aa2ff;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

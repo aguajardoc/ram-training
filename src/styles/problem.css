@@ -1,0 +1,77 @@
+.field-title {
+  color: #aaa;
+  text-align: center;
+  font-size: 14px;
+}
+
+.field-input {
+  padding: 6px;
+  width: 36px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-align: center;
+  margin-top: 6px;
+}
+
+.field {
+  width: 4.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.problem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  margin-top: 24px;
+  justify-content: center;
+
+  background: #1e1e3e;
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+
+  width: max-content;
+  text-align: left;
+  height: 108px;
+}
+
+.problem-name-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 7rem;
+  color: #646cff;
+  font-weight: 500;
+}
+
+.problem-name {
+  flex-wrap: nowrap;
+  width: 6rem;
+}
+
+.select {
+  display: flex;
+  text-align: center;
+  padding: 6px;
+  width: 100%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  margin-top: 6px;
+  min-width: 100px;
+}
+
+/* Remove field increment/decrement arrows */
+/* Chrome, Edge, Safari */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
