@@ -8,7 +8,7 @@ function NavbarItem({ ItemName } : Props) {
     return (
         <Link
             className="navbar-item"
-            href={`/${ItemName.toLowerCase().replace(" ", "")}`}
+            href={`/${ItemName.toLowerCase().replace(" ", "-")}`}
         >
             {ItemName}
         </Link>

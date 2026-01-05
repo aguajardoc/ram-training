@@ -1,4 +1,5 @@
 import NavbarItem from "./navbar-item";
+import LoginButton from "./login-button";
 import "../../styles/navbar.css"
 
 const items = ["Train", "Leaderboard", "Sign In", "Admin"];
