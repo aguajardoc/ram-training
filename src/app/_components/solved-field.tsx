@@ -3,8 +3,8 @@ type Props = {
 };
 
 const OPTIONS: Record<string, string[]> = {
-    practice: ["NO", "YES"],
-    contest: ["NO", "In Contest", "Upsolved"],
+    practice: ["NO", "YES", "YES (before)"],
+    contest: ["NO", "In Contest", "Upsolved", "YES (before)"],
 };
 
 function SolvedField({ problemType } : Props) {
