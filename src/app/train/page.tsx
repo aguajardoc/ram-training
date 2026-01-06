@@ -8,7 +8,12 @@ function Train() {
     if (isLoading) return <></>;
 
     return (
-    <div>
+    <div className="page">
+        {/* Choose Level */}
+
+        {/* Choose Mode */}
+
+        {/* Problem List */}
         {problems?.map(p => (
             <Problem
                 key={p.id}

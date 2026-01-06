@@ -31,7 +31,7 @@ function Problem({ problemType, problemName, problemURL } : Props) {
         counts.debugging;
 
     return (
-    <div className="page">
+    <div>
         <div className="problem">
             {/* Problem Name */}
             <ProblemName

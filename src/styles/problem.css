@@ -10,6 +10,15 @@
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   text-align: center;
   margin-top: 6px;
+
+  box-shadow:
+    0 12px 35px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
 }
 
 .field {
@@ -44,8 +53,12 @@
   align-items: center;
   justify-content: center;
   width: 7rem;
-  color: #646cff;
-  font-weight: 500;
+  color: #8c91ff;
+  font-weight: 600;
+
+  position: relative;
+  border-radius: 999px;
+  overflow: hidden;
 }
 
 .problem-name {
@@ -61,6 +74,15 @@
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   margin-top: 6px;
   min-width: 100px;
+
+  box-shadow:
+    0 12px 35px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
 }
 
 /* Remove field increment/decrement arrows */

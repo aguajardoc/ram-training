@@ -1,3 +1,7 @@
+:root {
+  --primary-color: #646cff;
+}
+
 html,
 body {
   padding: 0;
@@ -56,4 +60,9 @@ input:disabled {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100vw;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 6rem;
+  margin-bottom: 4rem;
 }

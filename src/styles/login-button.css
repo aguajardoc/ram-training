@@ -1,0 +1,50 @@
+.login-button-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-button {
+    padding: 0.9rem 1.6rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--primary-color);
+    background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
+    
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,0.45),
+        inset 0 1px 0 rgba(255,255,255,0.05);
+
+    cursor: pointer;
+    transition: 
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        background 0.15s ease;
+}
+
+.login-button:hover {
+    background: linear-gradient(135deg, #252525, #323232);
+    transform: translateY(-2px);
+    box-shadow:
+        0 16px 40px rgba(0,0,0,0.6),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+.login-button:active {
+    transform: translateY(0);
+    box-shadow:
+        0 6px 14px rgba(0,0,0,0.5),
+        inset 0 2px 6px rgba(0,0,0,0.6);
+}
+
+.login-button:focus-visible {
+    outline: none;
+    box-shadow:
+        0 0 0 2px var(--primary-color),
+        0 10px 30px rgba(0,0,0,0.6);
+}
+
