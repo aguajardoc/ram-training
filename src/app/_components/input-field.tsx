@@ -21,7 +21,7 @@ function InputField({ fieldType, value, editable = true, onChange } : Props) {
         disabled={!editable}
         onChange={
           editable && onChange 
-            ? e => onChange(Number(e.target.value))
+            ? e => onChange(Math.min(Math.ceil(Number(e.target.value)), 1440))
             : undefined
         }
       />
