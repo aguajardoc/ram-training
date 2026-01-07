@@ -95,9 +95,67 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 
 exports.Prisma.ProblemScalarFieldEnum = {
   id: 'id',
-  type: 'type',
   name: 'name',
   url: 'url'
+};
+
+exports.Prisma.TrackScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
+};
+
+exports.Prisma.TrackLevelScalarFieldEnum = {
+  id: 'id',
+  trackId: 'trackId',
+  code: 'code',
+  order: 'order'
+};
+
+exports.Prisma.LevelModuleScalarFieldEnum = {
+  id: 'id',
+  trackLevelId: 'trackLevelId',
+  moduleId: 'moduleId',
+  order: 'order'
+};
+
+exports.Prisma.ModuleScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
+};
+
+exports.Prisma.ModuleProblemScalarFieldEnum = {
+  id: 'id',
+  moduleId: 'moduleId',
+  problemId: 'problemId',
+  type: 'type',
+  difficulty: 'difficulty'
+};
+
+exports.Prisma.UserScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
+};
+
+exports.Prisma.SolveScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  problemId: 'problemId',
+  submitCount: 'submitCount',
+  readTime: 'readTime',
+  thinkTime: 'thinkTime',
+  codeTime: 'codeTime',
+  debugTime: 'debugTime',
+  onYourOwn: 'onYourOwn',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.UserTrackScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  trackId: 'trackId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -109,10 +167,27 @@ exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
+exports.ProblemDifficulty = exports.$Enums.ProblemDifficulty = {
+  EASY: 'EASY',
+  NORMAL: 'NORMAL',
+  HARD: 'HARD'
+};
 
+exports.ProblemType = exports.$Enums.ProblemType = {
+  PRACTICE: 'PRACTICE',
+  CONTEST: 'CONTEST'
+};
 
 exports.Prisma.ModelName = {
-  Problem: 'Problem'
+  Problem: 'Problem',
+  Track: 'Track',
+  TrackLevel: 'TrackLevel',
+  LevelModule: 'LevelModule',
+  Module: 'Module',
+  ModuleProblem: 'ModuleProblem',
+  User: 'User',
+  Solve: 'Solve',
+  UserTrack: 'UserTrack'
 };
 /**
  * Create the Client
@@ -125,7 +200,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/alex/Documents/ram-training-t3/generated/prisma",
+      "value": "/home/alex/Documents/ram-training/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -139,7 +214,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/home/alex/Documents/ram-training-t3/prisma/schema.prisma",
+    "sourceFilePath": "/home/alex/Documents/ram-training/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -162,13 +237,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\n/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments\n/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.\nmodel Problem {\n  id   BigInt @id @default(autoincrement())\n  type String @default(\"practice\") @db.VarChar\n  name String @default(\"TEST PROBLEM\") @db.VarChar\n  url  String @default(\"https://codeforces.com/problemset/problem/4/A\") @db.VarChar\n\n  @@map(\"Problems\")\n}\n",
-  "inlineSchemaHash": "310f7e9ae5bcdd1bcad57c5159ad3ebae330799d1191b43710c53eb71afcb58e",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nenum ProblemDifficulty {\n  EASY\n  NORMAL\n  HARD\n}\n\nenum ProblemType {\n  PRACTICE\n  CONTEST\n}\n\n/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments\n/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.\nmodel Problem {\n  id   BigInt @id @default(autoincrement())\n  name String @default(\"TEST PROBLEM\") @db.VarChar\n  url  String @default(\"https://codeforces.com/problemset/problem/4/A\") @db.VarChar\n\n  solves Solve[]\n\n  @@map(\"Problems\")\n}\n\n// Tracks consist of modules\nmodel Track {\n  id   BigInt @id @default(autoincrement())\n  name String\n\n  levels    TrackLevel[]\n  userTrack UserTrack[]\n}\n\n// Tracks have levels\nmodel TrackLevel {\n  id      BigInt @id @default(autoincrement())\n  trackId BigInt\n  code    String // A, B, C1... and such\n  order   Int\n\n  track        Track         @relation(fields: [trackId], references: [id])\n  levelModules LevelModule[]\n\n  @@unique([trackId, code])\n}\n\n// Modules belong to levels (could be in multiple tracks)\nmodel LevelModule {\n  id           BigInt @id @default(autoincrement())\n  trackLevelId BigInt\n  moduleId     BigInt\n  order        Int\n\n  trackLevel TrackLevel @relation(fields: [trackLevelId], references: [id])\n  module     Module     @relation(fields: [moduleId], references: [id])\n\n  @@unique([trackLevelId, moduleId])\n}\n\nmodel Module {\n  id   BigInt @id @default(autoincrement())\n  name String\n\n  moduleProblems ModuleProblem[]\n  levelModules   LevelModule[]\n}\n\n// Problems belong to modules\nmodel ModuleProblem {\n  id         BigInt            @id @default(autoincrement())\n  moduleId   BigInt\n  problemId  BigInt\n  type       ProblemType\n  difficulty ProblemDifficulty // 0 is easy, 1 is normal, 2 is hard\n\n  module Module @relation(fields: [moduleId], references: [id])\n\n  @@unique([moduleId, problemId])\n}\n\nmodel User {\n  id   BigInt @id @default(autoincrement())\n  name String\n\n  solves     Solve[]\n  userTracks UserTrack[]\n}\n\n// Store all problems solved by user\nmodel Solve {\n  id        BigInt @id @default(autoincrement())\n  userId    BigInt\n  problemId BigInt\n\n  submitCount Int\n\n  readTime  Int\n  thinkTime Int\n  codeTime  Int\n  debugTime Int\n\n  onYourOwn Boolean\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  user    User    @relation(fields: [userId], references: [id])\n  problem Problem @relation(fields: [problemId], references: [id])\n\n  @@unique([userId, problemId])\n}\n\nmodel UserTrack {\n  id      BigInt @id @default(autoincrement())\n  userId  BigInt\n  trackId BigInt\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  user  User  @relation(fields: [userId], references: [id])\n  track Track @relation(fields: [trackId], references: [id])\n\n  @@unique([userId, trackId])\n}\n",
+  "inlineSchemaHash": "8c2141640c33535d87987c4ed352ecbe611aaa4dd3bc200dcf78eb6b69e36330",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"Problem\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"type\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"url\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":\"Problems\"}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"Problem\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"url\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"solves\",\"kind\":\"object\",\"type\":\"Solve\",\"relationName\":\"ProblemToSolve\"}],\"dbName\":\"Problems\"},\"Track\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"levels\",\"kind\":\"object\",\"type\":\"TrackLevel\",\"relationName\":\"TrackToTrackLevel\"},{\"name\":\"userTrack\",\"kind\":\"object\",\"type\":\"UserTrack\",\"relationName\":\"TrackToUserTrack\"}],\"dbName\":null},\"TrackLevel\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"trackId\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"code\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"order\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"track\",\"kind\":\"object\",\"type\":\"Track\",\"relationName\":\"TrackToTrackLevel\"},{\"name\":\"levelModules\",\"kind\":\"object\",\"type\":\"LevelModule\",\"relationName\":\"LevelModuleToTrackLevel\"}],\"dbName\":null},\"LevelModule\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"trackLevelId\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"moduleId\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"order\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"trackLevel\",\"kind\":\"object\",\"type\":\"TrackLevel\",\"relationName\":\"LevelModuleToTrackLevel\"},{\"name\":\"module\",\"kind\":\"object\",\"type\":\"Module\",\"relationName\":\"LevelModuleToModule\"}],\"dbName\":null},\"Module\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"moduleProblems\",\"kind\":\"object\",\"type\":\"ModuleProblem\",\"relationName\":\"ModuleToModuleProblem\"},{\"name\":\"levelModules\",\"kind\":\"object\",\"type\":\"LevelModule\",\"relationName\":\"LevelModuleToModule\"}],\"dbName\":null},\"ModuleProblem\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"moduleId\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"problemId\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"type\",\"kind\":\"enum\",\"type\":\"ProblemType\"},{\"name\":\"difficulty\",\"kind\":\"enum\",\"type\":\"ProblemDifficulty\"},{\"name\":\"module\",\"kind\":\"object\",\"type\":\"Module\",\"relationName\":\"ModuleToModuleProblem\"}],\"dbName\":null},\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"solves\",\"kind\":\"object\",\"type\":\"Solve\",\"relationName\":\"SolveToUser\"},{\"name\":\"userTracks\",\"kind\":\"object\",\"type\":\"UserTrack\",\"relationName\":\"UserToUserTrack\"}],\"dbName\":null},\"Solve\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"problemId\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"submitCount\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"readTime\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"thinkTime\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"codeTime\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"debugTime\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"onYourOwn\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"SolveToUser\"},{\"name\":\"problem\",\"kind\":\"object\",\"type\":\"Problem\",\"relationName\":\"ProblemToSolve\"}],\"dbName\":null},\"UserTrack\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"trackId\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserToUserTrack\"},{\"name\":\"track\",\"kind\":\"object\",\"type\":\"Track\",\"relationName\":\"TrackToUserTrack\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),

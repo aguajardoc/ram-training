@@ -8,13 +8,127 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum ProblemDifficulty {
+  EASY
+  NORMAL
+  HARD
+}
+
+enum ProblemType {
+  PRACTICE
+  CONTEST
+}
+
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model Problem {
   id   BigInt  @id @default(autoincrement())
-  type String @default("practice") @db.VarChar
   name String @default("TEST PROBLEM") @db.VarChar
   url  String @default("https://codeforces.com/problemset/problem/4/A") @db.VarChar
 
+  solves Solve[]
+
   @@map("Problems")
+}
+
+// Tracks consist of modules
+model Track {
+  id        BigInt @id @default(autoincrement())
+  name      String
+
+  levels    TrackLevel[]
+  userTrack UserTrack[]
+}
+
+// Tracks have levels
+model TrackLevel {
+  id           BigInt @id @default(autoincrement())
+  trackId      BigInt
+  code         String  // A, B, C1... and such
+  order        Int
+
+  track        Track @relation(fields: [trackId], references: [id])
+  levelModules LevelModule[]
+
+  @@unique([trackId, code])
+}
+
+// Modules belong to levels (could be in multiple tracks)
+model LevelModule {
+  id            BigInt @id @default(autoincrement())
+  trackLevelId  BigInt
+  moduleId      BigInt
+  order         Int
+
+  trackLevel    TrackLevel  @relation(fields: [trackLevelId], references: [id])
+  module        Module      @relation(fields: [moduleId], references: [id])
+
+  @@unique([trackLevelId, moduleId])
+}
+
+model Module {
+  id              BigInt @id @default(autoincrement())
+  name            String
+
+  moduleProblems  ModuleProblem[]
+  levelModules    LevelModule[]
+}
+
+// Problems belong to modules
+model ModuleProblem {
+  id          BigInt @id @default(autoincrement())
+  moduleId    BigInt
+  problemId   BigInt
+  type        ProblemType
+  difficulty  ProblemDifficulty // 0 is easy, 1 is normal, 2 is hard
+
+  module      Module @relation(fields: [moduleId], references: [id])
+
+  @@unique([moduleId, problemId])
+}
+
+model User {
+  id          BigInt @id @default(autoincrement())
+  name        String
+
+  solves      Solve[]
+  userTracks  UserTrack[]
+}
+
+// Store all problems solved by user
+model Solve {
+  id          BigInt @id @default(autoincrement())
+  userId      BigInt
+  problemId   BigInt
+  
+  submitCount Int
+  
+  readTime    Int
+  thinkTime   Int
+  codeTime    Int
+  debugTime   Int
+
+  onYourOwn   Boolean
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user        User    @relation(fields: [userId], references: [id])
+  problem     Problem @relation(fields: [problemId], references: [id])
+
+  @@unique([userId, problemId])
+}
+
+model UserTrack {
+  id        BigInt @id @default(autoincrement())
+  userId    BigInt
+  trackId   BigInt
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user      User    @relation(fields: [userId], references: [id])
+  track     Track   @relation(fields: [trackId], references: [id])
+
+  @@unique([userId, trackId])
 }

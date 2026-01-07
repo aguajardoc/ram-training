@@ -123,9 +123,67 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 
 exports.Prisma.ProblemScalarFieldEnum = {
   id: 'id',
-  type: 'type',
   name: 'name',
   url: 'url'
+};
+
+exports.Prisma.TrackScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
+};
+
+exports.Prisma.TrackLevelScalarFieldEnum = {
+  id: 'id',
+  trackId: 'trackId',
+  code: 'code',
+  order: 'order'
+};
+
+exports.Prisma.LevelModuleScalarFieldEnum = {
+  id: 'id',
+  trackLevelId: 'trackLevelId',
+  moduleId: 'moduleId',
+  order: 'order'
+};
+
+exports.Prisma.ModuleScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
+};
+
+exports.Prisma.ModuleProblemScalarFieldEnum = {
+  id: 'id',
+  moduleId: 'moduleId',
+  problemId: 'problemId',
+  type: 'type',
+  difficulty: 'difficulty'
+};
+
+exports.Prisma.UserScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
+};
+
+exports.Prisma.SolveScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  problemId: 'problemId',
+  submitCount: 'submitCount',
+  readTime: 'readTime',
+  thinkTime: 'thinkTime',
+  codeTime: 'codeTime',
+  debugTime: 'debugTime',
+  onYourOwn: 'onYourOwn',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.UserTrackScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  trackId: 'trackId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -137,10 +195,27 @@ exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
+exports.ProblemType = exports.$Enums.ProblemType = {
+  PRACTICE: 'PRACTICE',
+  CONTEST: 'CONTEST'
+};
 
+exports.ProblemDifficulty = exports.$Enums.ProblemDifficulty = {
+  EASY: 'EASY',
+  NORMAL: 'NORMAL',
+  HARD: 'HARD'
+};
 
 exports.Prisma.ModelName = {
-  Problem: 'Problem'
+  Problem: 'Problem',
+  Track: 'Track',
+  TrackLevel: 'TrackLevel',
+  LevelModule: 'LevelModule',
+  Module: 'Module',
+  ModuleProblem: 'ModuleProblem',
+  User: 'User',
+  Solve: 'Solve',
+  UserTrack: 'UserTrack'
 };
 
 /**
