@@ -5,6 +5,8 @@ import Google from "next-auth/providers/google";
 
 import { db } from "~/server/db";
 
+type UserRole = "USER" | "ADMIN"
+
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
  * object and keep type safety.
@@ -16,14 +18,14 @@ declare module "next-auth" {
     user: {
       id: string;
       // ...other properties
-      // role: UserRole;
+      role: UserRole;
     } & DefaultSession["user"];
   }
 
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
+  interface User {
+    // ...other properties
+    role: UserRole;
+  }
 }
 
 /**
@@ -54,6 +56,7 @@ export const authConfig = {
       user: {
         ...session.user,
         id: user.id,
+        role: (user as any).role
       },
     }),
   },
