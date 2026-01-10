@@ -136,15 +136,17 @@ model UserTrack {
 
 // User + Auth tables
 model User {
-  id          String @id @default(cuid())
-  email       String? @unique
-  name        String?
-  role        Role  @default(USER)
+  id              String @id @default(cuid())
+  email           String? @unique
+  name            String?
+  image           String?
+  emailVerified   String?
+  role            Role  @default(USER)
 
-  solves      Solve[]
-  userTracks  UserTrack[]
-  account     Account[]
-  sessions    Session[]
+  solves          Solve[]
+  userTracks      UserTrack[]
+  account         Account[]
+  sessions        Session[]
 }
 
 model Account {

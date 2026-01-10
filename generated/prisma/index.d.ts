@@ -10865,6 +10865,8 @@ export namespace Prisma {
     id: string | null
     email: string | null
     name: string | null
+    image: string | null
+    emailVerified: string | null
     role: $Enums.Role | null
   }
 
@@ -10872,6 +10874,8 @@ export namespace Prisma {
     id: string | null
     email: string | null
     name: string | null
+    image: string | null
+    emailVerified: string | null
     role: $Enums.Role | null
   }
 
@@ -10879,6 +10883,8 @@ export namespace Prisma {
     id: number
     email: number
     name: number
+    image: number
+    emailVerified: number
     role: number
     _all: number
   }
@@ -10888,6 +10894,8 @@ export namespace Prisma {
     id?: true
     email?: true
     name?: true
+    image?: true
+    emailVerified?: true
     role?: true
   }
 
@@ -10895,6 +10903,8 @@ export namespace Prisma {
     id?: true
     email?: true
     name?: true
+    image?: true
+    emailVerified?: true
     role?: true
   }
 
@@ -10902,6 +10912,8 @@ export namespace Prisma {
     id?: true
     email?: true
     name?: true
+    image?: true
+    emailVerified?: true
     role?: true
     _all?: true
   }
@@ -10982,6 +10994,8 @@ export namespace Prisma {
     id: string
     email: string | null
     name: string | null
+    image: string | null
+    emailVerified: string | null
     role: $Enums.Role
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
@@ -11006,6 +11020,8 @@ export namespace Prisma {
     id?: boolean
     email?: boolean
     name?: boolean
+    image?: boolean
+    emailVerified?: boolean
     role?: boolean
     solves?: boolean | User$solvesArgs<ExtArgs>
     userTracks?: boolean | User$userTracksArgs<ExtArgs>
@@ -11018,6 +11034,8 @@ export namespace Prisma {
     id?: boolean
     email?: boolean
     name?: boolean
+    image?: boolean
+    emailVerified?: boolean
     role?: boolean
   }, ExtArgs["result"]["user"]>
 
@@ -11025,6 +11043,8 @@ export namespace Prisma {
     id?: boolean
     email?: boolean
     name?: boolean
+    image?: boolean
+    emailVerified?: boolean
     role?: boolean
   }, ExtArgs["result"]["user"]>
 
@@ -11032,10 +11052,12 @@ export namespace Prisma {
     id?: boolean
     email?: boolean
     name?: boolean
+    image?: boolean
+    emailVerified?: boolean
     role?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "role", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "image" | "emailVerified" | "role", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     solves?: boolean | User$solvesArgs<ExtArgs>
     userTracks?: boolean | User$userTracksArgs<ExtArgs>
@@ -11058,6 +11080,8 @@ export namespace Prisma {
       id: string
       email: string | null
       name: string | null
+      image: string | null
+      emailVerified: string | null
       role: $Enums.Role
     }, ExtArgs["result"]["user"]>
     composites: {}
@@ -11489,6 +11513,8 @@ export namespace Prisma {
     readonly id: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
     readonly name: FieldRef<"User", 'String'>
+    readonly image: FieldRef<"User", 'String'>
+    readonly emailVerified: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'Role'>
   }
     
@@ -15293,6 +15319,8 @@ export namespace Prisma {
     id: 'id',
     email: 'email',
     name: 'name',
+    image: 'image',
+    emailVerified: 'emailVerified',
     role: 'role'
   };
 
@@ -15945,6 +15973,8 @@ export namespace Prisma {
     id?: StringFilter<"User"> | string
     email?: StringNullableFilter<"User"> | string | null
     name?: StringNullableFilter<"User"> | string | null
+    image?: StringNullableFilter<"User"> | string | null
+    emailVerified?: StringNullableFilter<"User"> | string | null
     role?: EnumRoleFilter<"User"> | $Enums.Role
     solves?: SolveListRelationFilter
     userTracks?: UserTrackListRelationFilter
@@ -15956,6 +15986,8 @@ export namespace Prisma {
     id?: SortOrder
     email?: SortOrderInput | SortOrder
     name?: SortOrderInput | SortOrder
+    image?: SortOrderInput | SortOrder
+    emailVerified?: SortOrderInput | SortOrder
     role?: SortOrder
     solves?: SolveOrderByRelationAggregateInput
     userTracks?: UserTrackOrderByRelationAggregateInput
@@ -15970,6 +16002,8 @@ export namespace Prisma {
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     name?: StringNullableFilter<"User"> | string | null
+    image?: StringNullableFilter<"User"> | string | null
+    emailVerified?: StringNullableFilter<"User"> | string | null
     role?: EnumRoleFilter<"User"> | $Enums.Role
     solves?: SolveListRelationFilter
     userTracks?: UserTrackListRelationFilter
@@ -15981,6 +16015,8 @@ export namespace Prisma {
     id?: SortOrder
     email?: SortOrderInput | SortOrder
     name?: SortOrderInput | SortOrder
+    image?: SortOrderInput | SortOrder
+    emailVerified?: SortOrderInput | SortOrder
     role?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -15994,6 +16030,8 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"User"> | string
     email?: StringNullableWithAggregatesFilter<"User"> | string | null
     name?: StringNullableWithAggregatesFilter<"User"> | string | null
+    image?: StringNullableWithAggregatesFilter<"User"> | string | null
+    emailVerified?: StringNullableWithAggregatesFilter<"User"> | string | null
     role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
   }
 
@@ -16640,6 +16678,8 @@ export namespace Prisma {
     id?: string
     email?: string | null
     name?: string | null
+    image?: string | null
+    emailVerified?: string | null
     role?: $Enums.Role
     solves?: SolveCreateNestedManyWithoutUserInput
     userTracks?: UserTrackCreateNestedManyWithoutUserInput
@@ -16651,6 +16691,8 @@ export namespace Prisma {
     id?: string
     email?: string | null
     name?: string | null
+    image?: string | null
+    emailVerified?: string | null
     role?: $Enums.Role
     solves?: SolveUncheckedCreateNestedManyWithoutUserInput
     userTracks?: UserTrackUncheckedCreateNestedManyWithoutUserInput
@@ -16662,6 +16704,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     solves?: SolveUpdateManyWithoutUserNestedInput
     userTracks?: UserTrackUpdateManyWithoutUserNestedInput
@@ -16673,6 +16717,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     solves?: SolveUncheckedUpdateManyWithoutUserNestedInput
     userTracks?: UserTrackUncheckedUpdateManyWithoutUserNestedInput
@@ -16684,6 +16730,8 @@ export namespace Prisma {
     id?: string
     email?: string | null
     name?: string | null
+    image?: string | null
+    emailVerified?: string | null
     role?: $Enums.Role
   }
 
@@ -16691,6 +16739,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
   }
 
@@ -16698,6 +16748,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
   }
 
@@ -17414,6 +17466,8 @@ export namespace Prisma {
     id?: SortOrder
     email?: SortOrder
     name?: SortOrder
+    image?: SortOrder
+    emailVerified?: SortOrder
     role?: SortOrder
   }
 
@@ -17421,6 +17475,8 @@ export namespace Prisma {
     id?: SortOrder
     email?: SortOrder
     name?: SortOrder
+    image?: SortOrder
+    emailVerified?: SortOrder
     role?: SortOrder
   }
 
@@ -17428,6 +17484,8 @@ export namespace Prisma {
     id?: SortOrder
     email?: SortOrder
     name?: SortOrder
+    image?: SortOrder
+    emailVerified?: SortOrder
     role?: SortOrder
   }
 
@@ -19022,6 +19080,8 @@ export namespace Prisma {
     id?: string
     email?: string | null
     name?: string | null
+    image?: string | null
+    emailVerified?: string | null
     role?: $Enums.Role
     userTracks?: UserTrackCreateNestedManyWithoutUserInput
     account?: AccountCreateNestedManyWithoutUserInput
@@ -19032,6 +19092,8 @@ export namespace Prisma {
     id?: string
     email?: string | null
     name?: string | null
+    image?: string | null
+    emailVerified?: string | null
     role?: $Enums.Role
     userTracks?: UserTrackUncheckedCreateNestedManyWithoutUserInput
     account?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -19077,6 +19139,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     userTracks?: UserTrackUpdateManyWithoutUserNestedInput
     account?: AccountUpdateManyWithoutUserNestedInput
@@ -19087,6 +19151,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     userTracks?: UserTrackUncheckedUpdateManyWithoutUserNestedInput
     account?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -19122,6 +19188,8 @@ export namespace Prisma {
     id?: string
     email?: string | null
     name?: string | null
+    image?: string | null
+    emailVerified?: string | null
     role?: $Enums.Role
     solves?: SolveCreateNestedManyWithoutUserInput
     account?: AccountCreateNestedManyWithoutUserInput
@@ -19132,6 +19200,8 @@ export namespace Prisma {
     id?: string
     email?: string | null
     name?: string | null
+    image?: string | null
+    emailVerified?: string | null
     role?: $Enums.Role
     solves?: SolveUncheckedCreateNestedManyWithoutUserInput
     account?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -19175,6 +19245,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     solves?: SolveUpdateManyWithoutUserNestedInput
     account?: AccountUpdateManyWithoutUserNestedInput
@@ -19185,6 +19257,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     solves?: SolveUncheckedUpdateManyWithoutUserNestedInput
     account?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -19434,6 +19508,8 @@ export namespace Prisma {
     id?: string
     email?: string | null
     name?: string | null
+    image?: string | null
+    emailVerified?: string | null
     role?: $Enums.Role
     solves?: SolveCreateNestedManyWithoutUserInput
     userTracks?: UserTrackCreateNestedManyWithoutUserInput
@@ -19444,6 +19520,8 @@ export namespace Prisma {
     id?: string
     email?: string | null
     name?: string | null
+    image?: string | null
+    emailVerified?: string | null
     role?: $Enums.Role
     solves?: SolveUncheckedCreateNestedManyWithoutUserInput
     userTracks?: UserTrackUncheckedCreateNestedManyWithoutUserInput
@@ -19470,6 +19548,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     solves?: SolveUpdateManyWithoutUserNestedInput
     userTracks?: UserTrackUpdateManyWithoutUserNestedInput
@@ -19480,6 +19560,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     solves?: SolveUncheckedUpdateManyWithoutUserNestedInput
     userTracks?: UserTrackUncheckedUpdateManyWithoutUserNestedInput
@@ -19490,6 +19572,8 @@ export namespace Prisma {
     id?: string
     email?: string | null
     name?: string | null
+    image?: string | null
+    emailVerified?: string | null
     role?: $Enums.Role
     solves?: SolveCreateNestedManyWithoutUserInput
     userTracks?: UserTrackCreateNestedManyWithoutUserInput
@@ -19500,6 +19584,8 @@ export namespace Prisma {
     id?: string
     email?: string | null
     name?: string | null
+    image?: string | null
+    emailVerified?: string | null
     role?: $Enums.Role
     solves?: SolveUncheckedCreateNestedManyWithoutUserInput
     userTracks?: UserTrackUncheckedCreateNestedManyWithoutUserInput
@@ -19526,6 +19612,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     solves?: SolveUpdateManyWithoutUserNestedInput
     userTracks?: UserTrackUpdateManyWithoutUserNestedInput
@@ -19536,6 +19624,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     solves?: SolveUncheckedUpdateManyWithoutUserNestedInput
     userTracks?: UserTrackUncheckedUpdateManyWithoutUserNestedInput
