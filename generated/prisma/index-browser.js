@@ -155,13 +155,8 @@ exports.Prisma.ModuleProblemScalarFieldEnum = {
   id: 'id',
   moduleId: 'moduleId',
   problemId: 'problemId',
-  type: 'type',
+  problemType: 'problemType',
   difficulty: 'difficulty'
-};
-
-exports.Prisma.UserScalarFieldEnum = {
-  id: 'id',
-  name: 'name'
 };
 
 exports.Prisma.SolveScalarFieldEnum = {
@@ -169,10 +164,12 @@ exports.Prisma.SolveScalarFieldEnum = {
   userId: 'userId',
   problemId: 'problemId',
   submitCount: 'submitCount',
-  readTime: 'readTime',
-  thinkTime: 'thinkTime',
-  codeTime: 'codeTime',
-  debugTime: 'debugTime',
+  readTimeMinutes: 'readTimeMinutes',
+  thinkTimeMinutes: 'thinkTimeMinutes',
+  codeTimeMinutes: 'codeTimeMinutes',
+  debugTimeMinutes: 'debugTimeMinutes',
+  notes: 'notes',
+  mood: 'mood',
   onYourOwn: 'onYourOwn',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -186,6 +183,41 @@ exports.Prisma.UserTrackScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.UserScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  name: 'name',
+  role: 'role'
+};
+
+exports.Prisma.AccountScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  provider: 'provider',
+  providerAccountId: 'providerAccountId',
+  access_token: 'access_token',
+  refresh_token: 'refresh_token',
+  expires_at: 'expires_at',
+  token_type: 'token_type',
+  scope: 'scope',
+  id_token: 'id_token',
+  session_state: 'session_state'
+};
+
+exports.Prisma.SessionScalarFieldEnum = {
+  id: 'id',
+  sessionToken: 'sessionToken',
+  userId: 'userId',
+  expires: 'expires'
+};
+
+exports.Prisma.VerificationTokenScalarFieldEnum = {
+  identifier: 'identifier',
+  token: 'token',
+  expires: 'expires'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -194,6 +226,11 @@ exports.Prisma.SortOrder = {
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
+};
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
 };
 exports.ProblemType = exports.$Enums.ProblemType = {
   PRACTICE: 'PRACTICE',
@@ -206,6 +243,11 @@ exports.ProblemDifficulty = exports.$Enums.ProblemDifficulty = {
   HARD: 'HARD'
 };
 
+exports.Role = exports.$Enums.Role = {
+  USER: 'USER',
+  ADMIN: 'ADMIN'
+};
+
 exports.Prisma.ModelName = {
   Problem: 'Problem',
   Track: 'Track',
@@ -213,9 +255,12 @@ exports.Prisma.ModelName = {
   LevelModule: 'LevelModule',
   Module: 'Module',
   ModuleProblem: 'ModuleProblem',
-  User: 'User',
   Solve: 'Solve',
-  UserTrack: 'UserTrack'
+  UserTrack: 'UserTrack',
+  User: 'User',
+  Account: 'Account',
+  Session: 'Session',
+  VerificationToken: 'VerificationToken'
 };
 
 /**

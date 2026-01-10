@@ -19,21 +19,26 @@ enum ProblemType {
   CONTEST
 }
 
+enum Role {
+  USER
+  ADMIN
+}
+
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model Problem {
-  id   BigInt @id @default(autoincrement())
-  name String @default("TEST PROBLEM") @db.VarChar
-  url  String @default("https://codeforces.com/problemset/problem/4/A") @db.VarChar
-
-  solves Solve[]
+  id             String          @id @default(cuid())
+  name           String
+  url            String          @unique
+  solves         Solve[]
+  moduleProblems ModuleProblem[]
 
   @@map("Problems")
 }
 
 // Tracks consist of modules
 model Track {
-  id   BigInt @id @default(autoincrement())
+  id   String @id @default(cuid())
   name String
 
   levels    TrackLevel[]
@@ -42,12 +47,12 @@ model Track {
 
 // Tracks have levels
 model TrackLevel {
-  id      BigInt @id @default(autoincrement())
-  trackId BigInt
+  id      String @id @default(cuid())
+  trackId String
   code    String // A, B, C1... and such
   order   Int
 
-  track        Track         @relation(fields: [trackId], references: [id])
+  track        Track         @relation(fields: [trackId], references: [id], onDelete: Cascade)
   levelModules LevelModule[]
 
   @@unique([trackId, code])
@@ -55,19 +60,19 @@ model TrackLevel {
 
 // Modules belong to levels (could be in multiple tracks)
 model LevelModule {
-  id           BigInt @id @default(autoincrement())
-  trackLevelId BigInt
-  moduleId     BigInt
+  id           String @id @default(cuid())
+  trackLevelId String
+  moduleId     String
   order        Int
 
-  trackLevel TrackLevel @relation(fields: [trackLevelId], references: [id])
+  trackLevel TrackLevel @relation(fields: [trackLevelId], references: [id], onDelete: Cascade)
   module     Module     @relation(fields: [moduleId], references: [id])
 
   @@unique([trackLevelId, moduleId])
 }
 
 model Module {
-  id   BigInt @id @default(autoincrement())
+  id   String @id @default(cuid())
   name String
 
   moduleProblems ModuleProblem[]
@@ -76,59 +81,104 @@ model Module {
 
 // Problems belong to modules
 model ModuleProblem {
-  id         BigInt            @id @default(autoincrement())
-  moduleId   BigInt
-  problemId  BigInt
-  type       ProblemType
-  difficulty ProblemDifficulty // 0 is easy, 1 is normal, 2 is hard
+  id          String            @id @default(cuid())
+  moduleId    String
+  problemId   String
+  problemType ProblemType
+  difficulty  ProblemDifficulty
 
-  module Module @relation(fields: [moduleId], references: [id])
+  module  Module  @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  problem Problem @relation(fields: [problemId], references: [id], onDelete: Restrict)
 
   @@unique([moduleId, problemId])
 }
 
-model User {
-  id   BigInt @id @default(autoincrement())
-  name String
-
-  solves     Solve[]
-  userTracks UserTrack[]
-}
-
 // Store all problems solved by user
 model Solve {
-  id        BigInt @id @default(autoincrement())
-  userId    BigInt
-  problemId BigInt
+  id        String @id @default(cuid())
+  userId    String
+  problemId String
 
   submitCount Int
 
-  readTime  Int
-  thinkTime Int
-  codeTime  Int
-  debugTime Int
+  readTimeMinutes  Int
+  thinkTimeMinutes Int
+  codeTimeMinutes  Int
+  debugTimeMinutes Int
+
+  notes String?
+  mood  String?
 
   onYourOwn Boolean
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  user    User    @relation(fields: [userId], references: [id])
-  problem Problem @relation(fields: [problemId], references: [id])
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  problem Problem @relation(fields: [problemId], references: [id], onDelete: Restrict)
 
   @@unique([userId, problemId])
 }
 
 model UserTrack {
-  id      BigInt @id @default(autoincrement())
-  userId  BigInt
-  trackId BigInt
+  id      String @id @default(cuid())
+  userId  String
+  trackId String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  user  User  @relation(fields: [userId], references: [id])
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
   track Track @relation(fields: [trackId], references: [id])
 
   @@unique([userId, trackId])
+}
+
+// User + Auth tables
+model User {
+  id    String  @id @default(cuid())
+  email String? @unique
+  name  String?
+  role  Role    @default(USER)
+
+  solves     Solve[]
+  userTracks UserTrack[]
+  account    Account[]
+  sessions   Session[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  access_token      String?
+  refresh_token     String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
 }

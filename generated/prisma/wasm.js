@@ -127,13 +127,8 @@ exports.Prisma.ModuleProblemScalarFieldEnum = {
   id: 'id',
   moduleId: 'moduleId',
   problemId: 'problemId',
-  type: 'type',
+  problemType: 'problemType',
   difficulty: 'difficulty'
-};
-
-exports.Prisma.UserScalarFieldEnum = {
-  id: 'id',
-  name: 'name'
 };
 
 exports.Prisma.SolveScalarFieldEnum = {
@@ -141,10 +136,12 @@ exports.Prisma.SolveScalarFieldEnum = {
   userId: 'userId',
   problemId: 'problemId',
   submitCount: 'submitCount',
-  readTime: 'readTime',
-  thinkTime: 'thinkTime',
-  codeTime: 'codeTime',
-  debugTime: 'debugTime',
+  readTimeMinutes: 'readTimeMinutes',
+  thinkTimeMinutes: 'thinkTimeMinutes',
+  codeTimeMinutes: 'codeTimeMinutes',
+  debugTimeMinutes: 'debugTimeMinutes',
+  notes: 'notes',
+  mood: 'mood',
   onYourOwn: 'onYourOwn',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -158,6 +155,41 @@ exports.Prisma.UserTrackScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.UserScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  name: 'name',
+  role: 'role'
+};
+
+exports.Prisma.AccountScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  provider: 'provider',
+  providerAccountId: 'providerAccountId',
+  access_token: 'access_token',
+  refresh_token: 'refresh_token',
+  expires_at: 'expires_at',
+  token_type: 'token_type',
+  scope: 'scope',
+  id_token: 'id_token',
+  session_state: 'session_state'
+};
+
+exports.Prisma.SessionScalarFieldEnum = {
+  id: 'id',
+  sessionToken: 'sessionToken',
+  userId: 'userId',
+  expires: 'expires'
+};
+
+exports.Prisma.VerificationTokenScalarFieldEnum = {
+  identifier: 'identifier',
+  token: 'token',
+  expires: 'expires'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -166,6 +198,11 @@ exports.Prisma.SortOrder = {
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
+};
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
 };
 exports.ProblemDifficulty = exports.$Enums.ProblemDifficulty = {
   EASY: 'EASY',
@@ -178,6 +215,11 @@ exports.ProblemType = exports.$Enums.ProblemType = {
   CONTEST: 'CONTEST'
 };
 
+exports.Role = exports.$Enums.Role = {
+  USER: 'USER',
+  ADMIN: 'ADMIN'
+};
+
 exports.Prisma.ModelName = {
   Problem: 'Problem',
   Track: 'Track',
@@ -185,9 +227,12 @@ exports.Prisma.ModelName = {
   LevelModule: 'LevelModule',
   Module: 'Module',
   ModuleProblem: 'ModuleProblem',
-  User: 'User',
   Solve: 'Solve',
-  UserTrack: 'UserTrack'
+  UserTrack: 'UserTrack',
+  User: 'User',
+  Account: 'Account',
+  Session: 'Session',
+  VerificationToken: 'VerificationToken'
 };
 /**
  * Create the Client
@@ -237,13 +282,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nenum ProblemDifficulty {\n  EASY\n  NORMAL\n  HARD\n}\n\nenum ProblemType {\n  PRACTICE\n  CONTEST\n}\n\n/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments\n/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.\nmodel Problem {\n  id   BigInt @id @default(autoincrement())\n  name String @default(\"TEST PROBLEM\") @db.VarChar\n  url  String @default(\"https://codeforces.com/problemset/problem/4/A\") @db.VarChar\n\n  solves Solve[]\n\n  @@map(\"Problems\")\n}\n\n// Tracks consist of modules\nmodel Track {\n  id   BigInt @id @default(autoincrement())\n  name String\n\n  levels    TrackLevel[]\n  userTrack UserTrack[]\n}\n\n// Tracks have levels\nmodel TrackLevel {\n  id      BigInt @id @default(autoincrement())\n  trackId BigInt\n  code    String // A, B, C1... and such\n  order   Int\n\n  track        Track         @relation(fields: [trackId], references: [id])\n  levelModules LevelModule[]\n\n  @@unique([trackId, code])\n}\n\n// Modules belong to levels (could be in multiple tracks)\nmodel LevelModule {\n  id           BigInt @id @default(autoincrement())\n  trackLevelId BigInt\n  moduleId     BigInt\n  order        Int\n\n  trackLevel TrackLevel @relation(fields: [trackLevelId], references: [id])\n  module     Module     @relation(fields: [moduleId], references: [id])\n\n  @@unique([trackLevelId, moduleId])\n}\n\nmodel Module {\n  id   BigInt @id @default(autoincrement())\n  name String\n\n  moduleProblems ModuleProblem[]\n  levelModules   LevelModule[]\n}\n\n// Problems belong to modules\nmodel ModuleProblem {\n  id         BigInt            @id @default(autoincrement())\n  moduleId   BigInt\n  problemId  BigInt\n  type       ProblemType\n  difficulty ProblemDifficulty // 0 is easy, 1 is normal, 2 is hard\n\n  module Module @relation(fields: [moduleId], references: [id])\n\n  @@unique([moduleId, problemId])\n}\n\nmodel User {\n  id   BigInt @id @default(autoincrement())\n  name String\n\n  solves     Solve[]\n  userTracks UserTrack[]\n}\n\n// Store all problems solved by user\nmodel Solve {\n  id        BigInt @id @default(autoincrement())\n  userId    BigInt\n  problemId BigInt\n\n  submitCount Int\n\n  readTime  Int\n  thinkTime Int\n  codeTime  Int\n  debugTime Int\n\n  onYourOwn Boolean\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  user    User    @relation(fields: [userId], references: [id])\n  problem Problem @relation(fields: [problemId], references: [id])\n\n  @@unique([userId, problemId])\n}\n\nmodel UserTrack {\n  id      BigInt @id @default(autoincrement())\n  userId  BigInt\n  trackId BigInt\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  user  User  @relation(fields: [userId], references: [id])\n  track Track @relation(fields: [trackId], references: [id])\n\n  @@unique([userId, trackId])\n}\n",
-  "inlineSchemaHash": "8c2141640c33535d87987c4ed352ecbe611aaa4dd3bc200dcf78eb6b69e36330",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nenum ProblemDifficulty {\n  EASY\n  NORMAL\n  HARD\n}\n\nenum ProblemType {\n  PRACTICE\n  CONTEST\n}\n\nenum Role {\n  USER\n  ADMIN\n}\n\n/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments\n/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.\nmodel Problem {\n  id             String          @id @default(cuid())\n  name           String\n  url            String          @unique\n  solves         Solve[]\n  moduleProblems ModuleProblem[]\n\n  @@map(\"Problems\")\n}\n\n// Tracks consist of modules\nmodel Track {\n  id   String @id @default(cuid())\n  name String\n\n  levels    TrackLevel[]\n  userTrack UserTrack[]\n}\n\n// Tracks have levels\nmodel TrackLevel {\n  id      String @id @default(cuid())\n  trackId String\n  code    String // A, B, C1... and such\n  order   Int\n\n  track        Track         @relation(fields: [trackId], references: [id], onDelete: Cascade)\n  levelModules LevelModule[]\n\n  @@unique([trackId, code])\n}\n\n// Modules belong to levels (could be in multiple tracks)\nmodel LevelModule {\n  id           String @id @default(cuid())\n  trackLevelId String\n  moduleId     String\n  order        Int\n\n  trackLevel TrackLevel @relation(fields: [trackLevelId], references: [id], onDelete: Cascade)\n  module     Module     @relation(fields: [moduleId], references: [id])\n\n  @@unique([trackLevelId, moduleId])\n}\n\nmodel Module {\n  id   String @id @default(cuid())\n  name String\n\n  moduleProblems ModuleProblem[]\n  levelModules   LevelModule[]\n}\n\n// Problems belong to modules\nmodel ModuleProblem {\n  id          String            @id @default(cuid())\n  moduleId    String\n  problemId   String\n  problemType ProblemType\n  difficulty  ProblemDifficulty\n\n  module  Module  @relation(fields: [moduleId], references: [id], onDelete: Cascade)\n  problem Problem @relation(fields: [problemId], references: [id], onDelete: Restrict)\n\n  @@unique([moduleId, problemId])\n}\n\n// Store all problems solved by user\nmodel Solve {\n  id        String @id @default(cuid())\n  userId    String\n  problemId String\n\n  submitCount Int\n\n  readTimeMinutes  Int\n  thinkTimeMinutes Int\n  codeTimeMinutes  Int\n  debugTimeMinutes Int\n\n  notes String?\n  mood  String?\n\n  onYourOwn Boolean\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)\n  problem Problem @relation(fields: [problemId], references: [id], onDelete: Restrict)\n\n  @@unique([userId, problemId])\n}\n\nmodel UserTrack {\n  id      String @id @default(cuid())\n  userId  String\n  trackId String\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)\n  track Track @relation(fields: [trackId], references: [id])\n\n  @@unique([userId, trackId])\n}\n\n// User + Auth tables\nmodel User {\n  id    String  @id @default(cuid())\n  email String? @unique\n  name  String?\n  role  Role    @default(USER)\n\n  solves     Solve[]\n  userTracks UserTrack[]\n  account    Account[]\n  sessions   Session[]\n}\n\nmodel Account {\n  id                String  @id @default(cuid())\n  userId            String\n  type              String\n  provider          String\n  providerAccountId String\n  access_token      String?\n  refresh_token     String?\n  expires_at        Int?\n  token_type        String?\n  scope             String?\n  id_token          String?\n  session_state     String?\n\n  user User @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@unique([provider, providerAccountId])\n}\n\nmodel Session {\n  id           String   @id @default(cuid())\n  sessionToken String   @unique\n  userId       String\n  expires      DateTime\n\n  user User @relation(fields: [userId], references: [id], onDelete: Cascade)\n}\n\nmodel VerificationToken {\n  identifier String\n  token      String   @unique\n  expires    DateTime\n\n  @@unique([identifier, token])\n}\n",
+  "inlineSchemaHash": "b8b76025281a57b2622d43dd25685693c74c2a5a8fd96bd1400b7b7080e0e691",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"Problem\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"url\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"solves\",\"kind\":\"object\",\"type\":\"Solve\",\"relationName\":\"ProblemToSolve\"}],\"dbName\":\"Problems\"},\"Track\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"levels\",\"kind\":\"object\",\"type\":\"TrackLevel\",\"relationName\":\"TrackToTrackLevel\"},{\"name\":\"userTrack\",\"kind\":\"object\",\"type\":\"UserTrack\",\"relationName\":\"TrackToUserTrack\"}],\"dbName\":null},\"TrackLevel\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"trackId\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"code\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"order\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"track\",\"kind\":\"object\",\"type\":\"Track\",\"relationName\":\"TrackToTrackLevel\"},{\"name\":\"levelModules\",\"kind\":\"object\",\"type\":\"LevelModule\",\"relationName\":\"LevelModuleToTrackLevel\"}],\"dbName\":null},\"LevelModule\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"trackLevelId\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"moduleId\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"order\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"trackLevel\",\"kind\":\"object\",\"type\":\"TrackLevel\",\"relationName\":\"LevelModuleToTrackLevel\"},{\"name\":\"module\",\"kind\":\"object\",\"type\":\"Module\",\"relationName\":\"LevelModuleToModule\"}],\"dbName\":null},\"Module\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"moduleProblems\",\"kind\":\"object\",\"type\":\"ModuleProblem\",\"relationName\":\"ModuleToModuleProblem\"},{\"name\":\"levelModules\",\"kind\":\"object\",\"type\":\"LevelModule\",\"relationName\":\"LevelModuleToModule\"}],\"dbName\":null},\"ModuleProblem\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"moduleId\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"problemId\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"type\",\"kind\":\"enum\",\"type\":\"ProblemType\"},{\"name\":\"difficulty\",\"kind\":\"enum\",\"type\":\"ProblemDifficulty\"},{\"name\":\"module\",\"kind\":\"object\",\"type\":\"Module\",\"relationName\":\"ModuleToModuleProblem\"}],\"dbName\":null},\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"solves\",\"kind\":\"object\",\"type\":\"Solve\",\"relationName\":\"SolveToUser\"},{\"name\":\"userTracks\",\"kind\":\"object\",\"type\":\"UserTrack\",\"relationName\":\"UserToUserTrack\"}],\"dbName\":null},\"Solve\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"problemId\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"submitCount\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"readTime\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"thinkTime\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"codeTime\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"debugTime\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"onYourOwn\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"SolveToUser\"},{\"name\":\"problem\",\"kind\":\"object\",\"type\":\"Problem\",\"relationName\":\"ProblemToSolve\"}],\"dbName\":null},\"UserTrack\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"trackId\",\"kind\":\"scalar\",\"type\":\"BigInt\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserToUserTrack\"},{\"name\":\"track\",\"kind\":\"object\",\"type\":\"Track\",\"relationName\":\"TrackToUserTrack\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"Problem\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"url\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"solves\",\"kind\":\"object\",\"type\":\"Solve\",\"relationName\":\"ProblemToSolve\"},{\"name\":\"moduleProblems\",\"kind\":\"object\",\"type\":\"ModuleProblem\",\"relationName\":\"ModuleProblemToProblem\"}],\"dbName\":\"Problems\"},\"Track\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"levels\",\"kind\":\"object\",\"type\":\"TrackLevel\",\"relationName\":\"TrackToTrackLevel\"},{\"name\":\"userTrack\",\"kind\":\"object\",\"type\":\"UserTrack\",\"relationName\":\"TrackToUserTrack\"}],\"dbName\":null},\"TrackLevel\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"trackId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"code\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"order\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"track\",\"kind\":\"object\",\"type\":\"Track\",\"relationName\":\"TrackToTrackLevel\"},{\"name\":\"levelModules\",\"kind\":\"object\",\"type\":\"LevelModule\",\"relationName\":\"LevelModuleToTrackLevel\"}],\"dbName\":null},\"LevelModule\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"trackLevelId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"moduleId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"order\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"trackLevel\",\"kind\":\"object\",\"type\":\"TrackLevel\",\"relationName\":\"LevelModuleToTrackLevel\"},{\"name\":\"module\",\"kind\":\"object\",\"type\":\"Module\",\"relationName\":\"LevelModuleToModule\"}],\"dbName\":null},\"Module\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"moduleProblems\",\"kind\":\"object\",\"type\":\"ModuleProblem\",\"relationName\":\"ModuleToModuleProblem\"},{\"name\":\"levelModules\",\"kind\":\"object\",\"type\":\"LevelModule\",\"relationName\":\"LevelModuleToModule\"}],\"dbName\":null},\"ModuleProblem\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"moduleId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"problemId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"problemType\",\"kind\":\"enum\",\"type\":\"ProblemType\"},{\"name\":\"difficulty\",\"kind\":\"enum\",\"type\":\"ProblemDifficulty\"},{\"name\":\"module\",\"kind\":\"object\",\"type\":\"Module\",\"relationName\":\"ModuleToModuleProblem\"},{\"name\":\"problem\",\"kind\":\"object\",\"type\":\"Problem\",\"relationName\":\"ModuleProblemToProblem\"}],\"dbName\":null},\"Solve\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"problemId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"submitCount\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"readTimeMinutes\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"thinkTimeMinutes\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"codeTimeMinutes\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"debugTimeMinutes\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"notes\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"mood\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"onYourOwn\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"SolveToUser\"},{\"name\":\"problem\",\"kind\":\"object\",\"type\":\"Problem\",\"relationName\":\"ProblemToSolve\"}],\"dbName\":null},\"UserTrack\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"trackId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserToUserTrack\"},{\"name\":\"track\",\"kind\":\"object\",\"type\":\"Track\",\"relationName\":\"TrackToUserTrack\"}],\"dbName\":null},\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"Role\"},{\"name\":\"solves\",\"kind\":\"object\",\"type\":\"Solve\",\"relationName\":\"SolveToUser\"},{\"name\":\"userTracks\",\"kind\":\"object\",\"type\":\"UserTrack\",\"relationName\":\"UserToUserTrack\"},{\"name\":\"account\",\"kind\":\"object\",\"type\":\"Account\",\"relationName\":\"AccountToUser\"},{\"name\":\"sessions\",\"kind\":\"object\",\"type\":\"Session\",\"relationName\":\"SessionToUser\"}],\"dbName\":null},\"Account\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"provider\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"providerAccountId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"access_token\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"refresh_token\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expires_at\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"token_type\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"scope\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"id_token\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"session_state\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"AccountToUser\"}],\"dbName\":null},\"Session\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"sessionToken\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expires\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"SessionToUser\"}],\"dbName\":null},\"VerificationToken\":{\"fields\":[{\"name\":\"identifier\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"token\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expires\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),
