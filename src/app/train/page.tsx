@@ -4,6 +4,8 @@ import Problem from "../_components/problem";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 
+import "../../styles/globals.css"
+
 function Train() {
     const { data: problems, isLoading } = api.problem.all.useQuery();
     const { data: session } = useSession();
@@ -20,6 +22,10 @@ function Train() {
 
     return (
     <div className="page">
+        {/* Title */}
+        <h1 className="title">
+            TRAINING
+        </h1>
         {/* Choose Level */}
 
         {/* Choose Mode */}

@@ -90,3 +90,16 @@ input:disabled {
   animation-duration: 1.5s;
   animation-iteration-count: infinite;
 }
+
+.title {
+  display: inline-flex;
+  align-items: center;
+
+  color: #c7cbff;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+
+  padding-bottom: 0.25rem;
+  border-bottom: 2px solid #5b61ff;
+}
+
