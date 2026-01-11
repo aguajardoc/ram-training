@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import NavbarItem from "./navbar-item";
 import "../../styles/navbar.css"
 
-const items = ["Train", "Leaderboard", "Sign In", "Admin"];
+const items = ["Train", "Leaderboard", "Sign Out", "Admin"];
 
 function Navbar() {
     const navbarRef = useRef<HTMLElement | null>(null);
