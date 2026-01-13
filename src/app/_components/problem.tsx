@@ -5,6 +5,8 @@ import ProblemName from "./problem-name";
 import SolvedField from "./solved-field";
 import SelfcheckField from "./selfcheck-field";
 
+import '../../styles/problem.css'
+
 const fields = ["Reading", "Thinking", "Coding", "Debugging"];
 type ValueKey = "submissions" | "reading" | "thinking" | "coding" | "debugging";
 

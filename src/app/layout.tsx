@@ -1,4 +1,5 @@
 import "~/styles/globals.css";
+import "~/styles/problem.css";
 import BackgroundCanvas from "./_components/background-canvas";
 import Navbar from "./_components/navbar";
 

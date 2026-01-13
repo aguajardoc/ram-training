@@ -103,3 +103,42 @@ input:disabled {
   border-bottom: 2px solid #5b61ff;
 }
 
+.subtitle {
+  margin-top: 0.25rem;
+
+  color: #8f93c9;     /* same palette as title, just dimmer */
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+
+  opacity: 0.85;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  margin-top: 24px;
+  justify-content: center;
+
+  background: #1e1e3e;
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+
+  width: 50rem;
+  text-align: left;
+  height: 108px;
+
+  color: #6b70f5;
+}
+
+.edit-item {
+  max-width: 25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
