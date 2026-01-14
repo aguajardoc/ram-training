@@ -2,6 +2,7 @@
 import { auth } from "~/server/auth";
 import { db } from "~/server/db";
 import { redirect } from "next/navigation";
+import type { DateTime } from "next-auth/providers/kakao";
 
 export async function createProblem(formData: FormData) {
   const session = await auth();
@@ -42,4 +43,19 @@ export async function deleteProblem(id: string) {
   await db.problem.delete({ where: { id }});
 
   redirect("/admin");
+}
+
+export async function createModule(formData : FormData) {
+  const session = await auth();
+  if (!session || session.user.role !== "ADMIN") redirect("/");
+
+  const name = formData.get("name") as string;
+  const hidden = formData.get("hidden") === "on";
+  
+  const rawDate = formData.get("launch-date") as string;
+  const launchDate = new Date(rawDate)
+
+  await db.module.create({ data: {name, launchDate, hidden}});
+
+  redirect("/admin")
 }
