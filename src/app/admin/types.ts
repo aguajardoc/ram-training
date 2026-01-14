@@ -1,4 +1,4 @@
-import { Role } from "generated/prisma"
+import { Role, type Solve, type User } from "generated/prisma"
 
 export type UserRow = {
   id: string
@@ -8,4 +8,15 @@ export type UserRow = {
   _count: {
     solves: number
   }
+}
+
+export type SolveUser = {
+  user: User
+} & Solve;
+
+export type ProblemRow = {
+  id: string
+  name: string
+  url: string
+  solves: SolveUser[]
 }

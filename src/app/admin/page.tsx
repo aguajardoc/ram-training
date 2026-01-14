@@ -21,8 +21,16 @@ async function Admin() {
         db.track.findMany({ include: { levels: true }}),
         db.trackLevel.findMany({ include: { levelModules: true }}),
         db.module.findMany({ include: { moduleProblems: true }}),
-        db.problem.findMany(),
-    ])
+        db.problem.findMany({ 
+            include: { 
+                solves: {
+                    include: {
+                        user: true,
+                    },
+                },
+            }
+        }),
+    ]);
     
     return (
         <AdminDashboard

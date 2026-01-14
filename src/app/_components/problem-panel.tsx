@@ -3,9 +3,10 @@ import { createProblem } from "../admin/actions";
 import { useState } from "react";
 
 import AdminProblemDisplay from "./admin-problem-display";
+import type { ProblemRow } from "../admin/types";
 
 type Props = {
-    problems: Problem[],
+    problems: ProblemRow[],
 }
 
 function ProblemPanel({ problems } : Props) {
@@ -62,6 +63,10 @@ function ProblemPanel({ problems } : Props) {
                 onChange={e => setQ(e.target.value)}
             />
 
+            {/* Edit problem name */}
+            {/* Edit problem URL */}
+            {/* Delete problem */}
+            {/* View user solves per problem */}
             <div>
                 {filtered.map(p => (
                     <AdminProblemDisplay
@@ -69,13 +74,10 @@ function ProblemPanel({ problems } : Props) {
                         id={p.id}
                         name={p.name}
                         url={p.url}
+                        solves={p.solves}
                     />
                 ))}
             </div>
-            {/* Edit problem name */}
-            {/* Edit problem URL */}
-            {/* Delete problem */}
-            {/* View user solves per problem */}
         </>
     )
 }

@@ -7,14 +7,14 @@ import LevelPanel from "./level-panel";
 import ModulePanel from "./module-panel";
 import ProblemPanel from "./problem-panel";
 
-import type { UserRow } from "../admin/types";
+import type { ProblemRow, UserRow } from "../admin/types";
 
 type Props = {
-    users: UserRow[]
-    tracks: Track[]
-    trackLevels: TrackLevel[]
-    modules: Module[]
-    problems: Problem[]
+    users: UserRow[],
+    tracks: Track[],
+    trackLevels: TrackLevel[],
+    modules: Module[],
+    problems: ProblemRow[],
 };
 
 function AdminDashboard({ users, tracks, trackLevels, modules, problems } : Props) {
