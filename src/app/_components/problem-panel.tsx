@@ -1,4 +1,3 @@
-import type { Problem } from "generated/prisma";
 import { createProblem } from "../admin/actions";
 import { useState } from "react";
 
