@@ -6453,16 +6453,22 @@ export namespace Prisma {
   export type ModuleMinAggregateOutputType = {
     id: string | null
     name: string | null
+    launchDate: Date | null
+    hidden: boolean | null
   }
 
   export type ModuleMaxAggregateOutputType = {
     id: string | null
     name: string | null
+    launchDate: Date | null
+    hidden: boolean | null
   }
 
   export type ModuleCountAggregateOutputType = {
     id: number
     name: number
+    launchDate: number
+    hidden: number
     _all: number
   }
 
@@ -6470,16 +6476,22 @@ export namespace Prisma {
   export type ModuleMinAggregateInputType = {
     id?: true
     name?: true
+    launchDate?: true
+    hidden?: true
   }
 
   export type ModuleMaxAggregateInputType = {
     id?: true
     name?: true
+    launchDate?: true
+    hidden?: true
   }
 
   export type ModuleCountAggregateInputType = {
     id?: true
     name?: true
+    launchDate?: true
+    hidden?: true
     _all?: true
   }
 
@@ -6558,6 +6570,8 @@ export namespace Prisma {
   export type ModuleGroupByOutputType = {
     id: string
     name: string
+    launchDate: Date
+    hidden: boolean
     _count: ModuleCountAggregateOutputType | null
     _min: ModuleMinAggregateOutputType | null
     _max: ModuleMaxAggregateOutputType | null
@@ -6580,6 +6594,8 @@ export namespace Prisma {
   export type ModuleSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    launchDate?: boolean
+    hidden?: boolean
     moduleProblems?: boolean | Module$moduleProblemsArgs<ExtArgs>
     levelModules?: boolean | Module$levelModulesArgs<ExtArgs>
     _count?: boolean | ModuleCountOutputTypeDefaultArgs<ExtArgs>
@@ -6588,19 +6604,25 @@ export namespace Prisma {
   export type ModuleSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    launchDate?: boolean
+    hidden?: boolean
   }, ExtArgs["result"]["module"]>
 
   export type ModuleSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    launchDate?: boolean
+    hidden?: boolean
   }, ExtArgs["result"]["module"]>
 
   export type ModuleSelectScalar = {
     id?: boolean
     name?: boolean
+    launchDate?: boolean
+    hidden?: boolean
   }
 
-  export type ModuleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name", ExtArgs["result"]["module"]>
+  export type ModuleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "launchDate" | "hidden", ExtArgs["result"]["module"]>
   export type ModuleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     moduleProblems?: boolean | Module$moduleProblemsArgs<ExtArgs>
     levelModules?: boolean | Module$levelModulesArgs<ExtArgs>
@@ -6618,6 +6640,8 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
+      launchDate: Date
+      hidden: boolean
     }, ExtArgs["result"]["module"]>
     composites: {}
   }
@@ -7045,6 +7069,8 @@ export namespace Prisma {
   interface ModuleFieldRefs {
     readonly id: FieldRef<"Module", 'String'>
     readonly name: FieldRef<"Module", 'String'>
+    readonly launchDate: FieldRef<"Module", 'DateTime'>
+    readonly hidden: FieldRef<"Module", 'Boolean'>
   }
     
 
@@ -15268,7 +15294,9 @@ export namespace Prisma {
 
   export const ModuleScalarFieldEnum: {
     id: 'id',
-    name: 'name'
+    name: 'name',
+    launchDate: 'launchDate',
+    hidden: 'hidden'
   };
 
   export type ModuleScalarFieldEnum = (typeof ModuleScalarFieldEnum)[keyof typeof ModuleScalarFieldEnum]
@@ -15422,6 +15450,27 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'DateTime'
+   */
+  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+  /**
+   * Reference to a field of type 'DateTime[]'
+   */
+  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'ProblemType'
    */
   export type EnumProblemTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProblemType'>
@@ -15446,27 +15495,6 @@ export namespace Prisma {
    * Reference to a field of type 'ProblemDifficulty[]'
    */
   export type ListEnumProblemDifficultyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProblemDifficulty[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-  /**
-   * Reference to a field of type 'DateTime'
-   */
-  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
-    
-
-
-  /**
-   * Reference to a field of type 'DateTime[]'
-   */
-  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
     
 
 
@@ -15710,6 +15738,8 @@ export namespace Prisma {
     NOT?: ModuleWhereInput | ModuleWhereInput[]
     id?: StringFilter<"Module"> | string
     name?: StringFilter<"Module"> | string
+    launchDate?: DateTimeFilter<"Module"> | Date | string
+    hidden?: BoolFilter<"Module"> | boolean
     moduleProblems?: ModuleProblemListRelationFilter
     levelModules?: LevelModuleListRelationFilter
   }
@@ -15717,6 +15747,8 @@ export namespace Prisma {
   export type ModuleOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
+    launchDate?: SortOrder
+    hidden?: SortOrder
     moduleProblems?: ModuleProblemOrderByRelationAggregateInput
     levelModules?: LevelModuleOrderByRelationAggregateInput
   }
@@ -15727,6 +15759,8 @@ export namespace Prisma {
     OR?: ModuleWhereInput[]
     NOT?: ModuleWhereInput | ModuleWhereInput[]
     name?: StringFilter<"Module"> | string
+    launchDate?: DateTimeFilter<"Module"> | Date | string
+    hidden?: BoolFilter<"Module"> | boolean
     moduleProblems?: ModuleProblemListRelationFilter
     levelModules?: LevelModuleListRelationFilter
   }, "id">
@@ -15734,6 +15768,8 @@ export namespace Prisma {
   export type ModuleOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
+    launchDate?: SortOrder
+    hidden?: SortOrder
     _count?: ModuleCountOrderByAggregateInput
     _max?: ModuleMaxOrderByAggregateInput
     _min?: ModuleMinOrderByAggregateInput
@@ -15745,6 +15781,8 @@ export namespace Prisma {
     NOT?: ModuleScalarWhereWithAggregatesInput | ModuleScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Module"> | string
     name?: StringWithAggregatesFilter<"Module"> | string
+    launchDate?: DateTimeWithAggregatesFilter<"Module"> | Date | string
+    hidden?: BoolWithAggregatesFilter<"Module"> | boolean
   }
 
   export type ModuleProblemWhereInput = {
@@ -16416,6 +16454,8 @@ export namespace Prisma {
   export type ModuleCreateInput = {
     id?: string
     name: string
+    launchDate: Date | string
+    hidden?: boolean
     moduleProblems?: ModuleProblemCreateNestedManyWithoutModuleInput
     levelModules?: LevelModuleCreateNestedManyWithoutModuleInput
   }
@@ -16423,6 +16463,8 @@ export namespace Prisma {
   export type ModuleUncheckedCreateInput = {
     id?: string
     name: string
+    launchDate: Date | string
+    hidden?: boolean
     moduleProblems?: ModuleProblemUncheckedCreateNestedManyWithoutModuleInput
     levelModules?: LevelModuleUncheckedCreateNestedManyWithoutModuleInput
   }
@@ -16430,6 +16472,8 @@ export namespace Prisma {
   export type ModuleUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    launchDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    hidden?: BoolFieldUpdateOperationsInput | boolean
     moduleProblems?: ModuleProblemUpdateManyWithoutModuleNestedInput
     levelModules?: LevelModuleUpdateManyWithoutModuleNestedInput
   }
@@ -16437,6 +16481,8 @@ export namespace Prisma {
   export type ModuleUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    launchDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    hidden?: BoolFieldUpdateOperationsInput | boolean
     moduleProblems?: ModuleProblemUncheckedUpdateManyWithoutModuleNestedInput
     levelModules?: LevelModuleUncheckedUpdateManyWithoutModuleNestedInput
   }
@@ -16444,16 +16490,22 @@ export namespace Prisma {
   export type ModuleCreateManyInput = {
     id?: string
     name: string
+    launchDate: Date | string
+    hidden?: boolean
   }
 
   export type ModuleUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    launchDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    hidden?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ModuleUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    launchDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    hidden?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ModuleProblemCreateInput = {
@@ -17173,19 +17225,63 @@ export namespace Prisma {
     order?: SortOrder
   }
 
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type ModuleCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    launchDate?: SortOrder
+    hidden?: SortOrder
   }
 
   export type ModuleMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    launchDate?: SortOrder
+    hidden?: SortOrder
   }
 
   export type ModuleMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    launchDate?: SortOrder
+    hidden?: SortOrder
+  }
+
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type EnumProblemTypeFilter<$PrismaModel = never> = {
@@ -17269,22 +17365,6 @@ export namespace Prisma {
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     mode?: QueryMode
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
-  export type DateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type UserScalarRelationFilter = {
@@ -17382,28 +17462,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
-  }
-
-  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type UserTrackUserIdTrackIdCompoundUniqueInput = {
@@ -17920,6 +17978,14 @@ export namespace Prisma {
     connect?: LevelModuleWhereUniqueInput | LevelModuleWhereUniqueInput[]
   }
 
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
   export type ModuleProblemUpdateManyWithoutModuleNestedInput = {
     create?: XOR<ModuleProblemCreateWithoutModuleInput, ModuleProblemUncheckedCreateWithoutModuleInput> | ModuleProblemCreateWithoutModuleInput[] | ModuleProblemUncheckedCreateWithoutModuleInput[]
     connectOrCreate?: ModuleProblemCreateOrConnectWithoutModuleInput | ModuleProblemCreateOrConnectWithoutModuleInput[]
@@ -18026,14 +18092,6 @@ export namespace Prisma {
 
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
-  }
-
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
-  }
-
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
   }
 
   export type UserUpdateOneRequiredWithoutSolvesNestedInput = {
@@ -18357,6 +18415,44 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type NestedEnumProblemTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.ProblemType | EnumProblemTypeFieldRefInput<$PrismaModel>
     in?: $Enums.ProblemType[] | ListEnumProblemTypeFieldRefInput<$PrismaModel>
@@ -18405,22 +18501,6 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
-  export type NestedDateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -18447,28 +18527,6 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
-  }
-
-  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type NestedEnumRoleFilter<$PrismaModel = never> = {
@@ -18852,12 +18910,16 @@ export namespace Prisma {
   export type ModuleCreateWithoutLevelModulesInput = {
     id?: string
     name: string
+    launchDate: Date | string
+    hidden?: boolean
     moduleProblems?: ModuleProblemCreateNestedManyWithoutModuleInput
   }
 
   export type ModuleUncheckedCreateWithoutLevelModulesInput = {
     id?: string
     name: string
+    launchDate: Date | string
+    hidden?: boolean
     moduleProblems?: ModuleProblemUncheckedCreateNestedManyWithoutModuleInput
   }
 
@@ -18905,12 +18967,16 @@ export namespace Prisma {
   export type ModuleUpdateWithoutLevelModulesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    launchDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    hidden?: BoolFieldUpdateOperationsInput | boolean
     moduleProblems?: ModuleProblemUpdateManyWithoutModuleNestedInput
   }
 
   export type ModuleUncheckedUpdateWithoutLevelModulesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    launchDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    hidden?: BoolFieldUpdateOperationsInput | boolean
     moduleProblems?: ModuleProblemUncheckedUpdateManyWithoutModuleNestedInput
   }
 
@@ -18995,12 +19061,16 @@ export namespace Prisma {
   export type ModuleCreateWithoutModuleProblemsInput = {
     id?: string
     name: string
+    launchDate: Date | string
+    hidden?: boolean
     levelModules?: LevelModuleCreateNestedManyWithoutModuleInput
   }
 
   export type ModuleUncheckedCreateWithoutModuleProblemsInput = {
     id?: string
     name: string
+    launchDate: Date | string
+    hidden?: boolean
     levelModules?: LevelModuleUncheckedCreateNestedManyWithoutModuleInput
   }
 
@@ -19042,12 +19112,16 @@ export namespace Prisma {
   export type ModuleUpdateWithoutModuleProblemsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    launchDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    hidden?: BoolFieldUpdateOperationsInput | boolean
     levelModules?: LevelModuleUpdateManyWithoutModuleNestedInput
   }
 
   export type ModuleUncheckedUpdateWithoutModuleProblemsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    launchDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    hidden?: BoolFieldUpdateOperationsInput | boolean
     levelModules?: LevelModuleUncheckedUpdateManyWithoutModuleNestedInput
   }
 

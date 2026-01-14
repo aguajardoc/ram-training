@@ -72,8 +72,10 @@ model LevelModule {
 }
 
 model Module {
-  id   String @id @default(cuid())
-  name String
+  id         String   @id @default(cuid())
+  name       String
+  launchDate DateTime
+  hidden     Boolean  @default(false)
 
   moduleProblems ModuleProblem[]
   levelModules   LevelModule[]

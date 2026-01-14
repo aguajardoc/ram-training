@@ -148,7 +148,9 @@ exports.Prisma.LevelModuleScalarFieldEnum = {
 
 exports.Prisma.ModuleScalarFieldEnum = {
   id: 'id',
-  name: 'name'
+  name: 'name',
+  launchDate: 'launchDate',
+  hidden: 'hidden'
 };
 
 exports.Prisma.ModuleProblemScalarFieldEnum = {
