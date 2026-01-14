@@ -146,3 +146,6 @@ input:disabled {
   text-overflow: ellipsis;
 }
 
+.text {
+  color: #6b70f5
+}
