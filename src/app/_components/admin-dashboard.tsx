@@ -7,13 +7,13 @@ import LevelPanel from "./level-panel";
 import ModulePanel from "./module-panel";
 import ProblemPanel from "./problem-panel";
 
-import type { ProblemRow, UserRow } from "../admin/types";
+import type { ModuleRow, ProblemRow, UserRow } from "../admin/types";
 
 type Props = {
     users: UserRow[],
     tracks: Track[],
     trackLevels: TrackLevel[],
-    modules: Module[],
+    modules: ModuleRow[],
     problems: ProblemRow[],
 };
 

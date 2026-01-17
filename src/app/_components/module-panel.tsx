@@ -1,9 +1,10 @@
-import type { Module } from "generated/prisma";
 import { useState } from "react";
 import { createModule } from "../admin/actions";
+import AdminModuleDisplay from "./admin-module-display";
+import type { ModuleRow } from "../admin/types";
 
 type Props = {
-    modules: Module[],
+    modules: ModuleRow[],
 };
 
 function ModulePanel({ modules } : Props) {
@@ -73,6 +74,15 @@ function ModulePanel({ modules } : Props) {
             {/* Rename module */}
             {/* Delete module */}
             {/* Hide module */}
+            {filtered.map(m => (
+                <AdminModuleDisplay
+                    key={m.id}
+                    name={m.name}
+                    launchDate={m.launchDate}
+                    hidden={m.hidden}
+                    moduleProblems={m.moduleProblems}
+                />
+            ))}
         </>
     )
 }

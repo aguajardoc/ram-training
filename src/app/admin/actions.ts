@@ -45,6 +45,15 @@ export async function deleteProblem(id: string) {
   redirect("/admin");
 }
 
+export async function deleteUser(id: string) {
+  const session = await auth();
+  if (!session || session.user.role !== "ADMIN") redirect("/");
+
+  await db.user.delete({ where: { id }});
+
+  redirect("/admin");
+}
+
 export async function createModule(formData : FormData) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");

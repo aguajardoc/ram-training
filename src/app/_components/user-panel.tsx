@@ -2,6 +2,8 @@ import type { UserRow } from "../admin/types";
 import "../../styles/globals.css"
 import { useState } from "react";
 
+import { deleteUser } from "../admin/actions";
+
 type Props = {
     users: UserRow[],
 };
@@ -19,7 +21,7 @@ function UserPanel({ users } : Props) {
         normalize(u.name ?? "").includes(qn)
         );
     })
-    .slice(0, 5);
+    .slice(0, 3);
 
     return (
         <>
@@ -31,31 +33,34 @@ function UserPanel({ users } : Props) {
                 Search Users
             </h2>
 
-            {/* USER ACTIONS */}
+            {/* List Users */}
 
-                {/* List Users */}
+            {/* Search by email/name */}
+            <input
+                type="text"
+                placeholder="search users..."
+                value={q}
+                onChange={e => setQ(e.target.value)}
+            />
 
-                {/* Search by email/name */}
-                <input
-                    type="text"
-                    placeholder="search users..."
-                    value={q}
-                    onChange={e => setQ(e.target.value)}
-                />
-
-                {filtered.map(u => (
+            
+            {filtered.map(u => (
+                <>
+                    {/* Show Solve Count */}
                     <div className="text" key={u.id}>
-                        {u.name}
+                        {u.name ?? "anonymous"} has {u._count.solves} solves.
                     </div>
-                ))}
-                    {/* Solve Count */}
-                    {/* Last Login */}
-                    {/* Recent ACs */}
-                
-                    {/* Nuke user sessions */}
-                
+
                     {/* Delete user */}
-                {/* View Solves per user */}
+                    <button onClick={() => {
+                        if (!confirm("Delete this user?")) return;
+                        deleteUser(u.id);
+                        }}
+                    >
+                    Delete
+                    </button>
+                </>
+            ))}
         </>
     )
 }

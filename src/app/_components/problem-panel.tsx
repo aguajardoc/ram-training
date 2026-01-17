@@ -24,7 +24,6 @@ function ProblemPanel({ problems } : Props) {
     })
     .slice(0, 5);
 
-
     return(
         <>
             <h1 className="title">
@@ -62,10 +61,6 @@ function ProblemPanel({ problems } : Props) {
                 onChange={e => setQ(e.target.value)}
             />
 
-            {/* Edit problem name */}
-            {/* Edit problem URL */}
-            {/* Delete problem */}
-            {/* View user solves per problem */}
             <div>
                 {filtered.map(p => (
                     <AdminProblemDisplay
