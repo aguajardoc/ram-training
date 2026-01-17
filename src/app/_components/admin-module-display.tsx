@@ -3,6 +3,7 @@ import { useState } from "react";
 import { updateModule } from "../admin/actions";
 import { deleteModule } from "../admin/actions";
 import { createModuleProblem } from "../admin/actions";
+import { duplicateModule } from "../admin/actions";
 import AdminModuleProblemDisplay from "./admin-module-problem-display";
 import type { Problem } from "generated/prisma";
 
@@ -54,6 +55,14 @@ function AdminModuleDisplay({ id, name, launchDate, hidden, moduleProblems, prob
                         deleteModule(id);
                     }}>
                         Delete
+                    </button>
+
+                    {/* Duplicate module */}
+                    <button onClick={() => {
+                        if(!confirm("Duplicate this module?")) return
+                        duplicateModule(id);
+                    }}>
+                        Duplicate
                     </button>
 
                     {/* Settings per Problem */}

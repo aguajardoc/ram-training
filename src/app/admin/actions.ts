@@ -153,3 +153,35 @@ export async function createModule(formData : FormData) {
 
   redirect("/admin")
 }
+
+export async function duplicateModule(id : string) {
+  const session = await auth();
+  if (!session || session.user.role !== "ADMIN") redirect("/");
+
+  const original = await db.module.findUnique({
+      where: { id },
+      include: { moduleProblems: true },
+    });
+
+    if (!original) throw new Error("Module not found");
+
+    const { name, launchDate, hidden, moduleProblems } = original;
+
+    await db.module.create({
+      data: {
+        name: `${name} (Copy)`,
+        launchDate,
+        hidden,
+        moduleProblems: {
+          create: moduleProblems.map(p => ({
+            problemId: p.problemId,
+            order: p.order,
+            problemType: p.problemType,
+            difficulty: p.difficulty,
+          })),
+        },
+      },
+    });
+
+    redirect("/admin");
+}

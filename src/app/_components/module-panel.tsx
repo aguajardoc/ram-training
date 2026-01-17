@@ -50,7 +50,6 @@ function ModulePanel({ modules, problems } : Props) {
                 <input
                     type="checkbox"
                     name="hidden"
-                    required
                 />
 
                 <button type="submit">Create Module</button>
@@ -67,15 +66,6 @@ function ModulePanel({ modules, problems } : Props) {
                 onChange={e => setQ(e.target.value)}
             />
                 
-            {/* Add problems to module */}
-            {/* Remove problems from module */}
-            {/* Hide problems from module */}
-            {/* Edit difficulty parameters per problem */}
-            {/* Reorder problems */}
-            {/* Set launch date */}
-            {/* Rename module */}
-            {/* Delete module */}
-            {/* Hide module */}
             {filtered.map(m => (
                 <AdminModuleDisplay
                     key={m.id}
