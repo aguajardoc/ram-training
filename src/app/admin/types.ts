@@ -1,4 +1,4 @@
-import { Role, type ModuleProblem, type Solve, type User } from "generated/prisma"
+import { Role, type ModuleProblem, type Problem, type Solve, type User } from "generated/prisma"
 
 export type UserRow = {
   id: string
@@ -26,5 +26,9 @@ export type ModuleRow = {
   name: string
   launchDate: Date
   hidden: Boolean
-  moduleProblems: ModuleProblem[]
+  moduleProblems: ModuleProblemRow[]
+};
+
+export type ModuleProblemRow = ModuleProblem & {
+  problem: Problem,
 }

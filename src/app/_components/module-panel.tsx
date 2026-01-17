@@ -2,12 +2,14 @@ import { useState } from "react";
 import { createModule } from "../admin/actions";
 import AdminModuleDisplay from "./admin-module-display";
 import type { ModuleRow } from "../admin/types";
+import type { Problem } from "generated/prisma";
 
 type Props = {
     modules: ModuleRow[],
+    problems: Problem[],
 };
 
-function ModulePanel({ modules } : Props) {
+function ModulePanel({ modules, problems } : Props) {
     const [q, setQ] = useState("");
     
     const normalize = (s: string) =>
@@ -77,10 +79,12 @@ function ModulePanel({ modules } : Props) {
             {filtered.map(m => (
                 <AdminModuleDisplay
                     key={m.id}
+                    id={m.id}
                     name={m.name}
                     launchDate={m.launchDate}
                     hidden={m.hidden}
                     moduleProblems={m.moduleProblems}
+                    problems={problems}
                 />
             ))}
         </>

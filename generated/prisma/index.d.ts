@@ -7531,14 +7531,25 @@ export namespace Prisma {
 
   export type AggregateModuleProblem = {
     _count: ModuleProblemCountAggregateOutputType | null
+    _avg: ModuleProblemAvgAggregateOutputType | null
+    _sum: ModuleProblemSumAggregateOutputType | null
     _min: ModuleProblemMinAggregateOutputType | null
     _max: ModuleProblemMaxAggregateOutputType | null
+  }
+
+  export type ModuleProblemAvgAggregateOutputType = {
+    order: number | null
+  }
+
+  export type ModuleProblemSumAggregateOutputType = {
+    order: number | null
   }
 
   export type ModuleProblemMinAggregateOutputType = {
     id: string | null
     moduleId: string | null
     problemId: string | null
+    order: number | null
     problemType: $Enums.ProblemType | null
     difficulty: $Enums.ProblemDifficulty | null
   }
@@ -7547,6 +7558,7 @@ export namespace Prisma {
     id: string | null
     moduleId: string | null
     problemId: string | null
+    order: number | null
     problemType: $Enums.ProblemType | null
     difficulty: $Enums.ProblemDifficulty | null
   }
@@ -7555,16 +7567,26 @@ export namespace Prisma {
     id: number
     moduleId: number
     problemId: number
+    order: number
     problemType: number
     difficulty: number
     _all: number
   }
 
 
+  export type ModuleProblemAvgAggregateInputType = {
+    order?: true
+  }
+
+  export type ModuleProblemSumAggregateInputType = {
+    order?: true
+  }
+
   export type ModuleProblemMinAggregateInputType = {
     id?: true
     moduleId?: true
     problemId?: true
+    order?: true
     problemType?: true
     difficulty?: true
   }
@@ -7573,6 +7595,7 @@ export namespace Prisma {
     id?: true
     moduleId?: true
     problemId?: true
+    order?: true
     problemType?: true
     difficulty?: true
   }
@@ -7581,6 +7604,7 @@ export namespace Prisma {
     id?: true
     moduleId?: true
     problemId?: true
+    order?: true
     problemType?: true
     difficulty?: true
     _all?: true
@@ -7624,6 +7648,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: ModuleProblemAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ModuleProblemSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: ModuleProblemMinAggregateInputType
@@ -7654,6 +7690,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: ModuleProblemCountAggregateInputType | true
+    _avg?: ModuleProblemAvgAggregateInputType
+    _sum?: ModuleProblemSumAggregateInputType
     _min?: ModuleProblemMinAggregateInputType
     _max?: ModuleProblemMaxAggregateInputType
   }
@@ -7662,9 +7700,12 @@ export namespace Prisma {
     id: string
     moduleId: string
     problemId: string
+    order: number
     problemType: $Enums.ProblemType
     difficulty: $Enums.ProblemDifficulty
     _count: ModuleProblemCountAggregateOutputType | null
+    _avg: ModuleProblemAvgAggregateOutputType | null
+    _sum: ModuleProblemSumAggregateOutputType | null
     _min: ModuleProblemMinAggregateOutputType | null
     _max: ModuleProblemMaxAggregateOutputType | null
   }
@@ -7687,6 +7728,7 @@ export namespace Prisma {
     id?: boolean
     moduleId?: boolean
     problemId?: boolean
+    order?: boolean
     problemType?: boolean
     difficulty?: boolean
     module?: boolean | ModuleDefaultArgs<ExtArgs>
@@ -7697,6 +7739,7 @@ export namespace Prisma {
     id?: boolean
     moduleId?: boolean
     problemId?: boolean
+    order?: boolean
     problemType?: boolean
     difficulty?: boolean
     module?: boolean | ModuleDefaultArgs<ExtArgs>
@@ -7707,6 +7750,7 @@ export namespace Prisma {
     id?: boolean
     moduleId?: boolean
     problemId?: boolean
+    order?: boolean
     problemType?: boolean
     difficulty?: boolean
     module?: boolean | ModuleDefaultArgs<ExtArgs>
@@ -7717,11 +7761,12 @@ export namespace Prisma {
     id?: boolean
     moduleId?: boolean
     problemId?: boolean
+    order?: boolean
     problemType?: boolean
     difficulty?: boolean
   }
 
-  export type ModuleProblemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "moduleId" | "problemId" | "problemType" | "difficulty", ExtArgs["result"]["moduleProblem"]>
+  export type ModuleProblemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "moduleId" | "problemId" | "order" | "problemType" | "difficulty", ExtArgs["result"]["moduleProblem"]>
   export type ModuleProblemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     module?: boolean | ModuleDefaultArgs<ExtArgs>
     problem?: boolean | ProblemDefaultArgs<ExtArgs>
@@ -7745,6 +7790,7 @@ export namespace Prisma {
       id: string
       moduleId: string
       problemId: string
+      order: number
       problemType: $Enums.ProblemType
       difficulty: $Enums.ProblemDifficulty
     }, ExtArgs["result"]["moduleProblem"]>
@@ -8175,6 +8221,7 @@ export namespace Prisma {
     readonly id: FieldRef<"ModuleProblem", 'String'>
     readonly moduleId: FieldRef<"ModuleProblem", 'String'>
     readonly problemId: FieldRef<"ModuleProblem", 'String'>
+    readonly order: FieldRef<"ModuleProblem", 'Int'>
     readonly problemType: FieldRef<"ModuleProblem", 'ProblemType'>
     readonly difficulty: FieldRef<"ModuleProblem", 'ProblemDifficulty'>
   }
@@ -15306,6 +15353,7 @@ export namespace Prisma {
     id: 'id',
     moduleId: 'moduleId',
     problemId: 'problemId',
+    order: 'order',
     problemType: 'problemType',
     difficulty: 'difficulty'
   };
@@ -15792,6 +15840,7 @@ export namespace Prisma {
     id?: StringFilter<"ModuleProblem"> | string
     moduleId?: StringFilter<"ModuleProblem"> | string
     problemId?: StringFilter<"ModuleProblem"> | string
+    order?: IntFilter<"ModuleProblem"> | number
     problemType?: EnumProblemTypeFilter<"ModuleProblem"> | $Enums.ProblemType
     difficulty?: EnumProblemDifficultyFilter<"ModuleProblem"> | $Enums.ProblemDifficulty
     module?: XOR<ModuleScalarRelationFilter, ModuleWhereInput>
@@ -15802,6 +15851,7 @@ export namespace Prisma {
     id?: SortOrder
     moduleId?: SortOrder
     problemId?: SortOrder
+    order?: SortOrder
     problemType?: SortOrder
     difficulty?: SortOrder
     module?: ModuleOrderByWithRelationInput
@@ -15816,6 +15866,7 @@ export namespace Prisma {
     NOT?: ModuleProblemWhereInput | ModuleProblemWhereInput[]
     moduleId?: StringFilter<"ModuleProblem"> | string
     problemId?: StringFilter<"ModuleProblem"> | string
+    order?: IntFilter<"ModuleProblem"> | number
     problemType?: EnumProblemTypeFilter<"ModuleProblem"> | $Enums.ProblemType
     difficulty?: EnumProblemDifficultyFilter<"ModuleProblem"> | $Enums.ProblemDifficulty
     module?: XOR<ModuleScalarRelationFilter, ModuleWhereInput>
@@ -15826,11 +15877,14 @@ export namespace Prisma {
     id?: SortOrder
     moduleId?: SortOrder
     problemId?: SortOrder
+    order?: SortOrder
     problemType?: SortOrder
     difficulty?: SortOrder
     _count?: ModuleProblemCountOrderByAggregateInput
+    _avg?: ModuleProblemAvgOrderByAggregateInput
     _max?: ModuleProblemMaxOrderByAggregateInput
     _min?: ModuleProblemMinOrderByAggregateInput
+    _sum?: ModuleProblemSumOrderByAggregateInput
   }
 
   export type ModuleProblemScalarWhereWithAggregatesInput = {
@@ -15840,6 +15894,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"ModuleProblem"> | string
     moduleId?: StringWithAggregatesFilter<"ModuleProblem"> | string
     problemId?: StringWithAggregatesFilter<"ModuleProblem"> | string
+    order?: IntWithAggregatesFilter<"ModuleProblem"> | number
     problemType?: EnumProblemTypeWithAggregatesFilter<"ModuleProblem"> | $Enums.ProblemType
     difficulty?: EnumProblemDifficultyWithAggregatesFilter<"ModuleProblem"> | $Enums.ProblemDifficulty
   }
@@ -16510,6 +16565,7 @@ export namespace Prisma {
 
   export type ModuleProblemCreateInput = {
     id?: string
+    order: number
     problemType: $Enums.ProblemType
     difficulty: $Enums.ProblemDifficulty
     module: ModuleCreateNestedOneWithoutModuleProblemsInput
@@ -16520,12 +16576,14 @@ export namespace Prisma {
     id?: string
     moduleId: string
     problemId: string
+    order: number
     problemType: $Enums.ProblemType
     difficulty: $Enums.ProblemDifficulty
   }
 
   export type ModuleProblemUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
     problemType?: EnumProblemTypeFieldUpdateOperationsInput | $Enums.ProblemType
     difficulty?: EnumProblemDifficultyFieldUpdateOperationsInput | $Enums.ProblemDifficulty
     module?: ModuleUpdateOneRequiredWithoutModuleProblemsNestedInput
@@ -16536,6 +16594,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     moduleId?: StringFieldUpdateOperationsInput | string
     problemId?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
     problemType?: EnumProblemTypeFieldUpdateOperationsInput | $Enums.ProblemType
     difficulty?: EnumProblemDifficultyFieldUpdateOperationsInput | $Enums.ProblemDifficulty
   }
@@ -16544,12 +16603,14 @@ export namespace Prisma {
     id?: string
     moduleId: string
     problemId: string
+    order: number
     problemType: $Enums.ProblemType
     difficulty: $Enums.ProblemDifficulty
   }
 
   export type ModuleProblemUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
     problemType?: EnumProblemTypeFieldUpdateOperationsInput | $Enums.ProblemType
     difficulty?: EnumProblemDifficultyFieldUpdateOperationsInput | $Enums.ProblemDifficulty
   }
@@ -16558,6 +16619,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     moduleId?: StringFieldUpdateOperationsInput | string
     problemId?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
     problemType?: EnumProblemTypeFieldUpdateOperationsInput | $Enums.ProblemType
     difficulty?: EnumProblemDifficultyFieldUpdateOperationsInput | $Enums.ProblemDifficulty
   }
@@ -17312,14 +17374,20 @@ export namespace Prisma {
     id?: SortOrder
     moduleId?: SortOrder
     problemId?: SortOrder
+    order?: SortOrder
     problemType?: SortOrder
     difficulty?: SortOrder
+  }
+
+  export type ModuleProblemAvgOrderByAggregateInput = {
+    order?: SortOrder
   }
 
   export type ModuleProblemMaxOrderByAggregateInput = {
     id?: SortOrder
     moduleId?: SortOrder
     problemId?: SortOrder
+    order?: SortOrder
     problemType?: SortOrder
     difficulty?: SortOrder
   }
@@ -17328,8 +17396,13 @@ export namespace Prisma {
     id?: SortOrder
     moduleId?: SortOrder
     problemId?: SortOrder
+    order?: SortOrder
     problemType?: SortOrder
     difficulty?: SortOrder
+  }
+
+  export type ModuleProblemSumOrderByAggregateInput = {
+    order?: SortOrder
   }
 
   export type EnumProblemTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -18615,6 +18688,7 @@ export namespace Prisma {
 
   export type ModuleProblemCreateWithoutProblemInput = {
     id?: string
+    order: number
     problemType: $Enums.ProblemType
     difficulty: $Enums.ProblemDifficulty
     module: ModuleCreateNestedOneWithoutModuleProblemsInput
@@ -18623,6 +18697,7 @@ export namespace Prisma {
   export type ModuleProblemUncheckedCreateWithoutProblemInput = {
     id?: string
     moduleId: string
+    order: number
     problemType: $Enums.ProblemType
     difficulty: $Enums.ProblemDifficulty
   }
@@ -18695,6 +18770,7 @@ export namespace Prisma {
     id?: StringFilter<"ModuleProblem"> | string
     moduleId?: StringFilter<"ModuleProblem"> | string
     problemId?: StringFilter<"ModuleProblem"> | string
+    order?: IntFilter<"ModuleProblem"> | number
     problemType?: EnumProblemTypeFilter<"ModuleProblem"> | $Enums.ProblemType
     difficulty?: EnumProblemDifficultyFilter<"ModuleProblem"> | $Enums.ProblemDifficulty
   }
@@ -18982,6 +19058,7 @@ export namespace Prisma {
 
   export type ModuleProblemCreateWithoutModuleInput = {
     id?: string
+    order: number
     problemType: $Enums.ProblemType
     difficulty: $Enums.ProblemDifficulty
     problem: ProblemCreateNestedOneWithoutModuleProblemsInput
@@ -18990,6 +19067,7 @@ export namespace Prisma {
   export type ModuleProblemUncheckedCreateWithoutModuleInput = {
     id?: string
     problemId: string
+    order: number
     problemType: $Enums.ProblemType
     difficulty: $Enums.ProblemDifficulty
   }
@@ -19724,6 +19802,7 @@ export namespace Prisma {
   export type ModuleProblemCreateManyProblemInput = {
     id?: string
     moduleId: string
+    order: number
     problemType: $Enums.ProblemType
     difficulty: $Enums.ProblemDifficulty
   }
@@ -19775,6 +19854,7 @@ export namespace Prisma {
 
   export type ModuleProblemUpdateWithoutProblemInput = {
     id?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
     problemType?: EnumProblemTypeFieldUpdateOperationsInput | $Enums.ProblemType
     difficulty?: EnumProblemDifficultyFieldUpdateOperationsInput | $Enums.ProblemDifficulty
     module?: ModuleUpdateOneRequiredWithoutModuleProblemsNestedInput
@@ -19783,6 +19863,7 @@ export namespace Prisma {
   export type ModuleProblemUncheckedUpdateWithoutProblemInput = {
     id?: StringFieldUpdateOperationsInput | string
     moduleId?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
     problemType?: EnumProblemTypeFieldUpdateOperationsInput | $Enums.ProblemType
     difficulty?: EnumProblemDifficultyFieldUpdateOperationsInput | $Enums.ProblemDifficulty
   }
@@ -19790,6 +19871,7 @@ export namespace Prisma {
   export type ModuleProblemUncheckedUpdateManyWithoutProblemInput = {
     id?: StringFieldUpdateOperationsInput | string
     moduleId?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
     problemType?: EnumProblemTypeFieldUpdateOperationsInput | $Enums.ProblemType
     difficulty?: EnumProblemDifficultyFieldUpdateOperationsInput | $Enums.ProblemDifficulty
   }
@@ -19875,6 +19957,7 @@ export namespace Prisma {
   export type ModuleProblemCreateManyModuleInput = {
     id?: string
     problemId: string
+    order: number
     problemType: $Enums.ProblemType
     difficulty: $Enums.ProblemDifficulty
   }
@@ -19887,6 +19970,7 @@ export namespace Prisma {
 
   export type ModuleProblemUpdateWithoutModuleInput = {
     id?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
     problemType?: EnumProblemTypeFieldUpdateOperationsInput | $Enums.ProblemType
     difficulty?: EnumProblemDifficultyFieldUpdateOperationsInput | $Enums.ProblemDifficulty
     problem?: ProblemUpdateOneRequiredWithoutModuleProblemsNestedInput
@@ -19895,6 +19979,7 @@ export namespace Prisma {
   export type ModuleProblemUncheckedUpdateWithoutModuleInput = {
     id?: StringFieldUpdateOperationsInput | string
     problemId?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
     problemType?: EnumProblemTypeFieldUpdateOperationsInput | $Enums.ProblemType
     difficulty?: EnumProblemDifficultyFieldUpdateOperationsInput | $Enums.ProblemDifficulty
   }
@@ -19902,6 +19987,7 @@ export namespace Prisma {
   export type ModuleProblemUncheckedUpdateManyWithoutModuleInput = {
     id?: StringFieldUpdateOperationsInput | string
     problemId?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
     problemType?: EnumProblemTypeFieldUpdateOperationsInput | $Enums.ProblemType
     difficulty?: EnumProblemDifficultyFieldUpdateOperationsInput | $Enums.ProblemDifficulty
   }

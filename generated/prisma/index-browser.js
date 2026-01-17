@@ -157,6 +157,7 @@ exports.Prisma.ModuleProblemScalarFieldEnum = {
   id: 'id',
   moduleId: 'moduleId',
   problemId: 'problemId',
+  order: 'order',
   problemType: 'problemType',
   difficulty: 'difficulty'
 };

@@ -23,7 +23,7 @@ function AdminDashboard({ users, tracks, trackLevels, modules, problems } : Prop
             <UserPanel users={users}/>
             <TrackPanel tracks={tracks}/>
             <LevelPanel levels={trackLevels}/>
-            <ModulePanel modules={modules}/>
+            <ModulePanel modules={modules} problems={problems}/>
             <ProblemPanel problems={problems}/>
         </div>
     )

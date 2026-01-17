@@ -20,7 +20,15 @@ async function Admin() {
         }),
         db.track.findMany({ include: { levels: true }}),
         db.trackLevel.findMany({ include: { levelModules: true }}),
-        db.module.findMany({ include: { moduleProblems: true }}),
+        db.module.findMany({ 
+            include: { 
+                moduleProblems: {
+                    include: {
+                        problem: true,
+                    }
+                } 
+            }
+        }),
         db.problem.findMany({ 
             include: { 
                 solves: {

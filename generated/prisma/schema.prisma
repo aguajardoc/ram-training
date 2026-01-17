@@ -86,6 +86,7 @@ model ModuleProblem {
   id          String            @id @default(cuid())
   moduleId    String
   problemId   String
+  order       Int
   problemType ProblemType
   difficulty  ProblemDifficulty
 

@@ -45,9 +45,9 @@ function UserPanel({ users } : Props) {
 
             
             {filtered.map(u => (
-                <>
+                <div key={u.id}>
                     {/* Show Solve Count */}
-                    <div className="text" key={u.id}>
+                    <div className="text">
                         {u.name ?? "anonymous"} has {u._count.solves} solves.
                     </div>
 
@@ -59,7 +59,7 @@ function UserPanel({ users } : Props) {
                     >
                     Delete
                     </button>
-                </>
+                </div>
             ))}
         </>
     )

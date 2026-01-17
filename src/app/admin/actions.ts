@@ -3,6 +3,7 @@ import { auth } from "~/server/auth";
 import { db } from "~/server/db";
 import { redirect } from "next/navigation";
 import type { DateTime } from "next-auth/providers/kakao";
+import type { ProblemDifficulty, ProblemType } from "generated/prisma";
 
 export async function createProblem(formData: FormData) {
   const session = await auth();
@@ -17,6 +18,36 @@ export async function createProblem(formData: FormData) {
 
   redirect("/admin");
 }
+
+export async function createModuleProblem(formData: FormData) {
+  const session = await auth();
+  if (!session || session.user.role !== "ADMIN") redirect("/");
+
+  const moduleId = formData.get("moduleId") as string;
+  const problemId = formData.get("problemId") as string;
+  const problemType = formData.get("problemType") as ProblemType;
+  const difficulty = formData.get("difficulty") as ProblemDifficulty;
+
+  if (!moduleId || !problemId || !problemType || !difficulty) return;
+
+  const maxOrder = await db.moduleProblem.aggregate({
+    where: { moduleId },
+    _max: { order: true },
+  });
+
+  await db.moduleProblem.create({
+    data: {
+      moduleId,
+      problemId,
+      problemType,
+      difficulty,
+      order: (maxOrder._max.order ?? 0) + 1,
+    },
+  });
+
+  redirect("/admin");
+}
+
 
 export async function updateProblem(formData: FormData) {
   const session = await auth();
@@ -36,6 +67,43 @@ export async function updateProblem(formData: FormData) {
   redirect("/admin");
 }
 
+export async function changeDifficulty(id : string, newDiff : number) {
+  const session = await auth();
+  if (!session || session.user.role !== "ADMIN") redirect("/");
+
+  let difficulty;
+  if (newDiff === 0) difficulty = "EASY";
+  if (newDiff === 1) difficulty = "NORMAL";
+  if (newDiff === 2) difficulty = "HARD";
+  difficulty = difficulty as ProblemDifficulty;
+
+  await db.moduleProblem.update({
+    where: { id },
+    data: { difficulty },
+  })
+
+  redirect("/admin");
+}
+
+export async function updateModule(formData: FormData) {
+  const session = await auth();
+  if (!session || session.user.role !== "ADMIN") redirect("/");
+
+  const id = formData.get("id") as string;
+  const name = formData.get("name") as string;
+  const launchDate = new Date(formData.get("launchDate") as string);
+  const hidden = Boolean(formData.get("hidden") as string === "true" ? 1:0);
+
+  if (!name || isNaN(launchDate.getTime())) return;
+
+  await db.module.update({
+    where: { id },
+    data: { name, launchDate, hidden },
+  })
+
+  redirect("/admin");
+}
+
 export async function deleteProblem(id: string) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
@@ -45,11 +113,28 @@ export async function deleteProblem(id: string) {
   redirect("/admin");
 }
 
+export async function deleteModuleProblem(id: string) {
+  const session = await auth();
+  if (!session || session.user.role !== "ADMIN") redirect("/");
+
+  await db.moduleProblem.delete({ where: { id }});
+
+  redirect("/admin");
+}
+
 export async function deleteUser(id: string) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
 
   await db.user.delete({ where: { id }});
+
+  redirect("/admin");
+}
+export async function deleteModule(id: string) {
+  const session = await auth();
+  if (!session || session.user.role !== "ADMIN") redirect("/");
+
+  await db.module.delete({ where: { id }});
 
   redirect("/admin");
 }
