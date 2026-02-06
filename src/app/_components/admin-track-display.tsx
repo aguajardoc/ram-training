@@ -69,6 +69,12 @@ function AdminTrackDisplay({ name, id, users } : Props) {
 
             {viewingUsers && (
                 <div className="card">
+                    <input
+                        type="text"
+                        placeholder="search users…"
+                        value={q}
+                        onChange={e => setQ(e.target.value)}
+                    />
                     {filtered.map(u => (
                         <div key={u.id}>
                             {u.name}
