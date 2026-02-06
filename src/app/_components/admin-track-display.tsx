@@ -31,8 +31,6 @@ function AdminTrackDisplay({ name, id, users } : Props) {
                 <div className="card">
                 {name}
 
-                {/* Add user to track */} 
-                {/* Remove user from track */}
                 {/* View and Edit Users */}
                 <button onClick={() => setViewingUsers(true)}>View Users</button>
 
