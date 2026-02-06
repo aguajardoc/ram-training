@@ -148,6 +148,58 @@ export async function deleteUser(id: string) {
   redirect("/admin");
 }
 
+export async function addUserToTrack(userId: string, trackId: string) {
+  const session = await auth();
+  if (!session || session.user.role !== "ADMIN") redirect("/");
+
+  const exists = await db.userTrack.findUnique({
+    where: {
+      userId_trackId: {
+        userId,
+        trackId,
+      },
+    },
+  });
+
+  if (exists) redirect("/admin");
+
+  await db.userTrack.create({
+    data: {
+        userId,
+        trackId,
+    },
+  });
+
+  redirect("/admin");
+}
+
+export async function deleteUserFromTrack(userId: string, trackId: string) {
+  const session = await auth();
+  if (!session || session.user.role !== "ADMIN") redirect("/");
+
+  const exists = await db.userTrack.findUnique({
+    where: {
+      userId_trackId: {
+        userId,
+        trackId,
+      },
+    },
+  });
+
+  if (!exists) redirect("/admin");
+
+  await db.userTrack.delete({
+    where: {
+      userId_trackId: {
+        userId,
+        trackId,
+      },
+    },
+  });
+
+  redirect("/admin");
+}
+
 export async function deleteModule(id: string) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");

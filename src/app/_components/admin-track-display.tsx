@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { deleteTrack, updateTrackName } from "../admin/actions";
+import { deleteTrack, updateTrackName, deleteUserFromTrack, addUserToTrack } from "../admin/actions";
 import type { UserRow } from "../admin/types";
 
 type Props = {
@@ -20,10 +20,10 @@ function AdminTrackDisplay({ name, id, users } : Props) {
     .filter(u => {
         const qn = normalize(q);
         return (
-        normalize(u.name ?? "").includes(qn)
+        normalize(u.name ?? "anonymous").includes(qn)
         );
     })
-    .slice(0, 3);
+    .slice(0, 1);
 
     return (
         <>
@@ -72,6 +72,25 @@ function AdminTrackDisplay({ name, id, users } : Props) {
                     {filtered.map(u => (
                         <div key={u.id}>
                             {u.name}
+
+                            {/* Add User to Track */}
+                            <button
+                                onClick={() => {
+                                    addUserToTrack(u.id, id);
+                                }}
+                            >
+                                Add User to Track
+                            </button>
+
+                            {/* Delete User from Track */}
+                            <button
+                                onClick={() => {
+                                if (!confirm("Delete this user from this track?")) return;
+                                    deleteUserFromTrack(u.id, id);
+                                }}
+                            >
+                                Delete User from Track
+                            </button>
                         </div>
                     ))}
 
