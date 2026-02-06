@@ -21,7 +21,7 @@ function AdminDashboard({ users, tracks, trackLevels, modules, problems } : Prop
     return (
         <div className="page">
             <UserPanel users={users}/>
-            <TrackPanel tracks={tracks}/>
+            <TrackPanel tracks={tracks} users={users}/>
             <LevelPanel levels={trackLevels}/>
             <ModulePanel modules={modules} problems={problems}/>
             <ProblemPanel problems={problems}/>

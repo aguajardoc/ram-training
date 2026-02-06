@@ -2,12 +2,14 @@ import type { Track } from "generated/prisma";
 import { createTrack, deleteTrack } from "../admin/actions";
 import { useState } from "react";
 import AdminTrackDisplay from "./admin-track-display";
+import type { UserRow } from "../admin/types";
 
 type Props = {
     tracks: Track[],
+    users: UserRow[],
 };
 
-function TrackPanel({ tracks } : Props) {
+function TrackPanel({ tracks, users } : Props) {
     const [q, setQ] = useState("");
     
     const normalize = (s: string) =>
@@ -51,6 +53,7 @@ function TrackPanel({ tracks } : Props) {
                     key={t.id}
                     id={t.id}
                     name={t.name}
+                    users={users}
                 />
             ))}
 
