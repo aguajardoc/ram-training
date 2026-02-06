@@ -44,7 +44,7 @@ function ProblemPanel({ problems } : Props) {
 
                 <input
                     name="url"
-                    placeholder="codeforces.com/problem/4/A"
+                    placeholder="Problem URL"
                     required
                 />
                 <button type="submit">Create Problem</button>
