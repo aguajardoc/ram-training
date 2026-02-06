@@ -67,6 +67,23 @@ export async function updateProblem(formData: FormData) {
   redirect("/admin");
 }
 
+export async function updateTrackName(formData: FormData) {
+  const session = await auth();
+  if (!session || session.user.role !== "ADMIN") redirect("/");
+
+  const id = formData.get("id") as string;
+  const name = formData.get("name") as string;
+
+  if (!name) return;
+
+  await db.track.update({
+    where: { id },
+    data: { name },
+  })
+
+  redirect("/admin");
+}
+
 export async function changeDifficulty(id : string, newDiff : number) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
@@ -130,11 +147,21 @@ export async function deleteUser(id: string) {
 
   redirect("/admin");
 }
+
 export async function deleteModule(id: string) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
 
   await db.module.delete({ where: { id }});
+
+  redirect("/admin");
+}
+
+export async function deleteTrack(id: string) {
+  const session = await auth();
+  if (!session || session.user.role !== "ADMIN") redirect("/");
+
+  await db.track.delete({ where: { id }});
 
   redirect("/admin");
 }
@@ -150,6 +177,28 @@ export async function createModule(formData : FormData) {
   const launchDate = new Date(rawDate)
 
   await db.module.create({ data: {name, launchDate, hidden}});
+
+  redirect("/admin")
+}
+
+export async function createTrack(formData : FormData) {
+  const session = await auth();
+  if (!session || session.user.role !== "ADMIN") redirect("/");
+
+  const name = formData.get("name") as string;
+
+  await db.track.create({ data: {name}});
+
+  redirect("/admin")
+}
+
+export async function createLevel(formData : FormData) {
+  const session = await auth();
+  if (!session || session.user.role !== "ADMIN") redirect("/");
+
+  const code = formData.get("code") as string;
+
+  await db.trackLevel.create({ data: {code}});
 
   redirect("/admin")
 }

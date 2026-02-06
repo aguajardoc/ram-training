@@ -50,7 +50,7 @@ model TrackLevel {
   id           String @id @default(cuid())
   trackId      String
   code         String  // A, B, C1... and such
-  order        Int
+  order        Int    @default(autoincrement())
 
   track        Track @relation(fields: [trackId], references: [id], onDelete: Cascade)
   levelModules LevelModule[]

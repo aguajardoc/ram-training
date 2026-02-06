@@ -16410,7 +16410,7 @@ export namespace Prisma {
   export type TrackLevelCreateInput = {
     id?: string
     code: string
-    order: number
+    order?: number
     track: TrackCreateNestedOneWithoutLevelsInput
     levelModules?: LevelModuleCreateNestedManyWithoutTrackLevelInput
   }
@@ -16419,7 +16419,7 @@ export namespace Prisma {
     id?: string
     trackId: string
     code: string
-    order: number
+    order?: number
     levelModules?: LevelModuleUncheckedCreateNestedManyWithoutTrackLevelInput
   }
 
@@ -16443,7 +16443,7 @@ export namespace Prisma {
     id?: string
     trackId: string
     code: string
-    order: number
+    order?: number
   }
 
   export type TrackLevelUpdateManyMutationInput = {
@@ -18778,14 +18778,14 @@ export namespace Prisma {
   export type TrackLevelCreateWithoutTrackInput = {
     id?: string
     code: string
-    order: number
+    order?: number
     levelModules?: LevelModuleCreateNestedManyWithoutTrackLevelInput
   }
 
   export type TrackLevelUncheckedCreateWithoutTrackInput = {
     id?: string
     code: string
-    order: number
+    order?: number
     levelModules?: LevelModuleUncheckedCreateNestedManyWithoutTrackLevelInput
   }
 
@@ -18967,7 +18967,7 @@ export namespace Prisma {
   export type TrackLevelCreateWithoutLevelModulesInput = {
     id?: string
     code: string
-    order: number
+    order?: number
     track: TrackCreateNestedOneWithoutLevelsInput
   }
 
@@ -18975,7 +18975,7 @@ export namespace Prisma {
     id?: string
     trackId: string
     code: string
-    order: number
+    order?: number
   }
 
   export type TrackLevelCreateOrConnectWithoutLevelModulesInput = {
@@ -19879,7 +19879,7 @@ export namespace Prisma {
   export type TrackLevelCreateManyTrackInput = {
     id?: string
     code: string
-    order: number
+    order?: number
   }
 
   export type UserTrackCreateManyTrackInput = {
