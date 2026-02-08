@@ -1,10 +1,13 @@
 import "../../styles/globals.css"
+import { db } from "~/server/db";
 
-function GreetingPanel() {
+function LevelMappingPanel() {
+    // const []
+
     return (
         <>
             <h1 className="title">
-                GREETING
+                LEVEL MAPPING
             </h1>
             
             {/* Change Level-Track Correspondence */}
@@ -27,4 +30,4 @@ function GreetingPanel() {
     )
 }
 
-export default GreetingPanel;
+export default LevelMappingPanel;
