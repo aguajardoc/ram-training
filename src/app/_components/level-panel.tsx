@@ -1,3 +1,4 @@
+"use client"
 import type { TrackLevel, Track } from "generated/prisma";
 import { createLevel } from "../admin/actions";
 import { useState } from "react";

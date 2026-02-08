@@ -1,3 +1,4 @@
+"use client"
 import type { UserRow } from "../admin/types";
 import "../../styles/globals.css"
 import { useState } from "react";

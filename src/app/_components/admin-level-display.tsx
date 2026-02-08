@@ -1,3 +1,4 @@
+"use client"
 import { useState } from "react";
 import { deleteTrackLevel, addModuleToLevel, deleteModuleFromLevel } from "../admin/actions";
 import type { ModuleRow } from "../admin/types";

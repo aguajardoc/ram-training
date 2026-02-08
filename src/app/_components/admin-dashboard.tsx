@@ -1,4 +1,3 @@
-"use client"
 import type { Track, TrackLevel, Module, Problem } from "generated/prisma";
 
 import UserPanel from "./user-panel";

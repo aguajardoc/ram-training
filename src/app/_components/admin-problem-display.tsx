@@ -1,3 +1,4 @@
+"use client"
 import { deleteProblem, updateProblem } from "../admin/actions";
 import { useState } from "react";
 import type { SolveUser } from "../admin/types";

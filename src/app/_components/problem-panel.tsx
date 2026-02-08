@@ -1,3 +1,4 @@
+"use client"
 import { createProblem } from "../admin/actions";
 import { useState } from "react";
 

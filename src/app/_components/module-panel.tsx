@@ -1,3 +1,4 @@
+"use client"
 import { useState } from "react";
 import { createModule } from "../admin/actions";
 import AdminModuleDisplay from "./admin-module-display";

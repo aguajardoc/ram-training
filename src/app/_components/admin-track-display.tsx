@@ -1,3 +1,4 @@
+"use client"
 import { useState } from "react";
 import { deleteTrack, updateTrackName, deleteUserFromTrack, addUserToTrack } from "../admin/actions";
 import type { UserRow } from "../admin/types";

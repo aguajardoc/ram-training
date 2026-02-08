@@ -1,3 +1,4 @@
+"use client"
 import type { Track } from "generated/prisma";
 import { createTrack, deleteTrack } from "../admin/actions";
 import { useState } from "react";

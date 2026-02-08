@@ -1,33 +1,59 @@
 import "../../styles/globals.css"
 import { db } from "~/server/db";
+import { updateLevelMapping } from "../admin/actions";
 
-function LevelMappingPanel() {
-    // const []
+const LEVELS = [
+  { id: "Level A", label: "Beginner" },
+  { id: "Level B", label: "Intermediate" },
+  { id: "Level C1", label: "Advanced" },
+];
 
-    return (
-        <>
-            <h1 className="title">
-                LEVEL MAPPING
-            </h1>
+async function LevelMappingPanel() {
+  const allTracks = await db.track.findMany();
+  const currentMappings = await db.levelToTrack.findMany();
+
+  return (
+    <div>
+      <h1>Level Mapping</h1>
+      
+      {LEVELS.map((level) => {
+        // Find if we've already linked this level
+        const activeMapping = currentMappings.find((m) => m.levelId === level.id);
+
+        return (
+          <div key={level.id} style={{ marginBottom: "20px", border: "1px solid #333", padding: "10px" }}>
             
-            {/* Change Level-Track Correspondence */}
-            {/* Hardcoded because I firmly believe 3 levels is enough */}
-            <div className="card">
-                <div>Level A:</div>
+            <h3>{level.label}</h3>
+            <p>ID Key: {level.id}</p>
 
-            </div>
+            <form action={updateLevelMapping}>
+              {/* Hidden: Sends "Level A" to the server */}
+              <input type="hidden" name="levelId" value={level.id} />
+              
+              <div style={{ display: "flex", gap: "10px" }}>
+                <select 
+                  name="trackId" 
+                  defaultValue={activeMapping?.trackId || ""}
+                >
+                  <option value="" disabled>-- Select a Track --</option>
+                  
+                  {/* Populate dropdown with real DB tracks */}
+                  {allTracks.map((t) => (
+                    <option key={t.id} value={t.id}>
+                      {t.name}
+                    </option>
+                  ))}
+                </select>
 
-            <div className="card">
-                <div>Level B:</div>
+                <button type="submit">Save</button>
+              </div>
+            </form>
 
-            </div>
-
-            <div className="card">
-                <div>Level C1:</div>
-
-            </div>
-        </>
-    )
+          </div>
+        );
+      })}
+    </div>
+  );
 }
 
 export default LevelMappingPanel;

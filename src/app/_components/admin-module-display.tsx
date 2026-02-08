@@ -1,3 +1,4 @@
+"use client"
 import type { ModuleProblemRow } from "../admin/types";
 import { useState } from "react";
 import { updateModule } from "../admin/actions";
