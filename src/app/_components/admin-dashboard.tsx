@@ -20,11 +20,11 @@ type Props = {
 function AdminDashboard({ users, tracks, trackLevels, modules, problems } : Props) {
     return (
         <div className="page">
-            <UserPanel users={users}/>
-            <TrackPanel tracks={tracks} users={users}/>
-            <LevelPanel levels={trackLevels} tracks={tracks} modules={modules}/>
-            <ModulePanel modules={modules} problems={problems}/>
             <ProblemPanel problems={problems}/>
+            <ModulePanel modules={modules} problems={problems}/>
+            <LevelPanel levels={trackLevels} tracks={tracks} modules={modules}/>
+            <TrackPanel tracks={tracks} users={users}/>
+            <UserPanel users={users}/>
         </div>
     )
 }
