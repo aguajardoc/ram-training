@@ -331,3 +331,29 @@ export async function duplicateModule(id: string) {
 
   redirect("/admin");
 }
+
+export async function updateLevelMapping(formData: FormData) {
+  const session = await auth();
+  if (!session || session.user.role !== "ADMIN") redirect("/");
+
+  const levelId = formData.get("levelId") as string;
+  const trackId = formData.get("trackId") as string;
+
+  if (!levelId || !trackId) return;
+
+  // Clear existing mapping for this level
+  await db.levelToTrack.deleteMany({
+    where: {
+      levelId: levelId
+    }
+  });
+
+  await db.levelToTrack.create({
+    data: {
+      levelId: levelId,
+      trackId: trackId
+    }
+  });
+
+  redirect("/admin");
+}
