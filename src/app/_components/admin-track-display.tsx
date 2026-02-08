@@ -46,10 +46,7 @@ function AdminTrackDisplay({ name, id, users } : Props) {
 
                 {/* Edit Track Name */}
                 <button onClick={() => setEditing(true)}>Edit Name</button>
-
-                {/* Add modules to track */} 
-                {/* Reorganize modules in track */}
-
+                
                 </div>
             )}
 
