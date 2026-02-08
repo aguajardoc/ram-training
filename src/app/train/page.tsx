@@ -3,7 +3,8 @@ import { api } from "~/trpc/react";
 import Problem from "../_components/problem";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-
+import LevelPicker from "../_components/level-picker";
+import "../../styles/level-picker.css"
 import "../../styles/globals.css"
 
 function Train() {
@@ -15,9 +16,9 @@ function Train() {
 
     if (!hasChosenLevel) {
         return (
-            <div>
-                Choose a Level!
-            </div>
+            <LevelPicker
+                userId={session.user.id}
+            />
         )
     }
 

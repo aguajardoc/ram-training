@@ -2,7 +2,6 @@
 import { auth } from "~/server/auth";
 import { db } from "~/server/db";
 import { redirect } from "next/navigation";
-import type { DateTime } from "next-auth/providers/kakao";
 import type { ProblemDifficulty, ProblemType } from "generated/prisma";
 
 export async function createProblem(formData: FormData) {

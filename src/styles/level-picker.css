@@ -1,0 +1,113 @@
+.level-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.level-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.level-picker {
+  display: flex;
+  gap: 16px;
+}
+
+.nav-btn {
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 22px;
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.nav-btn:hover {
+  color: #fff;
+  transform: scale(1.1);
+}
+
+.carousel-window {
+  width: 620px;
+  height: 460px;
+  overflow: hidden;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.067);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.carousel-item {
+  flex: 0 0 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  text-align: center;
+  color: #888;
+  opacity: 0.5;
+  transform: scale(0.9);
+  transition: opacity 0.25s ease, transform 0.25s ease, color 0.25s ease;
+}
+
+.carousel-item.active {
+  opacity: 1;
+  color: #fff;
+  transform: scale(1);
+}
+
+.level-icon {
+  font-size: 32px;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.level-icon:hover {
+  color: #fff;
+  transform: scale(1.1);
+}
+
+.level-code {
+  font-size: 16px;
+  letter-spacing: 2px;
+  color: #aaa;
+  background: rgba(255,255,255,0.08);
+  padding: 4px 8px;
+  border-radius: 999px;
+}
+
+.level-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+.level-desc {
+  font-size: 18px;
+  color: #ccc;
+  line-height: 1.4;
+}
+
+.level-section {
+  margin-top: 6px;
+}
+
+.level-label {
+  font-size: 18px;
+  font-weight: 600;
+  color: #aaa;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.level-req {
+  font-size: 18px;
+  color: #999;
+}
