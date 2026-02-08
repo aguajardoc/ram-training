@@ -16461,7 +16461,7 @@ export namespace Prisma {
 
   export type LevelModuleCreateInput = {
     id?: string
-    order: number
+    order?: number
     trackLevel: TrackLevelCreateNestedOneWithoutLevelModulesInput
     module: ModuleCreateNestedOneWithoutLevelModulesInput
   }
@@ -16470,7 +16470,7 @@ export namespace Prisma {
     id?: string
     trackLevelId: string
     moduleId: string
-    order: number
+    order?: number
   }
 
   export type LevelModuleUpdateInput = {
@@ -16491,7 +16491,7 @@ export namespace Prisma {
     id?: string
     trackLevelId: string
     moduleId: string
-    order: number
+    order?: number
   }
 
   export type LevelModuleUpdateManyMutationInput = {
@@ -18895,14 +18895,14 @@ export namespace Prisma {
 
   export type LevelModuleCreateWithoutTrackLevelInput = {
     id?: string
-    order: number
+    order?: number
     module: ModuleCreateNestedOneWithoutLevelModulesInput
   }
 
   export type LevelModuleUncheckedCreateWithoutTrackLevelInput = {
     id?: string
     moduleId: string
-    order: number
+    order?: number
   }
 
   export type LevelModuleCreateOrConnectWithoutTrackLevelInput = {
@@ -19084,14 +19084,14 @@ export namespace Prisma {
 
   export type LevelModuleCreateWithoutModuleInput = {
     id?: string
-    order: number
+    order?: number
     trackLevel: TrackLevelCreateNestedOneWithoutLevelModulesInput
   }
 
   export type LevelModuleUncheckedCreateWithoutModuleInput = {
     id?: string
     trackLevelId: string
-    order: number
+    order?: number
   }
 
   export type LevelModuleCreateOrConnectWithoutModuleInput = {
@@ -19933,7 +19933,7 @@ export namespace Prisma {
   export type LevelModuleCreateManyTrackLevelInput = {
     id?: string
     moduleId: string
-    order: number
+    order?: number
   }
 
   export type LevelModuleUpdateWithoutTrackLevelInput = {
@@ -19965,7 +19965,7 @@ export namespace Prisma {
   export type LevelModuleCreateManyModuleInput = {
     id?: string
     trackLevelId: string
-    order: number
+    order?: number
   }
 
   export type ModuleProblemUpdateWithoutModuleInput = {

@@ -60,10 +60,10 @@ model TrackLevel {
 
 // Modules belong to levels (could be in multiple tracks)
 model LevelModule {
-  id            String @id @default(cuid())
+  id            String  @id @default(cuid())
   trackLevelId  String
   moduleId      String
-  order         Int
+  order         Int     @default(autoincrement())
 
   trackLevel    TrackLevel  @relation(fields: [trackLevelId], references: [id], onDelete: Cascade)
   module        Module      @relation(fields: [moduleId], references: [id])
