@@ -223,6 +223,12 @@ exports.Prisma.VerificationTokenScalarFieldEnum = {
   expires: 'expires'
 };
 
+exports.Prisma.LevelToTrackScalarFieldEnum = {
+  id: 'id',
+  levelId: 'levelId',
+  trackId: 'trackId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -265,7 +271,8 @@ exports.Prisma.ModelName = {
   User: 'User',
   Account: 'Account',
   Session: 'Session',
-  VerificationToken: 'VerificationToken'
+  VerificationToken: 'VerificationToken',
+  LevelToTrack: 'LevelToTrack'
 };
 
 /**

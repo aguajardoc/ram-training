@@ -187,3 +187,11 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
+model LevelToTrack {
+  id    String @id @default(cuid())
+  levelId String
+  trackId String
+
+  @@unique([levelId, trackId])
+}

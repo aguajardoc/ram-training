@@ -74,6 +74,11 @@ export type Session = $Result.DefaultSelection<Prisma.$SessionPayload>
  * 
  */
 export type VerificationToken = $Result.DefaultSelection<Prisma.$VerificationTokenPayload>
+/**
+ * Model LevelToTrack
+ * 
+ */
+export type LevelToTrack = $Result.DefaultSelection<Prisma.$LevelToTrackPayload>
 
 /**
  * Enums
@@ -354,6 +359,16 @@ export class PrismaClient<
     * ```
     */
   get verificationToken(): Prisma.VerificationTokenDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.levelToTrack`: Exposes CRUD operations for the **LevelToTrack** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more LevelToTracks
+    * const levelToTracks = await prisma.levelToTrack.findMany()
+    * ```
+    */
+  get levelToTrack(): Prisma.LevelToTrackDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -806,7 +821,8 @@ export namespace Prisma {
     User: 'User',
     Account: 'Account',
     Session: 'Session',
-    VerificationToken: 'VerificationToken'
+    VerificationToken: 'VerificationToken',
+    LevelToTrack: 'LevelToTrack'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -825,7 +841,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "problem" | "track" | "trackLevel" | "levelModule" | "module" | "moduleProblem" | "solve" | "userTrack" | "user" | "account" | "session" | "verificationToken"
+      modelProps: "problem" | "track" | "trackLevel" | "levelModule" | "module" | "moduleProblem" | "solve" | "userTrack" | "user" | "account" | "session" | "verificationToken" | "levelToTrack"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1717,6 +1733,80 @@ export namespace Prisma {
           }
         }
       }
+      LevelToTrack: {
+        payload: Prisma.$LevelToTrackPayload<ExtArgs>
+        fields: Prisma.LevelToTrackFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.LevelToTrackFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LevelToTrackPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.LevelToTrackFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LevelToTrackPayload>
+          }
+          findFirst: {
+            args: Prisma.LevelToTrackFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LevelToTrackPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.LevelToTrackFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LevelToTrackPayload>
+          }
+          findMany: {
+            args: Prisma.LevelToTrackFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LevelToTrackPayload>[]
+          }
+          create: {
+            args: Prisma.LevelToTrackCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LevelToTrackPayload>
+          }
+          createMany: {
+            args: Prisma.LevelToTrackCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.LevelToTrackCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LevelToTrackPayload>[]
+          }
+          delete: {
+            args: Prisma.LevelToTrackDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LevelToTrackPayload>
+          }
+          update: {
+            args: Prisma.LevelToTrackUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LevelToTrackPayload>
+          }
+          deleteMany: {
+            args: Prisma.LevelToTrackDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.LevelToTrackUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.LevelToTrackUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LevelToTrackPayload>[]
+          }
+          upsert: {
+            args: Prisma.LevelToTrackUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LevelToTrackPayload>
+          }
+          aggregate: {
+            args: Prisma.LevelToTrackAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateLevelToTrack>
+          }
+          groupBy: {
+            args: Prisma.LevelToTrackGroupByArgs<ExtArgs>
+            result: $Utils.Optional<LevelToTrackGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.LevelToTrackCountArgs<ExtArgs>
+            result: $Utils.Optional<LevelToTrackCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1825,6 +1915,7 @@ export namespace Prisma {
     account?: AccountOmit
     session?: SessionOmit
     verificationToken?: VerificationTokenOmit
+    levelToTrack?: LevelToTrackOmit
   }
 
   /* Types for Logging */
@@ -15289,6 +15380,975 @@ export namespace Prisma {
 
 
   /**
+   * Model LevelToTrack
+   */
+
+  export type AggregateLevelToTrack = {
+    _count: LevelToTrackCountAggregateOutputType | null
+    _min: LevelToTrackMinAggregateOutputType | null
+    _max: LevelToTrackMaxAggregateOutputType | null
+  }
+
+  export type LevelToTrackMinAggregateOutputType = {
+    id: string | null
+    levelId: string | null
+    trackId: string | null
+  }
+
+  export type LevelToTrackMaxAggregateOutputType = {
+    id: string | null
+    levelId: string | null
+    trackId: string | null
+  }
+
+  export type LevelToTrackCountAggregateOutputType = {
+    id: number
+    levelId: number
+    trackId: number
+    _all: number
+  }
+
+
+  export type LevelToTrackMinAggregateInputType = {
+    id?: true
+    levelId?: true
+    trackId?: true
+  }
+
+  export type LevelToTrackMaxAggregateInputType = {
+    id?: true
+    levelId?: true
+    trackId?: true
+  }
+
+  export type LevelToTrackCountAggregateInputType = {
+    id?: true
+    levelId?: true
+    trackId?: true
+    _all?: true
+  }
+
+  export type LevelToTrackAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LevelToTrack to aggregate.
+     */
+    where?: LevelToTrackWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LevelToTracks to fetch.
+     */
+    orderBy?: LevelToTrackOrderByWithRelationInput | LevelToTrackOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: LevelToTrackWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LevelToTracks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LevelToTracks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned LevelToTracks
+    **/
+    _count?: true | LevelToTrackCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LevelToTrackMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LevelToTrackMaxAggregateInputType
+  }
+
+  export type GetLevelToTrackAggregateType<T extends LevelToTrackAggregateArgs> = {
+        [P in keyof T & keyof AggregateLevelToTrack]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLevelToTrack[P]>
+      : GetScalarType<T[P], AggregateLevelToTrack[P]>
+  }
+
+
+
+
+  export type LevelToTrackGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LevelToTrackWhereInput
+    orderBy?: LevelToTrackOrderByWithAggregationInput | LevelToTrackOrderByWithAggregationInput[]
+    by: LevelToTrackScalarFieldEnum[] | LevelToTrackScalarFieldEnum
+    having?: LevelToTrackScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LevelToTrackCountAggregateInputType | true
+    _min?: LevelToTrackMinAggregateInputType
+    _max?: LevelToTrackMaxAggregateInputType
+  }
+
+  export type LevelToTrackGroupByOutputType = {
+    id: string
+    levelId: string
+    trackId: string
+    _count: LevelToTrackCountAggregateOutputType | null
+    _min: LevelToTrackMinAggregateOutputType | null
+    _max: LevelToTrackMaxAggregateOutputType | null
+  }
+
+  type GetLevelToTrackGroupByPayload<T extends LevelToTrackGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<LevelToTrackGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LevelToTrackGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LevelToTrackGroupByOutputType[P]>
+            : GetScalarType<T[P], LevelToTrackGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type LevelToTrackSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    levelId?: boolean
+    trackId?: boolean
+  }, ExtArgs["result"]["levelToTrack"]>
+
+  export type LevelToTrackSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    levelId?: boolean
+    trackId?: boolean
+  }, ExtArgs["result"]["levelToTrack"]>
+
+  export type LevelToTrackSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    levelId?: boolean
+    trackId?: boolean
+  }, ExtArgs["result"]["levelToTrack"]>
+
+  export type LevelToTrackSelectScalar = {
+    id?: boolean
+    levelId?: boolean
+    trackId?: boolean
+  }
+
+  export type LevelToTrackOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "levelId" | "trackId", ExtArgs["result"]["levelToTrack"]>
+
+  export type $LevelToTrackPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "LevelToTrack"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      levelId: string
+      trackId: string
+    }, ExtArgs["result"]["levelToTrack"]>
+    composites: {}
+  }
+
+  type LevelToTrackGetPayload<S extends boolean | null | undefined | LevelToTrackDefaultArgs> = $Result.GetResult<Prisma.$LevelToTrackPayload, S>
+
+  type LevelToTrackCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<LevelToTrackFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: LevelToTrackCountAggregateInputType | true
+    }
+
+  export interface LevelToTrackDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['LevelToTrack'], meta: { name: 'LevelToTrack' } }
+    /**
+     * Find zero or one LevelToTrack that matches the filter.
+     * @param {LevelToTrackFindUniqueArgs} args - Arguments to find a LevelToTrack
+     * @example
+     * // Get one LevelToTrack
+     * const levelToTrack = await prisma.levelToTrack.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends LevelToTrackFindUniqueArgs>(args: SelectSubset<T, LevelToTrackFindUniqueArgs<ExtArgs>>): Prisma__LevelToTrackClient<$Result.GetResult<Prisma.$LevelToTrackPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one LevelToTrack that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {LevelToTrackFindUniqueOrThrowArgs} args - Arguments to find a LevelToTrack
+     * @example
+     * // Get one LevelToTrack
+     * const levelToTrack = await prisma.levelToTrack.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends LevelToTrackFindUniqueOrThrowArgs>(args: SelectSubset<T, LevelToTrackFindUniqueOrThrowArgs<ExtArgs>>): Prisma__LevelToTrackClient<$Result.GetResult<Prisma.$LevelToTrackPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first LevelToTrack that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LevelToTrackFindFirstArgs} args - Arguments to find a LevelToTrack
+     * @example
+     * // Get one LevelToTrack
+     * const levelToTrack = await prisma.levelToTrack.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends LevelToTrackFindFirstArgs>(args?: SelectSubset<T, LevelToTrackFindFirstArgs<ExtArgs>>): Prisma__LevelToTrackClient<$Result.GetResult<Prisma.$LevelToTrackPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first LevelToTrack that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LevelToTrackFindFirstOrThrowArgs} args - Arguments to find a LevelToTrack
+     * @example
+     * // Get one LevelToTrack
+     * const levelToTrack = await prisma.levelToTrack.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends LevelToTrackFindFirstOrThrowArgs>(args?: SelectSubset<T, LevelToTrackFindFirstOrThrowArgs<ExtArgs>>): Prisma__LevelToTrackClient<$Result.GetResult<Prisma.$LevelToTrackPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more LevelToTracks that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LevelToTrackFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all LevelToTracks
+     * const levelToTracks = await prisma.levelToTrack.findMany()
+     * 
+     * // Get first 10 LevelToTracks
+     * const levelToTracks = await prisma.levelToTrack.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const levelToTrackWithIdOnly = await prisma.levelToTrack.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends LevelToTrackFindManyArgs>(args?: SelectSubset<T, LevelToTrackFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LevelToTrackPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a LevelToTrack.
+     * @param {LevelToTrackCreateArgs} args - Arguments to create a LevelToTrack.
+     * @example
+     * // Create one LevelToTrack
+     * const LevelToTrack = await prisma.levelToTrack.create({
+     *   data: {
+     *     // ... data to create a LevelToTrack
+     *   }
+     * })
+     * 
+     */
+    create<T extends LevelToTrackCreateArgs>(args: SelectSubset<T, LevelToTrackCreateArgs<ExtArgs>>): Prisma__LevelToTrackClient<$Result.GetResult<Prisma.$LevelToTrackPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many LevelToTracks.
+     * @param {LevelToTrackCreateManyArgs} args - Arguments to create many LevelToTracks.
+     * @example
+     * // Create many LevelToTracks
+     * const levelToTrack = await prisma.levelToTrack.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends LevelToTrackCreateManyArgs>(args?: SelectSubset<T, LevelToTrackCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many LevelToTracks and returns the data saved in the database.
+     * @param {LevelToTrackCreateManyAndReturnArgs} args - Arguments to create many LevelToTracks.
+     * @example
+     * // Create many LevelToTracks
+     * const levelToTrack = await prisma.levelToTrack.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many LevelToTracks and only return the `id`
+     * const levelToTrackWithIdOnly = await prisma.levelToTrack.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends LevelToTrackCreateManyAndReturnArgs>(args?: SelectSubset<T, LevelToTrackCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LevelToTrackPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a LevelToTrack.
+     * @param {LevelToTrackDeleteArgs} args - Arguments to delete one LevelToTrack.
+     * @example
+     * // Delete one LevelToTrack
+     * const LevelToTrack = await prisma.levelToTrack.delete({
+     *   where: {
+     *     // ... filter to delete one LevelToTrack
+     *   }
+     * })
+     * 
+     */
+    delete<T extends LevelToTrackDeleteArgs>(args: SelectSubset<T, LevelToTrackDeleteArgs<ExtArgs>>): Prisma__LevelToTrackClient<$Result.GetResult<Prisma.$LevelToTrackPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one LevelToTrack.
+     * @param {LevelToTrackUpdateArgs} args - Arguments to update one LevelToTrack.
+     * @example
+     * // Update one LevelToTrack
+     * const levelToTrack = await prisma.levelToTrack.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends LevelToTrackUpdateArgs>(args: SelectSubset<T, LevelToTrackUpdateArgs<ExtArgs>>): Prisma__LevelToTrackClient<$Result.GetResult<Prisma.$LevelToTrackPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more LevelToTracks.
+     * @param {LevelToTrackDeleteManyArgs} args - Arguments to filter LevelToTracks to delete.
+     * @example
+     * // Delete a few LevelToTracks
+     * const { count } = await prisma.levelToTrack.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends LevelToTrackDeleteManyArgs>(args?: SelectSubset<T, LevelToTrackDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LevelToTracks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LevelToTrackUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many LevelToTracks
+     * const levelToTrack = await prisma.levelToTrack.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends LevelToTrackUpdateManyArgs>(args: SelectSubset<T, LevelToTrackUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LevelToTracks and returns the data updated in the database.
+     * @param {LevelToTrackUpdateManyAndReturnArgs} args - Arguments to update many LevelToTracks.
+     * @example
+     * // Update many LevelToTracks
+     * const levelToTrack = await prisma.levelToTrack.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more LevelToTracks and only return the `id`
+     * const levelToTrackWithIdOnly = await prisma.levelToTrack.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends LevelToTrackUpdateManyAndReturnArgs>(args: SelectSubset<T, LevelToTrackUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LevelToTrackPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one LevelToTrack.
+     * @param {LevelToTrackUpsertArgs} args - Arguments to update or create a LevelToTrack.
+     * @example
+     * // Update or create a LevelToTrack
+     * const levelToTrack = await prisma.levelToTrack.upsert({
+     *   create: {
+     *     // ... data to create a LevelToTrack
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the LevelToTrack we want to update
+     *   }
+     * })
+     */
+    upsert<T extends LevelToTrackUpsertArgs>(args: SelectSubset<T, LevelToTrackUpsertArgs<ExtArgs>>): Prisma__LevelToTrackClient<$Result.GetResult<Prisma.$LevelToTrackPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of LevelToTracks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LevelToTrackCountArgs} args - Arguments to filter LevelToTracks to count.
+     * @example
+     * // Count the number of LevelToTracks
+     * const count = await prisma.levelToTrack.count({
+     *   where: {
+     *     // ... the filter for the LevelToTracks we want to count
+     *   }
+     * })
+    **/
+    count<T extends LevelToTrackCountArgs>(
+      args?: Subset<T, LevelToTrackCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LevelToTrackCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a LevelToTrack.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LevelToTrackAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LevelToTrackAggregateArgs>(args: Subset<T, LevelToTrackAggregateArgs>): Prisma.PrismaPromise<GetLevelToTrackAggregateType<T>>
+
+    /**
+     * Group by LevelToTrack.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LevelToTrackGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends LevelToTrackGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LevelToTrackGroupByArgs['orderBy'] }
+        : { orderBy?: LevelToTrackGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, LevelToTrackGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLevelToTrackGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the LevelToTrack model
+   */
+  readonly fields: LevelToTrackFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for LevelToTrack.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__LevelToTrackClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the LevelToTrack model
+   */
+  interface LevelToTrackFieldRefs {
+    readonly id: FieldRef<"LevelToTrack", 'String'>
+    readonly levelId: FieldRef<"LevelToTrack", 'String'>
+    readonly trackId: FieldRef<"LevelToTrack", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * LevelToTrack findUnique
+   */
+  export type LevelToTrackFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LevelToTrack
+     */
+    select?: LevelToTrackSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LevelToTrack
+     */
+    omit?: LevelToTrackOmit<ExtArgs> | null
+    /**
+     * Filter, which LevelToTrack to fetch.
+     */
+    where: LevelToTrackWhereUniqueInput
+  }
+
+  /**
+   * LevelToTrack findUniqueOrThrow
+   */
+  export type LevelToTrackFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LevelToTrack
+     */
+    select?: LevelToTrackSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LevelToTrack
+     */
+    omit?: LevelToTrackOmit<ExtArgs> | null
+    /**
+     * Filter, which LevelToTrack to fetch.
+     */
+    where: LevelToTrackWhereUniqueInput
+  }
+
+  /**
+   * LevelToTrack findFirst
+   */
+  export type LevelToTrackFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LevelToTrack
+     */
+    select?: LevelToTrackSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LevelToTrack
+     */
+    omit?: LevelToTrackOmit<ExtArgs> | null
+    /**
+     * Filter, which LevelToTrack to fetch.
+     */
+    where?: LevelToTrackWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LevelToTracks to fetch.
+     */
+    orderBy?: LevelToTrackOrderByWithRelationInput | LevelToTrackOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LevelToTracks.
+     */
+    cursor?: LevelToTrackWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LevelToTracks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LevelToTracks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LevelToTracks.
+     */
+    distinct?: LevelToTrackScalarFieldEnum | LevelToTrackScalarFieldEnum[]
+  }
+
+  /**
+   * LevelToTrack findFirstOrThrow
+   */
+  export type LevelToTrackFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LevelToTrack
+     */
+    select?: LevelToTrackSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LevelToTrack
+     */
+    omit?: LevelToTrackOmit<ExtArgs> | null
+    /**
+     * Filter, which LevelToTrack to fetch.
+     */
+    where?: LevelToTrackWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LevelToTracks to fetch.
+     */
+    orderBy?: LevelToTrackOrderByWithRelationInput | LevelToTrackOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LevelToTracks.
+     */
+    cursor?: LevelToTrackWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LevelToTracks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LevelToTracks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LevelToTracks.
+     */
+    distinct?: LevelToTrackScalarFieldEnum | LevelToTrackScalarFieldEnum[]
+  }
+
+  /**
+   * LevelToTrack findMany
+   */
+  export type LevelToTrackFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LevelToTrack
+     */
+    select?: LevelToTrackSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LevelToTrack
+     */
+    omit?: LevelToTrackOmit<ExtArgs> | null
+    /**
+     * Filter, which LevelToTracks to fetch.
+     */
+    where?: LevelToTrackWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LevelToTracks to fetch.
+     */
+    orderBy?: LevelToTrackOrderByWithRelationInput | LevelToTrackOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing LevelToTracks.
+     */
+    cursor?: LevelToTrackWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LevelToTracks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LevelToTracks.
+     */
+    skip?: number
+    distinct?: LevelToTrackScalarFieldEnum | LevelToTrackScalarFieldEnum[]
+  }
+
+  /**
+   * LevelToTrack create
+   */
+  export type LevelToTrackCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LevelToTrack
+     */
+    select?: LevelToTrackSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LevelToTrack
+     */
+    omit?: LevelToTrackOmit<ExtArgs> | null
+    /**
+     * The data needed to create a LevelToTrack.
+     */
+    data: XOR<LevelToTrackCreateInput, LevelToTrackUncheckedCreateInput>
+  }
+
+  /**
+   * LevelToTrack createMany
+   */
+  export type LevelToTrackCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many LevelToTracks.
+     */
+    data: LevelToTrackCreateManyInput | LevelToTrackCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * LevelToTrack createManyAndReturn
+   */
+  export type LevelToTrackCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LevelToTrack
+     */
+    select?: LevelToTrackSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the LevelToTrack
+     */
+    omit?: LevelToTrackOmit<ExtArgs> | null
+    /**
+     * The data used to create many LevelToTracks.
+     */
+    data: LevelToTrackCreateManyInput | LevelToTrackCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * LevelToTrack update
+   */
+  export type LevelToTrackUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LevelToTrack
+     */
+    select?: LevelToTrackSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LevelToTrack
+     */
+    omit?: LevelToTrackOmit<ExtArgs> | null
+    /**
+     * The data needed to update a LevelToTrack.
+     */
+    data: XOR<LevelToTrackUpdateInput, LevelToTrackUncheckedUpdateInput>
+    /**
+     * Choose, which LevelToTrack to update.
+     */
+    where: LevelToTrackWhereUniqueInput
+  }
+
+  /**
+   * LevelToTrack updateMany
+   */
+  export type LevelToTrackUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update LevelToTracks.
+     */
+    data: XOR<LevelToTrackUpdateManyMutationInput, LevelToTrackUncheckedUpdateManyInput>
+    /**
+     * Filter which LevelToTracks to update
+     */
+    where?: LevelToTrackWhereInput
+    /**
+     * Limit how many LevelToTracks to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * LevelToTrack updateManyAndReturn
+   */
+  export type LevelToTrackUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LevelToTrack
+     */
+    select?: LevelToTrackSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the LevelToTrack
+     */
+    omit?: LevelToTrackOmit<ExtArgs> | null
+    /**
+     * The data used to update LevelToTracks.
+     */
+    data: XOR<LevelToTrackUpdateManyMutationInput, LevelToTrackUncheckedUpdateManyInput>
+    /**
+     * Filter which LevelToTracks to update
+     */
+    where?: LevelToTrackWhereInput
+    /**
+     * Limit how many LevelToTracks to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * LevelToTrack upsert
+   */
+  export type LevelToTrackUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LevelToTrack
+     */
+    select?: LevelToTrackSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LevelToTrack
+     */
+    omit?: LevelToTrackOmit<ExtArgs> | null
+    /**
+     * The filter to search for the LevelToTrack to update in case it exists.
+     */
+    where: LevelToTrackWhereUniqueInput
+    /**
+     * In case the LevelToTrack found by the `where` argument doesn't exist, create a new LevelToTrack with this data.
+     */
+    create: XOR<LevelToTrackCreateInput, LevelToTrackUncheckedCreateInput>
+    /**
+     * In case the LevelToTrack was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LevelToTrackUpdateInput, LevelToTrackUncheckedUpdateInput>
+  }
+
+  /**
+   * LevelToTrack delete
+   */
+  export type LevelToTrackDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LevelToTrack
+     */
+    select?: LevelToTrackSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LevelToTrack
+     */
+    omit?: LevelToTrackOmit<ExtArgs> | null
+    /**
+     * Filter which LevelToTrack to delete.
+     */
+    where: LevelToTrackWhereUniqueInput
+  }
+
+  /**
+   * LevelToTrack deleteMany
+   */
+  export type LevelToTrackDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LevelToTracks to delete
+     */
+    where?: LevelToTrackWhereInput
+    /**
+     * Limit how many LevelToTracks to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * LevelToTrack without action
+   */
+  export type LevelToTrackDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LevelToTrack
+     */
+    select?: LevelToTrackSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LevelToTrack
+     */
+    omit?: LevelToTrackOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -15438,6 +16498,15 @@ export namespace Prisma {
   };
 
   export type VerificationTokenScalarFieldEnum = (typeof VerificationTokenScalarFieldEnum)[keyof typeof VerificationTokenScalarFieldEnum]
+
+
+  export const LevelToTrackScalarFieldEnum: {
+    id: 'id',
+    levelId: 'levelId',
+    trackId: 'trackId'
+  };
+
+  export type LevelToTrackScalarFieldEnum = (typeof LevelToTrackScalarFieldEnum)[keyof typeof LevelToTrackScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -16314,6 +17383,49 @@ export namespace Prisma {
     expires?: DateTimeWithAggregatesFilter<"VerificationToken"> | Date | string
   }
 
+  export type LevelToTrackWhereInput = {
+    AND?: LevelToTrackWhereInput | LevelToTrackWhereInput[]
+    OR?: LevelToTrackWhereInput[]
+    NOT?: LevelToTrackWhereInput | LevelToTrackWhereInput[]
+    id?: StringFilter<"LevelToTrack"> | string
+    levelId?: StringFilter<"LevelToTrack"> | string
+    trackId?: StringFilter<"LevelToTrack"> | string
+  }
+
+  export type LevelToTrackOrderByWithRelationInput = {
+    id?: SortOrder
+    levelId?: SortOrder
+    trackId?: SortOrder
+  }
+
+  export type LevelToTrackWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    levelId_trackId?: LevelToTrackLevelIdTrackIdCompoundUniqueInput
+    AND?: LevelToTrackWhereInput | LevelToTrackWhereInput[]
+    OR?: LevelToTrackWhereInput[]
+    NOT?: LevelToTrackWhereInput | LevelToTrackWhereInput[]
+    levelId?: StringFilter<"LevelToTrack"> | string
+    trackId?: StringFilter<"LevelToTrack"> | string
+  }, "id" | "levelId_trackId">
+
+  export type LevelToTrackOrderByWithAggregationInput = {
+    id?: SortOrder
+    levelId?: SortOrder
+    trackId?: SortOrder
+    _count?: LevelToTrackCountOrderByAggregateInput
+    _max?: LevelToTrackMaxOrderByAggregateInput
+    _min?: LevelToTrackMinOrderByAggregateInput
+  }
+
+  export type LevelToTrackScalarWhereWithAggregatesInput = {
+    AND?: LevelToTrackScalarWhereWithAggregatesInput | LevelToTrackScalarWhereWithAggregatesInput[]
+    OR?: LevelToTrackScalarWhereWithAggregatesInput[]
+    NOT?: LevelToTrackScalarWhereWithAggregatesInput | LevelToTrackScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"LevelToTrack"> | string
+    levelId?: StringWithAggregatesFilter<"LevelToTrack"> | string
+    trackId?: StringWithAggregatesFilter<"LevelToTrack"> | string
+  }
+
   export type ProblemCreateInput = {
     id?: string
     name: string
@@ -17061,6 +18173,48 @@ export namespace Prisma {
     expires?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type LevelToTrackCreateInput = {
+    id?: string
+    levelId: string
+    trackId: string
+  }
+
+  export type LevelToTrackUncheckedCreateInput = {
+    id?: string
+    levelId: string
+    trackId: string
+  }
+
+  export type LevelToTrackUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    levelId?: StringFieldUpdateOperationsInput | string
+    trackId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type LevelToTrackUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    levelId?: StringFieldUpdateOperationsInput | string
+    trackId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type LevelToTrackCreateManyInput = {
+    id?: string
+    levelId: string
+    trackId: string
+  }
+
+  export type LevelToTrackUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    levelId?: StringFieldUpdateOperationsInput | string
+    trackId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type LevelToTrackUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    levelId?: StringFieldUpdateOperationsInput | string
+    trackId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -17757,6 +18911,29 @@ export namespace Prisma {
     identifier?: SortOrder
     token?: SortOrder
     expires?: SortOrder
+  }
+
+  export type LevelToTrackLevelIdTrackIdCompoundUniqueInput = {
+    levelId: string
+    trackId: string
+  }
+
+  export type LevelToTrackCountOrderByAggregateInput = {
+    id?: SortOrder
+    levelId?: SortOrder
+    trackId?: SortOrder
+  }
+
+  export type LevelToTrackMaxOrderByAggregateInput = {
+    id?: SortOrder
+    levelId?: SortOrder
+    trackId?: SortOrder
+  }
+
+  export type LevelToTrackMinOrderByAggregateInput = {
+    id?: SortOrder
+    levelId?: SortOrder
+    trackId?: SortOrder
   }
 
   export type SolveCreateNestedManyWithoutProblemInput = {
