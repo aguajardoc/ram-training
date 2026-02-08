@@ -1,6 +1,7 @@
 import type { TrackLevel, Track } from "generated/prisma";
 import { createLevel } from "../admin/actions";
 import { useState } from "react";
+import AdminLevelDisplay from "./admin-level-display";
 
 type Props = {
     levels: TrackLevel[],
@@ -65,10 +66,12 @@ function LevelPanel({ levels, tracks } : Props) {
             />
 
             {filtered.map(l => (
-                <div className="card" key={l.id}>
-                    <div>{l.code}</div>
-                    <div>[ {trackMap[l.trackId]} ]</div>
-                </div>
+                <AdminLevelDisplay
+                    key={l.id}
+                    code={l.code}
+                    trackId={l.trackId}
+                    trackName={trackMap[l.trackId]}
+                />
             ))}
         </>
     )
