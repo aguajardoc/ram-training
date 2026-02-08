@@ -6,6 +6,7 @@ html,
 body {
   padding: 0;
   margin: 0;
+  box-sizing: border-box;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
@@ -61,14 +62,13 @@ input:disabled {
 }
 
 .page {
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100vw;
   flex-direction: column;
   gap: 16px;
-  margin-top: 6rem;
-  margin-bottom: 4rem;
 }
 
 @keyframes loadingAnimation {

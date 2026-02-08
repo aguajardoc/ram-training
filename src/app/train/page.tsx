@@ -16,9 +16,11 @@ function Train() {
 
     if (!hasChosenLevel) {
         return (
-            <LevelPicker
-                userId={session.user.id}
-            />
+            <div>
+                <LevelPicker
+                    userId={session.user.id}
+                />
+            </div>
         )
     }
 

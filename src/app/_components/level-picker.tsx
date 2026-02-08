@@ -12,7 +12,7 @@ const levels = [
     icon: "🟢",
     description: "For people just starting out.",
     aim: "Get comfortable with implementing ideas in code.",
-    requirements: "No prior experience required.",
+    requirements: "None! No prior experience required :)",
   },
   {
     id: "Level B",
@@ -40,56 +40,68 @@ function LevelPicker({ userId } : Props) {
 
   return (
     <div className="page">
-        <div className="level-picker">
+        <div className="level-picker-wrapper">
             <button className="nav-btn" onClick={prev}>⬅️</button>
+            <div className="level-picker">
+                
 
-            <div className="carousel-window">
-                <div
-                    className="carousel-track"
-                    style={{
-                        width: `${levels.length * 100}%`,
-                        transform: `translateX(-${idx * (100)}%)`,
-                    }}
-                >
-                    {levels.map((level, i) => (
-                        <div
-                        key={level.id}
-                        className={`carousel-item ${i === idx ? "active" : ""}`}
-                        >
-                            <div className="level-card">
-                            <div className="level-header">
-                                <span className="level-icon">{level.icon}</span>
-                                <span className="level-code">{level.id}</span>
+                <div className="carousel-window">
+                    <div
+                        className="carousel-track"
+                        style={{
+                            width: `${levels.length * 100}%`,
+                            transform: `translateX(-${idx * (100)}%)`,
+                        }}
+                    >
+                        {levels.map((level, i) => (
+                            <div
+                            key={level.id}
+                            className={`carousel-item ${i === idx ? "active" : ""}`}
+                            >
+                                <div className="level-card">
+                                <div className="level-header">
+                                    <span className="level-icon">{level.icon}</span>
+                                    <span className="level-code">{level.id}</span>
+                                </div>
+
+                                <div className="level-title">{level.title}</div>
+                                <p className="level-desc">{level.description}</p>
+
+                                <div className="level-section">
+                                    <span className="level-label">🎯 Aim</span>
+                                    <p className="level-desc">{level.aim}</p>
+                                </div>
+
+                                <div className="level-section">
+                                    <span className="level-label">📌 Requirements</span>
+                                    <p className="level-desc">{level.requirements}</p>
+                                </div>
+                                </div>
+
+                                <form action={enrollUserInTrack} className="enroll-form">
+                                    <input 
+                                        type="hidden"
+                                        name="userId"
+                                        value={userId}
+                                    />
+                                    <input
+                                        type="hidden"
+                                        name="trackId"
+                                        // value={trackId}
+                                    />
+
+                                    <button type="submit" className="journey-btn">
+                                        <span className="btn-glow" />
+                                        <span className="btn-text">Are you ready for it?</span>
+                                    </button>
+                                </form>
                             </div>
-
-                            <div className="level-title">{level.title}</div>
-                            <p className="level-desc">{level.description}</p>
-
-                            <div className="level-section">
-                                <span className="level-label">🎯 Aim</span>
-                                <p className="level-desc">{level.aim}</p>
-                            </div>
-
-                            <div className="level-section">
-                                <span className="level-label">📌 Requirements</span>
-                                <p className="level-req">{level.requirements}</p>
-                            </div>
-                            </div>
-
-                            <form action={enrollUserInTrack}>
-                                <input 
-                                    type="hidden"
-                                    name="userId"
-                                    value={userId}
-                                />
-
-                                <button type="submit">Are you Ready for it?</button>
-                            </form>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
-            </div>
 
+                
+            </div>
             <button className="nav-btn" onClick={next}>➡️</button>
         </div>
     </div>
