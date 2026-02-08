@@ -22,7 +22,8 @@ function ModulePanel({ modules, problems } : Props) {
         normalize(m.name).includes(qn)
         );
     })
-    .slice(0, 5);
+    .slice(0, 3);
+
     return(
         <>
             <h1 className="title">
