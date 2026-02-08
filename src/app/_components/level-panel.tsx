@@ -2,13 +2,15 @@ import type { TrackLevel, Track } from "generated/prisma";
 import { createLevel } from "../admin/actions";
 import { useState } from "react";
 import AdminLevelDisplay from "./admin-level-display";
+import type { ModuleRow } from "../admin/types";
 
 type Props = {
     levels: TrackLevel[],
     tracks: Track[],
+    modules: ModuleRow[],
 };
 
-function LevelPanel({ levels, tracks } : Props) {
+function LevelPanel({ levels, tracks, modules } : Props) {
     const [q, setQ] = useState("");
     
     const trackMap = Object.fromEntries(tracks.map(t => [t.id, t.name]));
@@ -53,7 +55,7 @@ function LevelPanel({ levels, tracks } : Props) {
                 <button type="submit">Create Level</button>
             </form>
 
-            {/* Add Modules to Level */}
+            {/* Edit Level */}
             <h2 className="subtitle">
                 Edit Level
             </h2>
@@ -69,8 +71,10 @@ function LevelPanel({ levels, tracks } : Props) {
                 <AdminLevelDisplay
                     key={l.id}
                     code={l.code}
+                    levelId={l.id}
                     trackId={l.trackId}
                     trackName={trackMap[l.trackId]}
+                    modules={modules}
                 />
             ))}
         </>

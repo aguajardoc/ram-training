@@ -173,6 +173,60 @@ export async function addUserToTrack(userId: string, trackId: string) {
   redirect("/admin");
 }
 
+export async function addModuleToLevel(formData: FormData) {
+  const session = await auth();
+  if (!session || session.user.role !== "ADMIN") redirect("/");
+
+  const moduleId = formData.get("moduleId") as string;
+  const trackLevelId = formData.get("trackLevelId") as string;
+
+  const exists = await db.levelModule.findUnique({
+    where: {
+      trackLevelId_moduleId: {
+        moduleId,
+        trackLevelId,
+      },
+    },
+  });
+
+  if (exists) redirect("/admin");
+
+  await db.levelModule.create({
+    data: {
+      moduleId,
+      trackLevelId
+    }
+  })
+}
+
+export async function deleteModuleFromLevel(formData: FormData) {
+  const session = await auth();
+  if (!session || session.user.role !== "ADMIN") redirect("/");
+
+  const moduleId = formData.get("moduleId") as string;
+  const trackLevelId = formData.get("trackLevelId") as string;
+
+  const exists = await db.levelModule.findUnique({
+    where: {
+      trackLevelId_moduleId: {
+        moduleId,
+        trackLevelId,
+      },
+    },
+  });
+
+  if (!exists) redirect("/admin");
+
+  await db.levelModule.delete({
+    where: {
+      trackLevelId_moduleId: {
+        moduleId,
+        trackLevelId,
+      },
+    },
+  })
+}
+
 export async function deleteUserFromTrack(userId: string, trackId: string) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
@@ -214,6 +268,15 @@ export async function deleteTrack(id: string) {
   if (!session || session.user.role !== "ADMIN") redirect("/");
 
   await db.track.delete({ where: { id }});
+
+  redirect("/admin");
+}
+
+export async function deleteTrackLevel(id: string) {
+  const session = await auth();
+  if (!session || session.user.role !== "ADMIN") redirect("/");
+
+  await db.trackLevel.delete({ where: { id }});
 
   redirect("/admin");
 }
