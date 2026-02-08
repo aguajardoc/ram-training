@@ -9,8 +9,17 @@ import "../../styles/globals.css"
 function Train() {
     const { data: problems, isLoading } = api.problem.all.useQuery();
     const { data: session } = useSession();
+    const { data: hasChosenLevel } = api.user.hasChosenLevel.useQuery();
 
     if (!session) redirect("/sign-in")
+
+    if (!hasChosenLevel) {
+        return (
+            <div>
+                Choose a Level!
+            </div>
+        )
+    }
 
     if (isLoading) {
         return (
