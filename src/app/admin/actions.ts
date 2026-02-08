@@ -249,8 +249,9 @@ export async function createLevel(formData : FormData) {
   if (!session || session.user.role !== "ADMIN") redirect("/");
 
   const code = formData.get("code") as string;
+  const trackId = formData.get("trackId") as string;
 
-  await db.trackLevel.create({ data: {code}});
+  await db.trackLevel.create({ data: {code, trackId}});
 
   redirect("/admin")
 }
