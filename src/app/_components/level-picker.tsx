@@ -39,7 +39,7 @@ function LevelPicker({ userId } : Props) {
   const next = () => setIdx((i) => (i + 1) % levels.length);
 
   return (
-    <div className="page">
+    <div className="empty-page">
         <div className="level-picker-wrapper">
             <button className="nav-btn" onClick={prev}>⬅️</button>
             <div className="level-picker">
