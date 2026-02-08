@@ -48,6 +48,13 @@ function TrackPanel({ tracks, users } : Props) {
                 Edit Track
             </h2>
 
+            <input
+                type="text"
+                placeholder="search tracks..."
+                value={q}
+                onChange={e => setQ(e.target.value)}
+            />
+
             {filtered.map(t => (
                 <AdminTrackDisplay
                     key={t.id}
@@ -56,26 +63,6 @@ function TrackPanel({ tracks, users } : Props) {
                     users={users}
                 />
             ))}
-
-            {/* Create Level */}
-            {/* <h2 className="subtitle">
-                Create Level
-            </h2>
-            <form action={createLevel}>
-                <input
-                    name="code"
-                    placeholder="Level Code"
-                    required
-                />
-
-                <select name="track" id="track">
-                    {tracks.map(t => (
-                        <option value={t.id}>{t.name}</option>
-                    ))}
-                </select>
-
-                <button type="submit">Create Level</button>
-            </form> */}
         </>
     )
 }
