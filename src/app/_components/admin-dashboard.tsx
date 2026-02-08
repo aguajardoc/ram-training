@@ -6,6 +6,7 @@ import TrackPanel from "./track-panel";
 import LevelPanel from "./level-panel";
 import ModulePanel from "./module-panel";
 import ProblemPanel from "./problem-panel";
+import GreetingPanel from "./greeting-panel";
 
 import type { ModuleRow, ProblemRow, UserRow } from "../admin/types";
 
@@ -25,6 +26,7 @@ function AdminDashboard({ users, tracks, trackLevels, modules, problems } : Prop
             <LevelPanel levels={trackLevels} tracks={tracks} modules={modules}/>
             <TrackPanel tracks={tracks} users={users}/>
             <UserPanel users={users}/>
+            {/* <GreetingPanel/> WIP */}
         </div>
     )
 }
