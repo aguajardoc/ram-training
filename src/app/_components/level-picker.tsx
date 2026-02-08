@@ -1,8 +1,10 @@
+"use client"
 import { useState } from "react";
 import { addUserToTrack } from "../train/actions";
 
 type Props = {
     userId: string
+    mappings: { levelId: string; trackId: string }[];
 }
 
 const levels = [
@@ -122,7 +124,7 @@ const RequirementsIcon = () => (
     </svg>
 );
 
-function LevelPicker({ userId } : Props) {
+function LevelPicker({ userId, mappings } : Props) {
     const [idx, setIdx] = useState(1);
 
     const prev = () => setIdx((i) => (i - 1 + levels.length) % levels.length);
@@ -155,55 +157,67 @@ function LevelPicker({ userId } : Props) {
                                 transform: `translateX(-${idx * (100)}%)`,
                             }}
                         >
-                            {levels.map((level, i) => (
-                                <div
-                                key={level.id}
-                                className={`carousel-item ${i === idx ? "active" : ""}`}
-                                >
-                                    <div className="level-card">
-                                    <div className="level-header">
-                                        <DifficultyIcon difficulty={level.difficulty}/>
-                                        <span className="level-code">{level.id}</span>
+                            {levels.map((level, i) => {
+                                const activeTrack = mappings.find((m) => m.levelId === level.id);
+                                const trackId = activeTrack?.trackId || "";
+                                
+                                return (
+                                    <div
+                                    key={level.id}
+                                    className={`carousel-item ${i === idx ? "active" : ""}`}
+                                    >
+                                        <div className="level-card">
+                                        <div className="level-header">
+                                            <DifficultyIcon difficulty={level.difficulty}/>
+                                            <span className="level-code">{level.id}</span>
+                                        </div>
+
+                                        <div className="level-title">{level.title}</div>
+                                        <p className="level-desc">{level.description}</p>
+
+                                        <div className="level-section">
+                                            
+                                            <span className="level-label">
+                                                <TargetIcon/> Objective
+                                            </span>
+                                            <p className="level-desc">{level.aim}</p>
+                                        </div>
+
+                                        <div className="level-section">
+                                            <span className="level-label">
+                                                <RequirementsIcon/> Requirements
+                                            </span>
+                                            <p className="level-desc">{level.requirements}</p>
+                                        </div>
+                                        </div>
+
+                                        <form action={addUserToTrack} className="enroll-form">
+                                            <input 
+                                                type="hidden"
+                                                name="userId"
+                                                value={userId}
+                                            />
+                                            <input
+                                                type="hidden"
+                                                name="trackId"
+                                                value={trackId}
+                                            />
+
+                                            <button 
+                                                type="submit" 
+                                                className="journey-btn"
+                                                disabled={!trackId} 
+                                                style={{ opacity: trackId ? 1 : 0.5, cursor: trackId ? 'pointer' : 'not-allowed' }}
+                                            >
+                                                <span className="btn-glow" />
+                                                <span className="btn-text">
+                                                    {trackId ? "Are you ready for it?" : "Coming Soon"}
+                                                </span>
+                                            </button>
+                                        </form>
                                     </div>
-
-                                    <div className="level-title">{level.title}</div>
-                                    <p className="level-desc">{level.description}</p>
-
-                                    <div className="level-section">
-                                        
-                                        <span className="level-label">
-                                            <TargetIcon/> Objective
-                                        </span>
-                                        <p className="level-desc">{level.aim}</p>
-                                    </div>
-
-                                    <div className="level-section">
-                                        <span className="level-label">
-                                            <RequirementsIcon/> Requirements
-                                        </span>
-                                        <p className="level-desc">{level.requirements}</p>
-                                    </div>
-                                    </div>
-
-                                    <form action={addUserToTrack} className="enroll-form">
-                                        <input 
-                                            type="hidden"
-                                            name="userId"
-                                            value={userId}
-                                        />
-                                        <input
-                                            type="hidden"
-                                            name="trackId"
-                                            // value={trackId}
-                                        />
-
-                                        <button type="submit" className="journey-btn">
-                                            <span className="btn-glow" />
-                                            <span className="btn-text">Are you ready for it?</span>
-                                        </button>
-                                    </form>
-                                </div>
-                            ))}
+                                )})
+                            }
                         </div>
                     </div>
 
