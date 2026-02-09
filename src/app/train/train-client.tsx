@@ -25,7 +25,7 @@ export default function TrainClient({ userId, levelMappings }: Props) {
   if (!hasChosenLevel) {
     return (
       <div>
-        <LevelPicker userId={userId} mappings={levelMappings} />
+        <LevelPicker userId={userId} mappings={levelMappings}/>
       </div>
     );
   }
@@ -43,6 +43,9 @@ export default function TrainClient({ userId, levelMappings }: Props) {
           problemURL={p.url}
         />
       ))}
+
+      {/* Change Level */}
+      <LevelPicker userId={userId} mappings={levelMappings}/>
     </div>
   );
 }

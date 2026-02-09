@@ -23,5 +23,5 @@ export async function addUserToTrack(formData : FormData) {
     },
   });
 
-  redirect("/admin");
+  redirect("/train");
 }
