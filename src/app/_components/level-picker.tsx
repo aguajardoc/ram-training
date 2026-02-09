@@ -3,9 +3,10 @@ import { useState } from "react";
 import { addUserToTrack } from "../train/actions";
 
 type Props = {
-    userId: string
-    mappings: { levelId: string; trackId: string }[];
-}
+    userId: string,
+    mappings: { levelId: string; trackId: string }[],
+    enrolledTrackIds: string[],
+};
 
 const levels = [
   {
@@ -124,7 +125,7 @@ const RequirementsIcon = () => (
     </svg>
 );
 
-function LevelPicker({ userId, mappings } : Props) {
+function LevelPicker({ userId, mappings, enrolledTrackIds } : Props) {
     const [idx, setIdx] = useState(1);
 
     const prev = () => setIdx((i) => (i - 1 + levels.length) % levels.length);
@@ -160,6 +161,7 @@ function LevelPicker({ userId, mappings } : Props) {
                             {levels.map((level, i) => {
                                 const activeTrack = mappings.find((m) => m.levelId === level.id);
                                 const trackId = activeTrack?.trackId || "";
+                                const isEnrolled = enrolledTrackIds.includes(trackId);
                                 
                                 return (
                                     <div
@@ -206,12 +208,15 @@ function LevelPicker({ userId, mappings } : Props) {
                                             <button 
                                                 type="submit" 
                                                 className="journey-btn"
-                                                disabled={!trackId} 
-                                                style={{ opacity: trackId ? 1 : 0.5, cursor: trackId ? 'pointer' : 'not-allowed' }}
+                                                disabled={!trackId || isEnrolled}
+                                                style={{ 
+                                                    opacity: (!trackId || isEnrolled) ? 0.5 : 1, 
+                                                    cursor: (!trackId || isEnrolled) ? 'not-allowed' : 'pointer' 
+                                                }}
                                             >
                                                 <span className="btn-glow" />
                                                 <span className="btn-text">
-                                                    {trackId ? "Are you ready for it?" : "Coming Soon"}
+                                                    {isEnrolled ? "Already in it!" : "Are you ready for it?"}
                                                 </span>
                                             </button>
                                         </form>

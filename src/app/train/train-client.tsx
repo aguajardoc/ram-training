@@ -6,11 +6,12 @@ import "../../styles/level-picker.css";
 import "../../styles/globals.css";
 
 type Props = {
-  userId: string;
-  levelMappings: any[];
+  userId: string,
+  levelMappings: any[],
+  enrolledTrackIds: string[],
 };
 
-export default function TrainClient({ userId, levelMappings }: Props) {
+export default function TrainClient({ userId, levelMappings, enrolledTrackIds }: Props) {
   const { data: problems, isLoading } = api.problem.all.useQuery();
   const { data: hasChosenLevel, isLoading: isCheckingLevel } = api.user.hasChosenLevel.useQuery();
 
@@ -25,7 +26,7 @@ export default function TrainClient({ userId, levelMappings }: Props) {
   if (!hasChosenLevel) {
     return (
       <div>
-        <LevelPicker userId={userId} mappings={levelMappings}/>
+        <LevelPicker userId={userId} mappings={levelMappings} enrolledTrackIds={enrolledTrackIds}/>
       </div>
     );
   }
@@ -45,7 +46,7 @@ export default function TrainClient({ userId, levelMappings }: Props) {
       ))}
 
       {/* Change Level */}
-      <LevelPicker userId={userId} mappings={levelMappings}/>
+      <LevelPicker userId={userId} mappings={levelMappings} enrolledTrackIds={enrolledTrackIds}/>
     </div>
   );
 }

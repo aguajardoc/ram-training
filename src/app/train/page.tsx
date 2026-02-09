@@ -9,10 +9,19 @@ async function Train() {
 
     const levelMappings = await db.levelToTrack.findMany();
 
+    const userEnrollments = await db.userTrack.findMany({
+        where: { userId: session.user.id },
+        select: { trackId: true }
+    });
+
+  
+    const enrolledTrackIds = userEnrollments.map(u => u.trackId);
+
     return (
         <TrainClient
             userId={session.user.id}
             levelMappings={levelMappings}
+            enrolledTrackIds={enrolledTrackIds}
         />
     )
 }
