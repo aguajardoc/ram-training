@@ -51,24 +51,25 @@ const CommentsIcon = ({ onClick } : IconProps) => (
 );
 
 const fields = ["Read", "Think", "Code", "Debug"];
-type ValueKey = "submissions" | "reading" | "thinking" | "coding" | "debugging";
+type ValueKey = "submissions" | "reading" | "thinking" | "coding" | "debugging" | "perceivedDifficulty";
 
 function Problem({ problemType, problemName, problemURL } : ProblemProps) {
     const [commenting, setCommenting] = useState(false);
-    const [counts, setCounts] = useState<Record<ValueKey, number>>({
+    const [values, setValues] = useState<Record<ValueKey, number>>({
         submissions: 0,
         reading: 0,
         thinking: 0,
         coding: 0,
         debugging: 0,
-    })
+        perceivedDifficulty: 0,
+    });
 
-    const setCount = (key: ValueKey, val: Number) => setCounts(t => ({ ...t, [key]: val }));
+    const setValue = (key: ValueKey, val: Number) => setValues(t => ({ ...t, [key]: val }));
     const totalTime = 
-        counts.reading + 
-        counts.thinking + 
-        counts.coding + 
-        counts.debugging;
+        values.reading + 
+        values.thinking + 
+        values.coding + 
+        values.debugging;
 
     const handleClick = () => setCommenting(true);
 
@@ -91,8 +92,10 @@ function Problem({ problemType, problemName, problemURL } : ProblemProps) {
             {/* Submit Count Field */}
             <InputField
                 fieldType={"Submits"}
-                value={counts["submissions"]}
-                onChange={v => setCount("submissions", v)}
+                value={values["submissions"]}
+                onChange={v => setValue("submissions", v)}
+                lowerBound={0}
+                upperBound={10000}
             />
 
             {/* Time-tracking Fields */}
@@ -103,8 +106,10 @@ function Problem({ problemType, problemName, problemURL } : ProblemProps) {
                     <InputField
                         key={f}
                         fieldType={f}
-                        value={counts[key]}
-                        onChange={v => setCount(key, v)}
+                        value={values[key]}
+                        onChange={v => setValue(key, v)}
+                        lowerBound={0}
+                        upperBound={10000}
                     />
                 );
             })}
@@ -115,6 +120,8 @@ function Problem({ problemType, problemName, problemURL } : ProblemProps) {
                 fieldType={"Total Time"}
                 value={totalTime}
                 editable={false}
+                lowerBound={0}
+                upperBound={10000}
             />
 
             {/* On Your Own Dropdown */}
@@ -122,8 +129,11 @@ function Problem({ problemType, problemName, problemURL } : ProblemProps) {
 
             {/* Perceived Difficulty Level */}
             <InputField
-                fieldType={"Difficulty (0-10)"}
-                value={totalTime}
+                fieldType={"Difficulty"}
+                value={values["perceivedDifficulty"]}
+                onChange={v => setValue("perceivedDifficulty", v)}
+                lowerBound={0}
+                upperBound={10}
             />
 
             {/* Comments */}
