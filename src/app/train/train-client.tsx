@@ -20,6 +20,14 @@ export default function TrainClient({ userId, levelMappings, enrolledTrackIds }:
   const { data: hasChosenLevel, isLoading: isCheckingLevel } = api.user.hasChosenLevel.useQuery();
   const [editingLevel, setEditingLevel] = useState(false);
 
+  if (isLoading || isCheckingLevel) {
+    return (
+      <div className="loading">
+        Fetching cool problems, please wait!
+      </div>
+    );
+  }
+
   // Force user to pick a track first
   if (!hasChosenLevel || editingLevel) {
     return (
@@ -35,14 +43,6 @@ export default function TrainClient({ userId, levelMappings, enrolledTrackIds }:
           </button>
           </div>
         )}
-      </div>
-    );
-  }
-
-  if (isLoading || isCheckingLevel) {
-    return (
-      <div className="loading">
-        Fetching cool problems, please wait!
       </div>
     );
   }
