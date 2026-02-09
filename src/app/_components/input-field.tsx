@@ -1,13 +1,15 @@
 import '../../styles/problem.css'
 
 type Props = {
-  fieldType: string
-  value?: number
-  editable?: boolean
-  onChange?: (v: number) => void
+  fieldType: string,
+  value?: number,
+  editable?: boolean,
+  onChange?: (v: number) => void,
+  lowerBound: number,
+  upperBound: number,
 };
 
-function InputField({ fieldType, value, editable = true, onChange } : Props) {
+function InputField({ fieldType, value, editable = true, onChange, lowerBound, upperBound } : Props) {
     return (
     <div className="field">
       <div className="field-title">
@@ -21,7 +23,9 @@ function InputField({ fieldType, value, editable = true, onChange } : Props) {
         disabled={!editable}
         onChange={
           editable && onChange 
-            ? e => onChange(Math.min(Math.ceil(Number(e.target.value)), 1440))
+            ? e => onChange(
+              Math.max(lowerBound, Math.min(Math.ceil(Number(e.target.value)), upperBound))
+            )
             : undefined
         }
       />
