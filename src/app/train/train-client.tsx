@@ -13,18 +13,14 @@ type Props = {
 };
 
 export default function TrainClient({ userId, levelMappings, enrolledTrackIds }: Props) {
-  const { data: problems, isLoading } = api.problem.all.useQuery();
+  const { data: problems, isLoading } = api.problem.getProblemsByTrack.useQuery(
+    { trackId: enrolledTrackIds[0] ?? ""},
+    { enabled: !!enrolledTrackIds[0] }
+  );
   const { data: hasChosenLevel, isLoading: isCheckingLevel } = api.user.hasChosenLevel.useQuery();
   const [editingLevel, setEditingLevel] = useState(false);
 
-  if (isLoading || isCheckingLevel) {
-    return (
-      <div className="loading">
-        Fetching cool problems, please wait!
-      </div>
-    );
-  }
-
+  // Force user to pick a track first
   if (!hasChosenLevel || editingLevel) {
     return (
       <div>
@@ -43,6 +39,15 @@ export default function TrainClient({ userId, levelMappings, enrolledTrackIds }:
     );
   }
 
+  if (isLoading || isCheckingLevel) {
+    return (
+      <div className="loading">
+        Fetching cool problems, please wait!
+      </div>
+    );
+  }
+
+  // Render problems available to user
   return (
     <div className="page">
       <h1 className="title">TRAINING</h1>
@@ -51,9 +56,9 @@ export default function TrainClient({ userId, levelMappings, enrolledTrackIds }:
       {problems?.map((p) => (
         <Problem
           key={p.id}
-          problemType={p.type}
-          problemName={p.name}
-          problemURL={p.url}
+          problemType={p.problemType}
+          problemName={p.problem.name}
+          problemURL={p.problem.url}
         />
       ))}
 

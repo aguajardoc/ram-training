@@ -21,4 +21,32 @@ export const problemRouter = createTRPCRouter({
     .mutation(({ ctx, input }) => {
       return ctx.db.problem.create({ data: input })
     }),
+
+    getProblemsByTrack: protectedProcedure
+    .input(z.object({ trackId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      return await ctx.db.moduleProblem.findMany({
+        where: {
+          module: {
+            levelModules: {
+              some: {
+                trackLevel: {
+                  trackId: input.trackId,
+                },
+              },
+            },
+          },
+        },
+        include: {
+          problem: true,
+          module: {
+            select: { name: true }
+          }
+        },
+        orderBy: [
+          { module: { id: 'asc' } },
+          { order: 'asc' }
+        ],
+      });
+    }),
 })
