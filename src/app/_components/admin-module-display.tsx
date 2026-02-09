@@ -119,8 +119,8 @@ function AdminModuleDisplay({ id, name, launchDate, hidden, moduleProblems, prob
                             </select>
 
                             <select name="difficulty" required>
-                                <option value="EASY">Easy</option>
                                 <option value="NORMAL">Normal</option>
+                                <option value="EASY">Easy</option>
                                 <option value="HARD">Hard</option>
                             </select>
 
