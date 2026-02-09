@@ -6,6 +6,7 @@ import SolvedField from "./solved-field";
 import SelfcheckField from "./selfcheck-field";
 
 import '../../styles/problem.css'
+import type { ProblemDifficulty } from "generated/prisma";
 
 const fields = ["Reading", "Thinking", "Coding", "Debugging"];
 type ValueKey = "submissions" | "reading" | "thinking" | "coding" | "debugging";
@@ -14,6 +15,7 @@ type Props = {
     problemType: string,
     problemName: string,
     problemURL: string,
+    problemDifficulty: ProblemDifficulty,
 };
 
 function Problem({ problemType, problemName, problemURL } : Props) {
@@ -34,6 +36,7 @@ function Problem({ problemType, problemName, problemURL } : Props) {
 
     return (
     <div>
+        {/* Change problem color based on difficulty */}
         <div className="problem">
             {/* Problem Name */}
             <ProblemName
@@ -42,11 +45,13 @@ function Problem({ problemType, problemName, problemURL } : Props) {
             />
 
             {/* Solved Field */}
+            {/* Fix this! */}
             <SolvedField
                 problemType={problemType}    
             />
 
             {/* Comments */}
+            {/* use svg for icon */}
 
             {/* Submit Count Field */}
             <InputField
@@ -78,7 +83,9 @@ function Problem({ problemType, problemName, problemURL } : Props) {
             />
 
             {/* On Your Own Dropdown */}
-            <SelfcheckField/>            
+            <SelfcheckField/> 
+
+            {/* Perceived Difficulty Level */}
         </div>
     </div>
     )

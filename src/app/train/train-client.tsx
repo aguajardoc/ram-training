@@ -51,16 +51,22 @@ export default function TrainClient({ userId, levelMappings, enrolledTrackIds }:
   return (
     <div className="page">
       <h1 className="title">TRAINING</h1>
+
+      {/* Module List */}
+      {/* map list of modules... */}
+
+          {/* Module Name */}
       
-      {/* Problem List */}
-      {problems?.map((p) => (
-        <Problem
-          key={p.id}
-          problemType={p.problemType}
-          problemName={p.problem.name}
-          problemURL={p.problem.url}
-        />
-      ))}
+          {/* Problem List */}
+          {problems?.map((p) => (
+            <Problem
+              key={p.id}
+              problemType={p.problemType}
+              problemName={p.problem.name}
+              problemURL={p.problem.url}
+              problemDifficulty={p.difficulty}
+            />
+          ))}
 
       {/* Change Level */}
       <button 
