@@ -121,7 +121,7 @@ function Problem({ problemType, problemName, problemURL } : ProblemProps) {
                 value={totalTime}
                 editable={false}
                 lowerBound={0}
-                upperBound={10000}
+                upperBound={100000}
             />
 
             {/* On Your Own Dropdown */}
