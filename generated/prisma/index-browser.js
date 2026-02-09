@@ -171,6 +171,7 @@ exports.Prisma.SolveScalarFieldEnum = {
   thinkTimeMinutes: 'thinkTimeMinutes',
   codeTimeMinutes: 'codeTimeMinutes',
   debugTimeMinutes: 'debugTimeMinutes',
+  perceivedDifficulty: 'perceivedDifficulty',
   notes: 'notes',
   mood: 'mood',
   onYourOwn: 'onYourOwn',

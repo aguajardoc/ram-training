@@ -86,6 +86,10 @@ function Problem({ problemType, problemName, problemURL } : Props) {
             <SelfcheckField/> 
 
             {/* Perceived Difficulty Level */}
+            <InputField
+                fieldType={"Difficulty (0-10)"}
+                value={totalTime}
+            />
         </div>
     </div>
     )

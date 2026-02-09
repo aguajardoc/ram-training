@@ -8747,6 +8747,7 @@ export namespace Prisma {
     thinkTimeMinutes: number | null
     codeTimeMinutes: number | null
     debugTimeMinutes: number | null
+    perceivedDifficulty: number | null
   }
 
   export type SolveSumAggregateOutputType = {
@@ -8755,6 +8756,7 @@ export namespace Prisma {
     thinkTimeMinutes: number | null
     codeTimeMinutes: number | null
     debugTimeMinutes: number | null
+    perceivedDifficulty: number | null
   }
 
   export type SolveMinAggregateOutputType = {
@@ -8766,6 +8768,7 @@ export namespace Prisma {
     thinkTimeMinutes: number | null
     codeTimeMinutes: number | null
     debugTimeMinutes: number | null
+    perceivedDifficulty: number | null
     notes: string | null
     mood: string | null
     onYourOwn: boolean | null
@@ -8782,6 +8785,7 @@ export namespace Prisma {
     thinkTimeMinutes: number | null
     codeTimeMinutes: number | null
     debugTimeMinutes: number | null
+    perceivedDifficulty: number | null
     notes: string | null
     mood: string | null
     onYourOwn: boolean | null
@@ -8798,6 +8802,7 @@ export namespace Prisma {
     thinkTimeMinutes: number
     codeTimeMinutes: number
     debugTimeMinutes: number
+    perceivedDifficulty: number
     notes: number
     mood: number
     onYourOwn: number
@@ -8813,6 +8818,7 @@ export namespace Prisma {
     thinkTimeMinutes?: true
     codeTimeMinutes?: true
     debugTimeMinutes?: true
+    perceivedDifficulty?: true
   }
 
   export type SolveSumAggregateInputType = {
@@ -8821,6 +8827,7 @@ export namespace Prisma {
     thinkTimeMinutes?: true
     codeTimeMinutes?: true
     debugTimeMinutes?: true
+    perceivedDifficulty?: true
   }
 
   export type SolveMinAggregateInputType = {
@@ -8832,6 +8839,7 @@ export namespace Prisma {
     thinkTimeMinutes?: true
     codeTimeMinutes?: true
     debugTimeMinutes?: true
+    perceivedDifficulty?: true
     notes?: true
     mood?: true
     onYourOwn?: true
@@ -8848,6 +8856,7 @@ export namespace Prisma {
     thinkTimeMinutes?: true
     codeTimeMinutes?: true
     debugTimeMinutes?: true
+    perceivedDifficulty?: true
     notes?: true
     mood?: true
     onYourOwn?: true
@@ -8864,6 +8873,7 @@ export namespace Prisma {
     thinkTimeMinutes?: true
     codeTimeMinutes?: true
     debugTimeMinutes?: true
+    perceivedDifficulty?: true
     notes?: true
     mood?: true
     onYourOwn?: true
@@ -8967,6 +8977,7 @@ export namespace Prisma {
     thinkTimeMinutes: number
     codeTimeMinutes: number
     debugTimeMinutes: number
+    perceivedDifficulty: number
     notes: string | null
     mood: string | null
     onYourOwn: boolean
@@ -9002,6 +9013,7 @@ export namespace Prisma {
     thinkTimeMinutes?: boolean
     codeTimeMinutes?: boolean
     debugTimeMinutes?: boolean
+    perceivedDifficulty?: boolean
     notes?: boolean
     mood?: boolean
     onYourOwn?: boolean
@@ -9020,6 +9032,7 @@ export namespace Prisma {
     thinkTimeMinutes?: boolean
     codeTimeMinutes?: boolean
     debugTimeMinutes?: boolean
+    perceivedDifficulty?: boolean
     notes?: boolean
     mood?: boolean
     onYourOwn?: boolean
@@ -9038,6 +9051,7 @@ export namespace Prisma {
     thinkTimeMinutes?: boolean
     codeTimeMinutes?: boolean
     debugTimeMinutes?: boolean
+    perceivedDifficulty?: boolean
     notes?: boolean
     mood?: boolean
     onYourOwn?: boolean
@@ -9056,6 +9070,7 @@ export namespace Prisma {
     thinkTimeMinutes?: boolean
     codeTimeMinutes?: boolean
     debugTimeMinutes?: boolean
+    perceivedDifficulty?: boolean
     notes?: boolean
     mood?: boolean
     onYourOwn?: boolean
@@ -9063,7 +9078,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type SolveOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "problemId" | "submitCount" | "readTimeMinutes" | "thinkTimeMinutes" | "codeTimeMinutes" | "debugTimeMinutes" | "notes" | "mood" | "onYourOwn" | "createdAt" | "updatedAt", ExtArgs["result"]["solve"]>
+  export type SolveOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "problemId" | "submitCount" | "readTimeMinutes" | "thinkTimeMinutes" | "codeTimeMinutes" | "debugTimeMinutes" | "perceivedDifficulty" | "notes" | "mood" | "onYourOwn" | "createdAt" | "updatedAt", ExtArgs["result"]["solve"]>
   export type SolveInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     problem?: boolean | ProblemDefaultArgs<ExtArgs>
@@ -9092,6 +9107,7 @@ export namespace Prisma {
       thinkTimeMinutes: number
       codeTimeMinutes: number
       debugTimeMinutes: number
+      perceivedDifficulty: number
       notes: string | null
       mood: string | null
       onYourOwn: boolean
@@ -9530,6 +9546,7 @@ export namespace Prisma {
     readonly thinkTimeMinutes: FieldRef<"Solve", 'Int'>
     readonly codeTimeMinutes: FieldRef<"Solve", 'Int'>
     readonly debugTimeMinutes: FieldRef<"Solve", 'Int'>
+    readonly perceivedDifficulty: FieldRef<"Solve", 'Int'>
     readonly notes: FieldRef<"Solve", 'String'>
     readonly mood: FieldRef<"Solve", 'String'>
     readonly onYourOwn: FieldRef<"Solve", 'Boolean'>
@@ -16430,6 +16447,7 @@ export namespace Prisma {
     thinkTimeMinutes: 'thinkTimeMinutes',
     codeTimeMinutes: 'codeTimeMinutes',
     debugTimeMinutes: 'debugTimeMinutes',
+    perceivedDifficulty: 'perceivedDifficulty',
     notes: 'notes',
     mood: 'mood',
     onYourOwn: 'onYourOwn',
@@ -16980,6 +16998,7 @@ export namespace Prisma {
     thinkTimeMinutes?: IntFilter<"Solve"> | number
     codeTimeMinutes?: IntFilter<"Solve"> | number
     debugTimeMinutes?: IntFilter<"Solve"> | number
+    perceivedDifficulty?: IntFilter<"Solve"> | number
     notes?: StringNullableFilter<"Solve"> | string | null
     mood?: StringNullableFilter<"Solve"> | string | null
     onYourOwn?: BoolFilter<"Solve"> | boolean
@@ -16998,6 +17017,7 @@ export namespace Prisma {
     thinkTimeMinutes?: SortOrder
     codeTimeMinutes?: SortOrder
     debugTimeMinutes?: SortOrder
+    perceivedDifficulty?: SortOrder
     notes?: SortOrderInput | SortOrder
     mood?: SortOrderInput | SortOrder
     onYourOwn?: SortOrder
@@ -17020,6 +17040,7 @@ export namespace Prisma {
     thinkTimeMinutes?: IntFilter<"Solve"> | number
     codeTimeMinutes?: IntFilter<"Solve"> | number
     debugTimeMinutes?: IntFilter<"Solve"> | number
+    perceivedDifficulty?: IntFilter<"Solve"> | number
     notes?: StringNullableFilter<"Solve"> | string | null
     mood?: StringNullableFilter<"Solve"> | string | null
     onYourOwn?: BoolFilter<"Solve"> | boolean
@@ -17038,6 +17059,7 @@ export namespace Prisma {
     thinkTimeMinutes?: SortOrder
     codeTimeMinutes?: SortOrder
     debugTimeMinutes?: SortOrder
+    perceivedDifficulty?: SortOrder
     notes?: SortOrderInput | SortOrder
     mood?: SortOrderInput | SortOrder
     onYourOwn?: SortOrder
@@ -17062,6 +17084,7 @@ export namespace Prisma {
     thinkTimeMinutes?: IntWithAggregatesFilter<"Solve"> | number
     codeTimeMinutes?: IntWithAggregatesFilter<"Solve"> | number
     debugTimeMinutes?: IntWithAggregatesFilter<"Solve"> | number
+    perceivedDifficulty?: IntWithAggregatesFilter<"Solve"> | number
     notes?: StringNullableWithAggregatesFilter<"Solve"> | string | null
     mood?: StringNullableWithAggregatesFilter<"Solve"> | string | null
     onYourOwn?: BoolWithAggregatesFilter<"Solve"> | boolean
@@ -17743,6 +17766,7 @@ export namespace Prisma {
     thinkTimeMinutes: number
     codeTimeMinutes: number
     debugTimeMinutes: number
+    perceivedDifficulty: number
     notes?: string | null
     mood?: string | null
     onYourOwn: boolean
@@ -17761,6 +17785,7 @@ export namespace Prisma {
     thinkTimeMinutes: number
     codeTimeMinutes: number
     debugTimeMinutes: number
+    perceivedDifficulty: number
     notes?: string | null
     mood?: string | null
     onYourOwn: boolean
@@ -17775,6 +17800,7 @@ export namespace Prisma {
     thinkTimeMinutes?: IntFieldUpdateOperationsInput | number
     codeTimeMinutes?: IntFieldUpdateOperationsInput | number
     debugTimeMinutes?: IntFieldUpdateOperationsInput | number
+    perceivedDifficulty?: IntFieldUpdateOperationsInput | number
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     mood?: NullableStringFieldUpdateOperationsInput | string | null
     onYourOwn?: BoolFieldUpdateOperationsInput | boolean
@@ -17793,6 +17819,7 @@ export namespace Prisma {
     thinkTimeMinutes?: IntFieldUpdateOperationsInput | number
     codeTimeMinutes?: IntFieldUpdateOperationsInput | number
     debugTimeMinutes?: IntFieldUpdateOperationsInput | number
+    perceivedDifficulty?: IntFieldUpdateOperationsInput | number
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     mood?: NullableStringFieldUpdateOperationsInput | string | null
     onYourOwn?: BoolFieldUpdateOperationsInput | boolean
@@ -17809,6 +17836,7 @@ export namespace Prisma {
     thinkTimeMinutes: number
     codeTimeMinutes: number
     debugTimeMinutes: number
+    perceivedDifficulty: number
     notes?: string | null
     mood?: string | null
     onYourOwn: boolean
@@ -17823,6 +17851,7 @@ export namespace Prisma {
     thinkTimeMinutes?: IntFieldUpdateOperationsInput | number
     codeTimeMinutes?: IntFieldUpdateOperationsInput | number
     debugTimeMinutes?: IntFieldUpdateOperationsInput | number
+    perceivedDifficulty?: IntFieldUpdateOperationsInput | number
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     mood?: NullableStringFieldUpdateOperationsInput | string | null
     onYourOwn?: BoolFieldUpdateOperationsInput | boolean
@@ -17839,6 +17868,7 @@ export namespace Prisma {
     thinkTimeMinutes?: IntFieldUpdateOperationsInput | number
     codeTimeMinutes?: IntFieldUpdateOperationsInput | number
     debugTimeMinutes?: IntFieldUpdateOperationsInput | number
+    perceivedDifficulty?: IntFieldUpdateOperationsInput | number
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     mood?: NullableStringFieldUpdateOperationsInput | string | null
     onYourOwn?: BoolFieldUpdateOperationsInput | boolean
@@ -18618,6 +18648,7 @@ export namespace Prisma {
     thinkTimeMinutes?: SortOrder
     codeTimeMinutes?: SortOrder
     debugTimeMinutes?: SortOrder
+    perceivedDifficulty?: SortOrder
     notes?: SortOrder
     mood?: SortOrder
     onYourOwn?: SortOrder
@@ -18631,6 +18662,7 @@ export namespace Prisma {
     thinkTimeMinutes?: SortOrder
     codeTimeMinutes?: SortOrder
     debugTimeMinutes?: SortOrder
+    perceivedDifficulty?: SortOrder
   }
 
   export type SolveMaxOrderByAggregateInput = {
@@ -18642,6 +18674,7 @@ export namespace Prisma {
     thinkTimeMinutes?: SortOrder
     codeTimeMinutes?: SortOrder
     debugTimeMinutes?: SortOrder
+    perceivedDifficulty?: SortOrder
     notes?: SortOrder
     mood?: SortOrder
     onYourOwn?: SortOrder
@@ -18658,6 +18691,7 @@ export namespace Prisma {
     thinkTimeMinutes?: SortOrder
     codeTimeMinutes?: SortOrder
     debugTimeMinutes?: SortOrder
+    perceivedDifficulty?: SortOrder
     notes?: SortOrder
     mood?: SortOrder
     onYourOwn?: SortOrder
@@ -18671,6 +18705,7 @@ export namespace Prisma {
     thinkTimeMinutes?: SortOrder
     codeTimeMinutes?: SortOrder
     debugTimeMinutes?: SortOrder
+    perceivedDifficulty?: SortOrder
   }
 
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -19830,6 +19865,7 @@ export namespace Prisma {
     thinkTimeMinutes: number
     codeTimeMinutes: number
     debugTimeMinutes: number
+    perceivedDifficulty: number
     notes?: string | null
     mood?: string | null
     onYourOwn: boolean
@@ -19846,6 +19882,7 @@ export namespace Prisma {
     thinkTimeMinutes: number
     codeTimeMinutes: number
     debugTimeMinutes: number
+    perceivedDifficulty: number
     notes?: string | null
     mood?: string | null
     onYourOwn: boolean
@@ -19917,6 +19954,7 @@ export namespace Prisma {
     thinkTimeMinutes?: IntFilter<"Solve"> | number
     codeTimeMinutes?: IntFilter<"Solve"> | number
     debugTimeMinutes?: IntFilter<"Solve"> | number
+    perceivedDifficulty?: IntFilter<"Solve"> | number
     notes?: StringNullableFilter<"Solve"> | string | null
     mood?: StringNullableFilter<"Solve"> | string | null
     onYourOwn?: BoolFilter<"Solve"> | boolean
@@ -20624,6 +20662,7 @@ export namespace Prisma {
     thinkTimeMinutes: number
     codeTimeMinutes: number
     debugTimeMinutes: number
+    perceivedDifficulty: number
     notes?: string | null
     mood?: string | null
     onYourOwn: boolean
@@ -20640,6 +20679,7 @@ export namespace Prisma {
     thinkTimeMinutes: number
     codeTimeMinutes: number
     debugTimeMinutes: number
+    perceivedDifficulty: number
     notes?: string | null
     mood?: string | null
     onYourOwn: boolean
@@ -20969,6 +21009,7 @@ export namespace Prisma {
     thinkTimeMinutes: number
     codeTimeMinutes: number
     debugTimeMinutes: number
+    perceivedDifficulty: number
     notes?: string | null
     mood?: string | null
     onYourOwn: boolean
@@ -20991,6 +21032,7 @@ export namespace Prisma {
     thinkTimeMinutes?: IntFieldUpdateOperationsInput | number
     codeTimeMinutes?: IntFieldUpdateOperationsInput | number
     debugTimeMinutes?: IntFieldUpdateOperationsInput | number
+    perceivedDifficulty?: IntFieldUpdateOperationsInput | number
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     mood?: NullableStringFieldUpdateOperationsInput | string | null
     onYourOwn?: BoolFieldUpdateOperationsInput | boolean
@@ -21007,6 +21049,7 @@ export namespace Prisma {
     thinkTimeMinutes?: IntFieldUpdateOperationsInput | number
     codeTimeMinutes?: IntFieldUpdateOperationsInput | number
     debugTimeMinutes?: IntFieldUpdateOperationsInput | number
+    perceivedDifficulty?: IntFieldUpdateOperationsInput | number
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     mood?: NullableStringFieldUpdateOperationsInput | string | null
     onYourOwn?: BoolFieldUpdateOperationsInput | boolean
@@ -21022,6 +21065,7 @@ export namespace Prisma {
     thinkTimeMinutes?: IntFieldUpdateOperationsInput | number
     codeTimeMinutes?: IntFieldUpdateOperationsInput | number
     debugTimeMinutes?: IntFieldUpdateOperationsInput | number
+    perceivedDifficulty?: IntFieldUpdateOperationsInput | number
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     mood?: NullableStringFieldUpdateOperationsInput | string | null
     onYourOwn?: BoolFieldUpdateOperationsInput | boolean
@@ -21195,6 +21239,7 @@ export namespace Prisma {
     thinkTimeMinutes: number
     codeTimeMinutes: number
     debugTimeMinutes: number
+    perceivedDifficulty: number
     notes?: string | null
     mood?: string | null
     onYourOwn: boolean
@@ -21236,6 +21281,7 @@ export namespace Prisma {
     thinkTimeMinutes?: IntFieldUpdateOperationsInput | number
     codeTimeMinutes?: IntFieldUpdateOperationsInput | number
     debugTimeMinutes?: IntFieldUpdateOperationsInput | number
+    perceivedDifficulty?: IntFieldUpdateOperationsInput | number
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     mood?: NullableStringFieldUpdateOperationsInput | string | null
     onYourOwn?: BoolFieldUpdateOperationsInput | boolean
@@ -21252,6 +21298,7 @@ export namespace Prisma {
     thinkTimeMinutes?: IntFieldUpdateOperationsInput | number
     codeTimeMinutes?: IntFieldUpdateOperationsInput | number
     debugTimeMinutes?: IntFieldUpdateOperationsInput | number
+    perceivedDifficulty?: IntFieldUpdateOperationsInput | number
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     mood?: NullableStringFieldUpdateOperationsInput | string | null
     onYourOwn?: BoolFieldUpdateOperationsInput | boolean
@@ -21267,6 +21314,7 @@ export namespace Prisma {
     thinkTimeMinutes?: IntFieldUpdateOperationsInput | number
     codeTimeMinutes?: IntFieldUpdateOperationsInput | number
     debugTimeMinutes?: IntFieldUpdateOperationsInput | number
+    perceivedDifficulty?: IntFieldUpdateOperationsInput | number
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     mood?: NullableStringFieldUpdateOperationsInput | string | null
     onYourOwn?: BoolFieldUpdateOperationsInput | boolean
