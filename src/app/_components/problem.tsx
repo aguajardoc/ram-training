@@ -8,17 +8,53 @@ import SelfcheckField from "./selfcheck-field";
 import '../../styles/problem.css'
 import type { ProblemDifficulty } from "generated/prisma";
 
-const fields = ["Reading", "Thinking", "Coding", "Debugging"];
-type ValueKey = "submissions" | "reading" | "thinking" | "coding" | "debugging";
-
-type Props = {
+type ProblemProps = {
     problemType: string,
     problemName: string,
     problemURL: string,
     problemDifficulty: ProblemDifficulty,
 };
 
-function Problem({ problemType, problemName, problemURL } : Props) {
+type IconProps = {
+    onClick?: () => void,
+}
+
+const CommentsIcon = ({ onClick } : IconProps) => (
+    <button 
+    className="icon-btn" 
+    onClick={onClick}
+    aria-label="View Comments" // Important for screen readers
+    type="button"
+  >
+    <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        viewBox="0 0 24 24" 
+        width="24" 
+        height="24" 
+        // 1. Force pure white instead of inheriting text color
+        fill="#646cff" 
+        style={{ display: 'inline-block', verticalAlign: 'middle' }}
+    >
+        {/* 2. Removed opacity=".3" here. 
+        Now the inner part is solid white, making it much brighter.
+        */}
+        <path 
+        d="m4 18l2-2h14V4H4z" 
+        />
+        
+        {/* Outer Outline */}
+        <path 
+        d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2m0 14H6l-2 2V4h16z" 
+        />
+    </svg>
+  </button>
+);
+
+const fields = ["Read", "Think", "Code", "Debug"];
+type ValueKey = "submissions" | "reading" | "thinking" | "coding" | "debugging";
+
+function Problem({ problemType, problemName, problemURL } : ProblemProps) {
+    const [commenting, setCommenting] = useState(false);
     const [counts, setCounts] = useState<Record<ValueKey, number>>({
         submissions: 0,
         reading: 0,
@@ -33,6 +69,8 @@ function Problem({ problemType, problemName, problemURL } : Props) {
         counts.thinking + 
         counts.coding + 
         counts.debugging;
+
+    const handleClick = () => setCommenting(true);
 
     return (
     <div>
@@ -50,12 +88,9 @@ function Problem({ problemType, problemName, problemURL } : Props) {
                 problemType={problemType}    
             />
 
-            {/* Comments */}
-            {/* use svg for icon */}
-
             {/* Submit Count Field */}
             <InputField
-                fieldType={"Submissions"}
+                fieldType={"Submits"}
                 value={counts["submissions"]}
                 onChange={v => setCount("submissions", v)}
             />
@@ -77,7 +112,7 @@ function Problem({ problemType, problemName, problemURL } : Props) {
 
             {/* Total Time Field */}
             <InputField
-                fieldType={"Total"}
+                fieldType={"Total Time"}
                 value={totalTime}
                 editable={false}
             />
@@ -90,6 +125,9 @@ function Problem({ problemType, problemName, problemURL } : Props) {
                 fieldType={"Difficulty (0-10)"}
                 value={totalTime}
             />
+
+            {/* Comments */}
+            <CommentsIcon onClick={handleClick}/>
         </div>
     </div>
     )

@@ -147,7 +147,7 @@ input:disabled {
   text-align: left;
   height: 108px;
 
-  color: #6b70f5;
+  color: #646cff;
 }
 
 .edit-item {
@@ -158,5 +158,5 @@ input:disabled {
 }
 
 .text {
-  color: #6b70f5
+  color: #646cff;
 }
