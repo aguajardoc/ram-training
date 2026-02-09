@@ -2,12 +2,21 @@
 import { useEffect, useRef } from "react";
 import NavbarItem from "./navbar-item";
 import "../../styles/navbar.css"
+import type { Session } from "next-auth";
+import type { Role } from "generated/prisma";
 
 const items = ["Train", "Leaderboard", "Sign Out", "Admin"];
 
-function Navbar() {
+type Props = {
+    session: Session | null,
+    role: Role | undefined,
+};
+
+function Navbar({ session, role } : Props) {
     const navbarRef = useRef<HTMLElement | null>(null);
     const lastScrollY = useRef(0);
+
+    if (!session) return(<></>)
 
     useEffect(() => {
         const handleScroll = () => {
@@ -35,11 +44,15 @@ function Navbar() {
     return (
         <div>
             <nav ref={navbarRef} className="navbar visible">
-                {items.map(i => 
-                    <NavbarItem
-                        key={i}
-                        ItemName={i}
-                    />
+                {items.map(i => {
+                    if (i === "Admin" && role !== "ADMIN") return null;
+                    return(
+                        <NavbarItem
+                            key={i}
+                            ItemName={i}
+                        />
+                    )
+                }
                 )}
             </nav>
         </div>

@@ -32,7 +32,10 @@ export default async function RootLayout({
         <SessionProvider  session={session}>
           <TRPCReactProvider>
             <BackgroundCanvas />
-            <Navbar />
+            <Navbar 
+              session={session}
+              role={session?.user.role}
+            />
             {children}
           </TRPCReactProvider>
         </SessionProvider>

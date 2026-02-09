@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import { api } from "~/trpc/react";
 import Problem from "../_components/problem";
 import LevelPicker from "../_components/level-picker";
@@ -14,6 +15,7 @@ type Props = {
 export default function TrainClient({ userId, levelMappings, enrolledTrackIds }: Props) {
   const { data: problems, isLoading } = api.problem.all.useQuery();
   const { data: hasChosenLevel, isLoading: isCheckingLevel } = api.user.hasChosenLevel.useQuery();
+  const [editingLevel, setEditingLevel] = useState(false);
 
   if (isLoading || isCheckingLevel) {
     return (
@@ -23,10 +25,20 @@ export default function TrainClient({ userId, levelMappings, enrolledTrackIds }:
     );
   }
 
-  if (!hasChosenLevel) {
+  if (!hasChosenLevel || editingLevel) {
     return (
       <div>
         <LevelPicker userId={userId} mappings={levelMappings} enrolledTrackIds={enrolledTrackIds}/>
+
+        {editingLevel && (
+          <div className="page">
+          <button 
+              className="journey-btn"
+              onClick={() => setEditingLevel(false)}>
+                Back
+          </button>
+          </div>
+        )}
       </div>
     );
   }
@@ -46,7 +58,11 @@ export default function TrainClient({ userId, levelMappings, enrolledTrackIds }:
       ))}
 
       {/* Change Level */}
-      <LevelPicker userId={userId} mappings={levelMappings} enrolledTrackIds={enrolledTrackIds}/>
+      <button 
+          className="journey-btn"
+          onClick={() => setEditingLevel(true)}>
+              Change Level
+      </button>
     </div>
   );
 }
