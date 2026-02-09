@@ -39,8 +39,7 @@ async function Admin() {
             }
         }),
     ]);
-    
-    // TODO: add an option to change which "starter" levels map to which tracks
+
     return (
         <AdminDashboard
             users={users}
