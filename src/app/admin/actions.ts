@@ -124,6 +124,10 @@ export async function deleteProblem(id: string) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
 
+  await db.moduleProblem.deleteMany({
+    where: { problemId: id }
+  });
+
   await db.problem.delete({ where: { id } });
 
   redirect("/admin");
@@ -238,6 +242,8 @@ export async function deleteUserFromTrack(userId: string, trackId: string) {
 export async function deleteModule(id: string) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
+
+  await db.levelModule.deleteMany({ where: { moduleId: id }});
 
   await db.module.delete({ where: { id } });
 
