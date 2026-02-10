@@ -134,7 +134,7 @@ function Problem({ problemType, problemName, problemURL, problemDifficulty } : P
                 return (
                     <InputField
                         key={f}
-                        fieldType={f}
+                        fieldType={`${f}`}
                         value={values[key]}
                         onChange={v => setValue(key, v)}
                         lowerBound={0}
@@ -146,7 +146,7 @@ function Problem({ problemType, problemName, problemURL, problemDifficulty } : P
 
             {/* Total Time Field */}
             <InputField
-                fieldType={"Total Time"}
+                fieldType={"Total"}
                 value={totalTime}
                 editable={false}
                 lowerBound={0}

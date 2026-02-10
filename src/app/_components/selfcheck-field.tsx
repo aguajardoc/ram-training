@@ -2,7 +2,7 @@ function SelfcheckField() {
     return(
         <div>
             <div className="field-title">
-                On your own?
+                By yourself?
             </div>
             
             <select className="select">
