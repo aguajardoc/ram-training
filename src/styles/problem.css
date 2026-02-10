@@ -118,3 +118,7 @@ input[type=number] {
 .icon-btn:active {
   transform: scale(0.95);
 }
+
+.module {
+  margin-bottom: 16px;
+}
