@@ -27,8 +27,6 @@ const colorMap: Record<string, string> = {
 };
 
 const CommentsIcon = ({ onClick, classModifier } : IconProps) => {
-    
-
     return (
     <button 
     className="icon-btn" 
@@ -39,8 +37,8 @@ const CommentsIcon = ({ onClick, classModifier } : IconProps) => {
     <svg 
         xmlns="http://www.w3.org/2000/svg" 
         viewBox="0 0 24 24" 
-        width="24" 
-        height="24" 
+        width="26" 
+        height="26" 
         
         fill={colorMap[classModifier]}
         style={{ display: 'inline-block', verticalAlign: 'middle' }}
@@ -55,6 +53,29 @@ const CommentsIcon = ({ onClick, classModifier } : IconProps) => {
     </svg>
   </button>
 )};
+
+const SaveIcon = ({ onClick, classModifier }: IconProps) => (
+  <button 
+    className="icon-btn save-btn" 
+    onClick={onClick}
+    type="button"
+    style={{ color: colorMap[classModifier] }} 
+  >
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      viewBox="0 0 24 24" 
+      width="28" 
+      height="28"
+    >
+      <path
+        fill="currentColor"
+        fillRule="evenodd"
+        d="M5 3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7.414A2 2 0 0 0 20.414 6L18 3.586A2 2 0 0 0 16.586 3zm10 11a3 3 0 1 1-6 0a3 3 0 0 1 6 0M8 7V5h8v2a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1"
+        clipRule="evenodd"
+      />
+    </svg>
+  </button>
+);
 
 const fields = ["Read", "Think", "Code", "Debug"];
 type ValueKey = "submissions" | "read" | "think" | "code" | "debug" | "perceivedDifficulty";
@@ -93,7 +114,6 @@ function Problem({ problemType, problemName, problemURL, problemDifficulty } : P
             />
 
             {/* Solved Field */}
-            {/* Fix this! */}
             <SolvedField
                 problemType={problemType}    
             />
@@ -147,6 +167,12 @@ function Problem({ problemType, problemName, problemURL, problemDifficulty } : P
 
             {/* Comments */}
             <CommentsIcon 
+                onClick={handleClick}
+                classModifier={classModifier}
+            />
+
+            {/* Save Entry */}
+            <SaveIcon
                 onClick={handleClick}
                 classModifier={classModifier}
             />
