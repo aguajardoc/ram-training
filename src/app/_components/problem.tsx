@@ -47,25 +47,25 @@ const CommentsIcon = ({ onClick } : IconProps) => (
 );
 
 const fields = ["Read", "Think", "Code", "Debug"];
-type ValueKey = "submissions" | "reading" | "thinking" | "coding" | "debugging" | "perceivedDifficulty";
+type ValueKey = "submissions" | "read" | "think" | "code" | "debug" | "perceivedDifficulty";
 
 function Problem({ problemType, problemName, problemURL } : ProblemProps) {
     const [commenting, setCommenting] = useState(false);
     const [values, setValues] = useState<Record<ValueKey, number>>({
         submissions: 0,
-        reading: 0,
-        thinking: 0,
-        coding: 0,
-        debugging: 0,
+        read: 0,
+        think: 0,
+        code: 0,
+        debug: 0,
         perceivedDifficulty: 0,
     });
 
     const setValue = (key: ValueKey, val: Number) => setValues(t => ({ ...t, [key]: val }));
-    const totalTime = 
-        values.reading + 
-        values.thinking + 
-        values.coding + 
-        values.debugging;
+    let totalTime = 
+        values.read + 
+        values.think + 
+        values.code + 
+        values.debug;
 
     const handleClick = () => setCommenting(true);
 
