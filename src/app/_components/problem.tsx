@@ -6,7 +6,7 @@ import SolvedField from "./solved-field";
 import SelfcheckField from "./selfcheck-field";
 
 import '../../styles/problem.css'
-import type { ProblemDifficulty, ProblemType } from "generated/prisma";
+import { ProblemDifficulty, type ProblemType } from "generated/prisma";
 
 type ProblemProps = {
     problemType: ProblemType,
@@ -17,9 +17,19 @@ type ProblemProps = {
 
 type IconProps = {
     onClick?: () => void,
+    classModifier: string,
 }
 
-const CommentsIcon = ({ onClick } : IconProps) => (
+const colorMap: Record<string, string> = {
+    easy: "#64ff83",
+    normal: "#646cff",
+    hard: "#ff7664",
+};
+
+const CommentsIcon = ({ onClick, classModifier } : IconProps) => {
+    
+
+    return (
     <button 
     className="icon-btn" 
     onClick={onClick}
@@ -32,7 +42,7 @@ const CommentsIcon = ({ onClick } : IconProps) => (
         width="24" 
         height="24" 
         
-        fill="#646cff" 
+        fill={colorMap[classModifier]}
         style={{ display: 'inline-block', verticalAlign: 'middle' }}
     >
         <path 
@@ -44,12 +54,12 @@ const CommentsIcon = ({ onClick } : IconProps) => (
         />
     </svg>
   </button>
-);
+)};
 
 const fields = ["Read", "Think", "Code", "Debug"];
 type ValueKey = "submissions" | "read" | "think" | "code" | "debug" | "perceivedDifficulty";
 
-function Problem({ problemType, problemName, problemURL } : ProblemProps) {
+function Problem({ problemType, problemName, problemURL, problemDifficulty } : ProblemProps) {
     const [commenting, setCommenting] = useState(false);
     const [values, setValues] = useState<Record<ValueKey, number>>({
         submissions: 0,
@@ -69,14 +79,17 @@ function Problem({ problemType, problemName, problemURL } : ProblemProps) {
 
     const handleClick = () => setCommenting(true);
 
+    const classModifier = String(problemDifficulty).toLowerCase();
+
     return (
     <div>
         {/* Change problem color based on difficulty */}
-        <div className="problem">
+        <div className={`problem ${classModifier}`}>
             {/* Problem Name */}
             <ProblemName
                 problemName={problemName}
                 problemURL={problemURL}
+                problemDifficulty={problemDifficulty}
             />
 
             {/* Solved Field */}
@@ -133,7 +146,10 @@ function Problem({ problemType, problemName, problemURL } : ProblemProps) {
             />
 
             {/* Comments */}
-            <CommentsIcon onClick={handleClick}/>
+            <CommentsIcon 
+                onClick={handleClick}
+                classModifier={classModifier}
+            />
         </div>
     </div>
     )

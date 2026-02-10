@@ -47,6 +47,18 @@
   height: 108px;
 }
 
+.problem.easy {
+  background: #1e3e24;
+}
+
+.problem.normal {
+  background: #1e1e3e;
+}
+
+.problem.hard {
+  background: #3e1e1e;
+}
+
 .problem-name-wrapper {
   display: flex;
   flex-direction: column;
@@ -59,6 +71,14 @@
   position: relative;
   border-radius: 999px;
   overflow: hidden;
+}
+
+.problem-name-wrapper.easy {
+  color: #64ff83
+}
+
+.problem-name-wrapper.hard {
+  color: #ff7664
 }
 
 .problem-name {
@@ -122,3 +142,4 @@ input[type=number] {
 .module {
   margin-bottom: 16px;
 }
+
