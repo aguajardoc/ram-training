@@ -1,10 +1,12 @@
+import type { ProblemType } from "generated/prisma";
+
 type Props = {
-    problemType: string
+    problemType: ProblemType,
 };
 
 const OPTIONS: Record<string, string[]> = {
-    practice: ["NO", "YES", "YES (before)"],
-    contest: ["NO", "In Contest", "Upsolved", "YES (before)"],
+    PRACTICE: ["NO", "YES", "YES (before)"],
+    CONTEST: ["NO", "In Contest", "Upsolved", "YES (before)"],
 };
 
 function SolvedField({ problemType } : Props) {

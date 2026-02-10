@@ -6,10 +6,10 @@ import SolvedField from "./solved-field";
 import SelfcheckField from "./selfcheck-field";
 
 import '../../styles/problem.css'
-import type { ProblemDifficulty } from "generated/prisma";
+import type { ProblemDifficulty, ProblemType } from "generated/prisma";
 
 type ProblemProps = {
-    problemType: string,
+    problemType: ProblemType,
     problemName: string,
     problemURL: string,
     problemDifficulty: ProblemDifficulty,
@@ -31,18 +31,14 @@ const CommentsIcon = ({ onClick } : IconProps) => (
         viewBox="0 0 24 24" 
         width="24" 
         height="24" 
-        // 1. Force pure white instead of inheriting text color
+        
         fill="#646cff" 
         style={{ display: 'inline-block', verticalAlign: 'middle' }}
     >
-        {/* 2. Removed opacity=".3" here. 
-        Now the inner part is solid white, making it much brighter.
-        */}
         <path 
         d="m4 18l2-2h14V4H4z" 
         />
         
-        {/* Outer Outline */}
         <path 
         d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2m0 14H6l-2 2V4h16z" 
         />
