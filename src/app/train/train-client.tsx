@@ -38,7 +38,7 @@ export default function TrainClient({ userId, levelMappings, enrolledTrackIds }:
   const { data: hasChosenLevel, isLoading: isCheckingLevel } = api.user.hasChosenLevel.useQuery();
   const [editingLevel, setEditingLevel] = useState(false);
 
-  if (isCheckingLevel || !hasChosenLevel) {
+  if (isLoading && (isCheckingLevel || !hasChosenLevel)) {
     return (
       <div className="loading">
         Loading...
