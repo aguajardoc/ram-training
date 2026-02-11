@@ -35,10 +35,10 @@ function AdminModuleDisplay({ id, name, launchDate, hidden, moduleProblems, prob
 
 
     return (
-        <div className="card">
+        <div className="card module-admin-card" style={{ border: '1px solid #ccc', borderRadius: '8px', marginBottom: '20px' }}>
             {!editing ? (
                 !adding ? (
-                    <div>
+                    <div className="module-header" style={{ position: 'sticky', top: 0, background: 'white', padding: '15px', borderBottom: '1px solid #eee', zIndex: 10 }}>
                         {name}
                     {/* Add problems to module */}
                     <button onClick={() => setAdding(true)}>

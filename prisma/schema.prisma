@@ -102,6 +102,7 @@ model Solve {
   userId              String
   problemId           String
   
+  statusString        String @default("NO")
   submitCount         Int
   
   readTimeMinutes     Int

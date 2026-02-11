@@ -6,13 +6,16 @@ import SolvedField from "./solved-field";
 import SelfcheckField from "./selfcheck-field";
 
 import '../../styles/problem.css'
-import { ProblemDifficulty, type ProblemType } from "generated/prisma";
+import { ProblemDifficulty, type ProblemType, type Solve } from "generated/prisma";
+import { saveSolve } from "../train/actions";
 
 type ProblemProps = {
+    problemId: string,
     problemType: ProblemType,
     problemName: string,
     problemURL: string,
     problemDifficulty: ProblemDifficulty,
+    solveData: Solve[],
 };
 
 type IconProps = {
@@ -58,7 +61,7 @@ const SaveIcon = ({ onClick, classModifier }: IconProps) => (
   <button 
     className="icon-btn save-btn" 
     onClick={onClick}
-    type="button"
+    type="submit"
     style={{ color: colorMap[classModifier] }} 
   >
     <svg 
@@ -80,18 +83,23 @@ const SaveIcon = ({ onClick, classModifier }: IconProps) => (
 const fields = ["Read", "Think", "Code", "Debug"];
 type ValueKey = "submissions" | "read" | "think" | "code" | "debug" | "perceivedDifficulty";
 
-function Problem({ problemType, problemName, problemURL, problemDifficulty } : ProblemProps) {
+function Problem({ problemId, problemType, problemName, problemURL, problemDifficulty, solveData } : ProblemProps) {
+    const solve = solveData?.[0];
+
     const [commenting, setCommenting] = useState(false);
     const [values, setValues] = useState<Record<ValueKey, number>>({
-        submissions: 0,
-        read: 0,
-        think: 0,
-        code: 0,
-        debug: 0,
-        perceivedDifficulty: 0,
+        submissions: solve?.submitCount ?? 0,
+        read: solve?.readTimeMinutes ?? 0,
+        think: solve?.thinkTimeMinutes ?? 0,
+        code: solve?.codeTimeMinutes ?? 0,
+        debug: solve?.debugTimeMinutes ?? 0,
+        perceivedDifficulty: solve?.perceivedDifficulty ?? 0,
     });
 
-    const setValue = (key: ValueKey, val: Number) => setValues(t => ({ ...t, [key]: val }));
+    const [solvedStatus, setSolvedStatus] = useState(solve?.statusString ?? "NO");
+    const [onYourOwn, setOnYourOwn] = useState(solve?.onYourOwn ?? true);
+
+    const setValue = (key: ValueKey, val: number) => setValues(t => ({ ...t, [key]: val }));
     let totalTime = 
         values.read + 
         values.think + 
@@ -115,7 +123,9 @@ function Problem({ problemType, problemName, problemURL, problemDifficulty } : P
 
             {/* Solved Field */}
             <SolvedField
-                problemType={problemType}    
+                problemType={problemType}
+                value={solvedStatus}
+                onChange={setSolvedStatus}  
             />
 
             {/* Submit Count Field */}
@@ -153,8 +163,11 @@ function Problem({ problemType, problemName, problemURL, problemDifficulty } : P
                 upperBound={100000}
             />
 
-            {/* On Your Own Dropdown */}
-            <SelfcheckField/> 
+            {/* "On Your Own" Dropdown */}
+            <SelfcheckField
+                value={onYourOwn}
+                onChange={setOnYourOwn}
+            /> 
 
             {/* Perceived Difficulty Level */}
             <InputField
@@ -166,19 +179,31 @@ function Problem({ problemType, problemName, problemURL, problemDifficulty } : P
             />
 
             {/* Comments */}
-            <CommentsIcon 
+            {/* <CommentsIcon 
                 onClick={handleClick}
                 classModifier={classModifier}
-            />
+            /> */}
 
             {/* Save Entry */}
-            <SaveIcon
-                onClick={handleClick}
-                classModifier={classModifier}
-            />
+            <form action={saveSolve}>
+                <input name="statusString" type="hidden" value={solvedStatus}></input>
+                <input name="problemId" type="hidden" value={problemId} />
+                
+                <input name="submitCount" type="hidden" value={values.submissions}></input>
+                <input name="readTimeMinutes" type="hidden" value={values.read}></input>
+                <input name="thinkTimeMinutes" type="hidden" value={values.think}></input>
+                <input name="codeTimeMinutes" type="hidden" value={values.code}></input>
+                <input name="debugTimeMinutes" type="hidden" value={values.debug}></input>
+                <input name="onYourOwn" type="hidden" value={String(onYourOwn)}></input>
+                <input name="perceivedDifficulty" type="hidden" value={values.perceivedDifficulty}></input>
+
+                <SaveIcon
+                    classModifier={classModifier}
+                />
+            </form>
         </div>
     </div>
-    )
+    );
 }
 
-export default Problem
+export default Problem;

@@ -4,7 +4,7 @@ import { api } from "~/trpc/react";
 import LevelPicker from "../_components/level-picker";
 import "../../styles/level-picker.css";
 import "../../styles/globals.css";
-import type { ProblemDifficulty, ProblemType } from "generated/prisma";
+import type { ProblemDifficulty, ProblemType, Solve } from "generated/prisma";
 import { Fragment } from "react";
 import Problem from "../_components/problem";
 
@@ -15,7 +15,12 @@ type Props = {
 };
 
 type FullProblem = {
-  problem: { name: string; id: string; url: string; };
+  problem: { 
+    name: string; 
+    id: string; 
+    url: string; 
+    solves: Solve[];
+  };
   module: { name: string; };
   id: string;
   problemId: string;
@@ -86,7 +91,6 @@ export default function TrainClient({ userId, levelMappings, enrolledTrackIds }:
       <h1 className="title">TRAINING</h1>
 
       {/* Module List */}
-      
       {moduleList.map(m => (
         <div key={m.moduleId} className="module">
           {/* Module Name */}
@@ -98,10 +102,12 @@ export default function TrainClient({ userId, levelMappings, enrolledTrackIds }:
             {m.problems?.map((p) => (
               <Problem
                 key={p.id}
+                problemId={p.problemId}
                 problemType={p.problemType}
                 problemName={p.problem.name}
                 problemURL={p.problem.url}
                 problemDifficulty={p.difficulty}
+                solveData={p.problem.solves}
               />
             ))}
         </div>

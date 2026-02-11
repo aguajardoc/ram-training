@@ -166,6 +166,7 @@ exports.Prisma.SolveScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   problemId: 'problemId',
+  statusString: 'statusString',
   submitCount: 'submitCount',
   readTimeMinutes: 'readTimeMinutes',
   thinkTimeMinutes: 'thinkTimeMinutes',

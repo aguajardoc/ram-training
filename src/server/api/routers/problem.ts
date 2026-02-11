@@ -38,7 +38,16 @@ export const problemRouter = createTRPCRouter({
           },
         },
         include: {
-          problem: true,
+          problem: {
+            include: {
+              solves: {
+                where: {
+                  userId: ctx.session.user.id
+                },
+                take: 1
+              }
+            }
+          },
           module: {
             select: { name: true }
           }

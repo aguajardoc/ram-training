@@ -8763,6 +8763,7 @@ export namespace Prisma {
     id: string | null
     userId: string | null
     problemId: string | null
+    statusString: string | null
     submitCount: number | null
     readTimeMinutes: number | null
     thinkTimeMinutes: number | null
@@ -8780,6 +8781,7 @@ export namespace Prisma {
     id: string | null
     userId: string | null
     problemId: string | null
+    statusString: string | null
     submitCount: number | null
     readTimeMinutes: number | null
     thinkTimeMinutes: number | null
@@ -8797,6 +8799,7 @@ export namespace Prisma {
     id: number
     userId: number
     problemId: number
+    statusString: number
     submitCount: number
     readTimeMinutes: number
     thinkTimeMinutes: number
@@ -8834,6 +8837,7 @@ export namespace Prisma {
     id?: true
     userId?: true
     problemId?: true
+    statusString?: true
     submitCount?: true
     readTimeMinutes?: true
     thinkTimeMinutes?: true
@@ -8851,6 +8855,7 @@ export namespace Prisma {
     id?: true
     userId?: true
     problemId?: true
+    statusString?: true
     submitCount?: true
     readTimeMinutes?: true
     thinkTimeMinutes?: true
@@ -8868,6 +8873,7 @@ export namespace Prisma {
     id?: true
     userId?: true
     problemId?: true
+    statusString?: true
     submitCount?: true
     readTimeMinutes?: true
     thinkTimeMinutes?: true
@@ -8972,6 +8978,7 @@ export namespace Prisma {
     id: string
     userId: string
     problemId: string
+    statusString: string
     submitCount: number
     readTimeMinutes: number
     thinkTimeMinutes: number
@@ -9008,6 +9015,7 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     problemId?: boolean
+    statusString?: boolean
     submitCount?: boolean
     readTimeMinutes?: boolean
     thinkTimeMinutes?: boolean
@@ -9027,6 +9035,7 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     problemId?: boolean
+    statusString?: boolean
     submitCount?: boolean
     readTimeMinutes?: boolean
     thinkTimeMinutes?: boolean
@@ -9046,6 +9055,7 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     problemId?: boolean
+    statusString?: boolean
     submitCount?: boolean
     readTimeMinutes?: boolean
     thinkTimeMinutes?: boolean
@@ -9065,6 +9075,7 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     problemId?: boolean
+    statusString?: boolean
     submitCount?: boolean
     readTimeMinutes?: boolean
     thinkTimeMinutes?: boolean
@@ -9078,7 +9089,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type SolveOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "problemId" | "submitCount" | "readTimeMinutes" | "thinkTimeMinutes" | "codeTimeMinutes" | "debugTimeMinutes" | "perceivedDifficulty" | "notes" | "mood" | "onYourOwn" | "createdAt" | "updatedAt", ExtArgs["result"]["solve"]>
+  export type SolveOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "problemId" | "statusString" | "submitCount" | "readTimeMinutes" | "thinkTimeMinutes" | "codeTimeMinutes" | "debugTimeMinutes" | "perceivedDifficulty" | "notes" | "mood" | "onYourOwn" | "createdAt" | "updatedAt", ExtArgs["result"]["solve"]>
   export type SolveInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     problem?: boolean | ProblemDefaultArgs<ExtArgs>
@@ -9102,6 +9113,7 @@ export namespace Prisma {
       id: string
       userId: string
       problemId: string
+      statusString: string
       submitCount: number
       readTimeMinutes: number
       thinkTimeMinutes: number
@@ -9541,6 +9553,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Solve", 'String'>
     readonly userId: FieldRef<"Solve", 'String'>
     readonly problemId: FieldRef<"Solve", 'String'>
+    readonly statusString: FieldRef<"Solve", 'String'>
     readonly submitCount: FieldRef<"Solve", 'Int'>
     readonly readTimeMinutes: FieldRef<"Solve", 'Int'>
     readonly thinkTimeMinutes: FieldRef<"Solve", 'Int'>
@@ -16442,6 +16455,7 @@ export namespace Prisma {
     id: 'id',
     userId: 'userId',
     problemId: 'problemId',
+    statusString: 'statusString',
     submitCount: 'submitCount',
     readTimeMinutes: 'readTimeMinutes',
     thinkTimeMinutes: 'thinkTimeMinutes',
@@ -16993,6 +17007,7 @@ export namespace Prisma {
     id?: StringFilter<"Solve"> | string
     userId?: StringFilter<"Solve"> | string
     problemId?: StringFilter<"Solve"> | string
+    statusString?: StringFilter<"Solve"> | string
     submitCount?: IntFilter<"Solve"> | number
     readTimeMinutes?: IntFilter<"Solve"> | number
     thinkTimeMinutes?: IntFilter<"Solve"> | number
@@ -17012,6 +17027,7 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     problemId?: SortOrder
+    statusString?: SortOrder
     submitCount?: SortOrder
     readTimeMinutes?: SortOrder
     thinkTimeMinutes?: SortOrder
@@ -17035,6 +17051,7 @@ export namespace Prisma {
     NOT?: SolveWhereInput | SolveWhereInput[]
     userId?: StringFilter<"Solve"> | string
     problemId?: StringFilter<"Solve"> | string
+    statusString?: StringFilter<"Solve"> | string
     submitCount?: IntFilter<"Solve"> | number
     readTimeMinutes?: IntFilter<"Solve"> | number
     thinkTimeMinutes?: IntFilter<"Solve"> | number
@@ -17054,6 +17071,7 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     problemId?: SortOrder
+    statusString?: SortOrder
     submitCount?: SortOrder
     readTimeMinutes?: SortOrder
     thinkTimeMinutes?: SortOrder
@@ -17079,6 +17097,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Solve"> | string
     userId?: StringWithAggregatesFilter<"Solve"> | string
     problemId?: StringWithAggregatesFilter<"Solve"> | string
+    statusString?: StringWithAggregatesFilter<"Solve"> | string
     submitCount?: IntWithAggregatesFilter<"Solve"> | number
     readTimeMinutes?: IntWithAggregatesFilter<"Solve"> | number
     thinkTimeMinutes?: IntWithAggregatesFilter<"Solve"> | number
@@ -17761,6 +17780,7 @@ export namespace Prisma {
 
   export type SolveCreateInput = {
     id?: string
+    statusString?: string
     submitCount: number
     readTimeMinutes: number
     thinkTimeMinutes: number
@@ -17780,6 +17800,7 @@ export namespace Prisma {
     id?: string
     userId: string
     problemId: string
+    statusString?: string
     submitCount: number
     readTimeMinutes: number
     thinkTimeMinutes: number
@@ -17795,6 +17816,7 @@ export namespace Prisma {
 
   export type SolveUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    statusString?: StringFieldUpdateOperationsInput | string
     submitCount?: IntFieldUpdateOperationsInput | number
     readTimeMinutes?: IntFieldUpdateOperationsInput | number
     thinkTimeMinutes?: IntFieldUpdateOperationsInput | number
@@ -17814,6 +17836,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     problemId?: StringFieldUpdateOperationsInput | string
+    statusString?: StringFieldUpdateOperationsInput | string
     submitCount?: IntFieldUpdateOperationsInput | number
     readTimeMinutes?: IntFieldUpdateOperationsInput | number
     thinkTimeMinutes?: IntFieldUpdateOperationsInput | number
@@ -17831,6 +17854,7 @@ export namespace Prisma {
     id?: string
     userId: string
     problemId: string
+    statusString?: string
     submitCount: number
     readTimeMinutes: number
     thinkTimeMinutes: number
@@ -17846,6 +17870,7 @@ export namespace Prisma {
 
   export type SolveUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    statusString?: StringFieldUpdateOperationsInput | string
     submitCount?: IntFieldUpdateOperationsInput | number
     readTimeMinutes?: IntFieldUpdateOperationsInput | number
     thinkTimeMinutes?: IntFieldUpdateOperationsInput | number
@@ -17863,6 +17888,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     problemId?: StringFieldUpdateOperationsInput | string
+    statusString?: StringFieldUpdateOperationsInput | string
     submitCount?: IntFieldUpdateOperationsInput | number
     readTimeMinutes?: IntFieldUpdateOperationsInput | number
     thinkTimeMinutes?: IntFieldUpdateOperationsInput | number
@@ -18643,6 +18669,7 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     problemId?: SortOrder
+    statusString?: SortOrder
     submitCount?: SortOrder
     readTimeMinutes?: SortOrder
     thinkTimeMinutes?: SortOrder
@@ -18669,6 +18696,7 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     problemId?: SortOrder
+    statusString?: SortOrder
     submitCount?: SortOrder
     readTimeMinutes?: SortOrder
     thinkTimeMinutes?: SortOrder
@@ -18686,6 +18714,7 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     problemId?: SortOrder
+    statusString?: SortOrder
     submitCount?: SortOrder
     readTimeMinutes?: SortOrder
     thinkTimeMinutes?: SortOrder
@@ -19860,6 +19889,7 @@ export namespace Prisma {
 
   export type SolveCreateWithoutProblemInput = {
     id?: string
+    statusString?: string
     submitCount: number
     readTimeMinutes: number
     thinkTimeMinutes: number
@@ -19877,6 +19907,7 @@ export namespace Prisma {
   export type SolveUncheckedCreateWithoutProblemInput = {
     id?: string
     userId: string
+    statusString?: string
     submitCount: number
     readTimeMinutes: number
     thinkTimeMinutes: number
@@ -19949,6 +19980,7 @@ export namespace Prisma {
     id?: StringFilter<"Solve"> | string
     userId?: StringFilter<"Solve"> | string
     problemId?: StringFilter<"Solve"> | string
+    statusString?: StringFilter<"Solve"> | string
     submitCount?: IntFilter<"Solve"> | number
     readTimeMinutes?: IntFilter<"Solve"> | number
     thinkTimeMinutes?: IntFilter<"Solve"> | number
@@ -20657,6 +20689,7 @@ export namespace Prisma {
 
   export type SolveCreateWithoutUserInput = {
     id?: string
+    statusString?: string
     submitCount: number
     readTimeMinutes: number
     thinkTimeMinutes: number
@@ -20674,6 +20707,7 @@ export namespace Prisma {
   export type SolveUncheckedCreateWithoutUserInput = {
     id?: string
     problemId: string
+    statusString?: string
     submitCount: number
     readTimeMinutes: number
     thinkTimeMinutes: number
@@ -21004,6 +21038,7 @@ export namespace Prisma {
   export type SolveCreateManyProblemInput = {
     id?: string
     userId: string
+    statusString?: string
     submitCount: number
     readTimeMinutes: number
     thinkTimeMinutes: number
@@ -21027,6 +21062,7 @@ export namespace Prisma {
 
   export type SolveUpdateWithoutProblemInput = {
     id?: StringFieldUpdateOperationsInput | string
+    statusString?: StringFieldUpdateOperationsInput | string
     submitCount?: IntFieldUpdateOperationsInput | number
     readTimeMinutes?: IntFieldUpdateOperationsInput | number
     thinkTimeMinutes?: IntFieldUpdateOperationsInput | number
@@ -21044,6 +21080,7 @@ export namespace Prisma {
   export type SolveUncheckedUpdateWithoutProblemInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    statusString?: StringFieldUpdateOperationsInput | string
     submitCount?: IntFieldUpdateOperationsInput | number
     readTimeMinutes?: IntFieldUpdateOperationsInput | number
     thinkTimeMinutes?: IntFieldUpdateOperationsInput | number
@@ -21060,6 +21097,7 @@ export namespace Prisma {
   export type SolveUncheckedUpdateManyWithoutProblemInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    statusString?: StringFieldUpdateOperationsInput | string
     submitCount?: IntFieldUpdateOperationsInput | number
     readTimeMinutes?: IntFieldUpdateOperationsInput | number
     thinkTimeMinutes?: IntFieldUpdateOperationsInput | number
@@ -21234,6 +21272,7 @@ export namespace Prisma {
   export type SolveCreateManyUserInput = {
     id?: string
     problemId: string
+    statusString?: string
     submitCount: number
     readTimeMinutes: number
     thinkTimeMinutes: number
@@ -21276,6 +21315,7 @@ export namespace Prisma {
 
   export type SolveUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
+    statusString?: StringFieldUpdateOperationsInput | string
     submitCount?: IntFieldUpdateOperationsInput | number
     readTimeMinutes?: IntFieldUpdateOperationsInput | number
     thinkTimeMinutes?: IntFieldUpdateOperationsInput | number
@@ -21293,6 +21333,7 @@ export namespace Prisma {
   export type SolveUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     problemId?: StringFieldUpdateOperationsInput | string
+    statusString?: StringFieldUpdateOperationsInput | string
     submitCount?: IntFieldUpdateOperationsInput | number
     readTimeMinutes?: IntFieldUpdateOperationsInput | number
     thinkTimeMinutes?: IntFieldUpdateOperationsInput | number
@@ -21309,6 +21350,7 @@ export namespace Prisma {
   export type SolveUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     problemId?: StringFieldUpdateOperationsInput | string
+    statusString?: StringFieldUpdateOperationsInput | string
     submitCount?: IntFieldUpdateOperationsInput | number
     readTimeMinutes?: IntFieldUpdateOperationsInput | number
     thinkTimeMinutes?: IntFieldUpdateOperationsInput | number
