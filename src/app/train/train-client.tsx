@@ -73,7 +73,7 @@ export default function TrainClient({ userId, levelMappings, enrolledTrackIds }:
     );
   }
 
-  // List of modules
+  // List of modules.
   // I care about modules and the problems they contain
   const moduleMap = new Map<string, FullProblem[]>();
 
