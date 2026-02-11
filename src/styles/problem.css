@@ -32,7 +32,7 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   overflow-x: auto;
   margin-top: 24px;
   justify-content: center;
@@ -57,6 +57,41 @@
 
 .problem.hard {
   background: #3e1e1e;
+}
+
+@media (max-width: 768px) {
+  .problem {
+    /* On mobile, center everything */
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  /* Make the Name take the full top row */
+  .problem > :first-child { 
+    width: 100%;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+  }
+
+  /* Make the Input Fields form a 2-column grid */
+  /* This targets your InputField components */
+  .problem > div {
+    flex: 1 1 40%; /* Grow to fill space, but stay roughly 40% wide */
+    min-width: 80px; /* Don't get too small */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Make the Save button big and clickable at the bottom */
+  .problem form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
 }
 
 .problem-name-wrapper {
