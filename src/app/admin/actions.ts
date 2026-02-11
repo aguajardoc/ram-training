@@ -3,7 +3,6 @@ import { auth } from "~/server/auth";
 import { db } from "~/server/db";
 import { redirect } from "next/navigation";
 import type { ProblemDifficulty, ProblemType } from "generated/prisma";
-import { revalidatePath } from "next/cache";
 
 export async function createProblem(formData: FormData) {
   const session = await auth();
@@ -16,9 +15,7 @@ export async function createProblem(formData: FormData) {
 
   await db.problem.create({ data: { name, url } });
 
-  revalidatePath("/admin");
-  
-  return { success: true };
+  redirect("/admin");
 }
 
 export async function createModuleProblem(formData: FormData) {
@@ -47,9 +44,7 @@ export async function createModuleProblem(formData: FormData) {
     },
   });
 
-  revalidatePath("/admin");
-  
-  return { success: true };
+  redirect("/admin");
 }
 
 
@@ -135,7 +130,7 @@ export async function deleteProblem(id: string) {
 
   await db.problem.delete({ where: { id } });
 
-  revalidatePath("/admin");
+  redirect("/admin");
 }
 
 export async function deleteModuleProblem(id: string) {
@@ -144,7 +139,7 @@ export async function deleteModuleProblem(id: string) {
 
   await db.moduleProblem.delete({ where: { id } });
 
-  revalidatePath("/admin");
+  redirect("/admin");
 }
 
 export async function deleteUser(id: string) {
@@ -153,7 +148,7 @@ export async function deleteUser(id: string) {
 
   await db.user.delete({ where: { id } });
 
-  revalidatePath("/admin");
+  redirect("/admin");
 }
 
 export async function addUserToTrack(userId: string, trackId: string) {
@@ -218,7 +213,7 @@ export async function deleteModuleFromLevel(formData: FormData) {
     },
   });
 
-  if (!exists) revalidatePath("/admin");
+  if (!exists) redirect("/admin");
 
   await db.levelModule.delete({
     where: {
@@ -241,7 +236,7 @@ export async function deleteUserFromTrack(userId: string, trackId: string) {
     },
   });
 
-  revalidatePath("/admin");
+  redirect("/admin");
 }
 
 export async function deleteModule(id: string) {
@@ -252,7 +247,7 @@ export async function deleteModule(id: string) {
 
   await db.module.delete({ where: { id } });
 
-  revalidatePath("/admin");
+  redirect("/admin");
 }
 
 export async function deleteTrack(id: string) {
@@ -261,7 +256,7 @@ export async function deleteTrack(id: string) {
 
   await db.track.delete({ where: { id } });
 
-  revalidatePath("/admin");
+  redirect("/admin");
 }
 
 export async function deleteTrackLevel(id: string) {
@@ -270,7 +265,7 @@ export async function deleteTrackLevel(id: string) {
 
   await db.trackLevel.delete({ where: { id } });
 
-  revalidatePath("/admin");
+  redirect("/admin");
 }
 
 export async function createModule(formData: FormData) {
@@ -285,9 +280,7 @@ export async function createModule(formData: FormData) {
 
   await db.module.create({ data: { name, launchDate, hidden } });
 
-  revalidatePath("/admin");
-  
-  return { success: true };
+  redirect("/admin")
 }
 
 export async function createTrack(formData: FormData) {
@@ -298,9 +291,7 @@ export async function createTrack(formData: FormData) {
 
   await db.track.create({ data: { name } });
 
-  revalidatePath("/admin");
-  
-  return { success: true };
+  redirect("/admin")
 }
 
 export async function createLevel(formData: FormData) {
@@ -312,9 +303,7 @@ export async function createLevel(formData: FormData) {
 
   await db.trackLevel.create({ data: { code, trackId } });
 
-  revalidatePath("/admin");
-  
-  return { success: true };
+  redirect("/admin")
 }
 
 export async function duplicateModule(id: string) {

@@ -46,11 +46,13 @@ function BackgroundCanvas() {
     let angle = 0;
 
     function clear() {
+      if (!ctx || !game) return;
       ctx.fillStyle = BACKGROUND;
       ctx.fillRect(0, 0, game.width, game.height);
     }
 
     function screen(p: { x: number; y: number }) {
+      if (!ctx || !game) return;
       return {
         x: game.width / 2 + p.x * MODEL_SIZE,
         y: game.height / 2 - p.y * MODEL_SIZE,
@@ -76,6 +78,7 @@ function BackgroundCanvas() {
     }
 
     function line(p1: any, p2: any) {
+      if (!ctx || !game) return;
       ctx.lineWidth = 3;
       ctx.strokeStyle = FOREGROUND;
       ctx.beginPath();
@@ -90,8 +93,10 @@ function BackgroundCanvas() {
 
       for (const f of fs) {
         for (let i = 0; i < f.length; i++) {
-          const a = vs[f[i]];
-          const b = vs[f[(i + 1) % f.length]];
+          const a = vs[f[i]!];
+          const b = vs[f[(i + 1) % f.length]!];
+
+          if (!a || !b) return;
 
           line(
             screen(project(rotateXZ(a, angle))),

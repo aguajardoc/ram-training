@@ -1,6 +1,7 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { type DefaultSession, type NextAuthConfig } from "next-auth";
 import NextAuth from "next-auth";
+import type { Adapter } from "next-auth/adapters";
 import Google from "next-auth/providers/google";
 
 import { db } from "~/server/db";
@@ -49,7 +50,7 @@ export const authConfig = {
      * @see https://next-auth.js.org/providers/github
      */
   ],
-  adapter: PrismaAdapter(db),
+  adapter: PrismaAdapter(db) as Adapter,
   callbacks: {
     session: ({ session, user }) => ({
       ...session,
