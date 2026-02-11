@@ -126,7 +126,7 @@ const RequirementsIcon = () => (
 );
 
 function LevelPicker({ userId, mappings, enrolledTrackIds } : Props) {
-    const [idx, setIdx] = useState(1);
+    const [idx, setIdx] = useState(0);
 
     const prev = () => setIdx((i) => (i - 1 + levels.length) % levels.length);
     const next = () => setIdx((i) => (i + 1) % levels.length);

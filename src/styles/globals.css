@@ -160,3 +160,9 @@ input:disabled {
 .text {
   color: #646cff;
 }
+
+.floating-back-button {
+  margin-top: -10rem;
+  text-align: center;
+  padding-bottom: 2rem;
+}

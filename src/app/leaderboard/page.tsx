@@ -22,7 +22,13 @@ async function Leaderboard() {
         include: {
             _count: {
                 select: {
-                    solves: true
+                    solves: {
+                        where: {
+                            statusString: {
+                                not: "NO"
+                            }
+                        }
+                    }
                 },
             },
         },

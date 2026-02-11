@@ -38,7 +38,15 @@ export default function TrainClient({ userId, levelMappings, enrolledTrackIds }:
   const { data: hasChosenLevel, isLoading: isCheckingLevel } = api.user.hasChosenLevel.useQuery();
   const [editingLevel, setEditingLevel] = useState(false);
 
-  if (isLoading || isCheckingLevel) {
+  if (isCheckingLevel || !hasChosenLevel) {
+    return (
+      <div className="loading">
+        Loading...
+      </div>
+    );
+  }
+
+  if (isLoading) {
     return (
       <div className="loading">
         Fetching cool problems, please wait!
@@ -53,7 +61,7 @@ export default function TrainClient({ userId, levelMappings, enrolledTrackIds }:
         <LevelPicker userId={userId} mappings={levelMappings} enrolledTrackIds={enrolledTrackIds}/>
 
         {editingLevel && (
-          <div className="page">
+          <div className="floating-back-button">
           <button 
               className="journey-btn"
               onClick={() => setEditingLevel(false)}>

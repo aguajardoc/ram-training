@@ -6,10 +6,12 @@ import { revalidatePath } from "next/cache";
 
 export async function addUserToTrack(formData : FormData) {
   const session = await auth();
-  if (!session?.user?.id || session.user.role !== "ADMIN") redirect("/");
+  if (!session?.user?.id) redirect("/train");
 
   const userId = formData.get("userId") as string;
   const trackId = formData.get("trackId") as string;
+
+  if (!userId || !trackId) return; 
 
   await db.userTrack.deleteMany({
     where: {
@@ -24,7 +26,7 @@ export async function addUserToTrack(formData : FormData) {
     },
   });
 
-  revalidatePath("/train");
+  redirect("/train");
 }
 
 export async function saveSolve(formData: FormData) {
