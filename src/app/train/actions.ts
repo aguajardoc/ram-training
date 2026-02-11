@@ -2,6 +2,7 @@
 import { auth } from "~/server/auth";
 import { db } from "~/server/db";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 export async function addUserToTrack(formData : FormData) {
   const session = await auth();
@@ -23,7 +24,7 @@ export async function addUserToTrack(formData : FormData) {
     },
   });
 
-  redirect("/train");
+  revalidatePath("/train");
 }
 
 export async function saveSolve(formData: FormData) {
@@ -72,4 +73,6 @@ export async function saveSolve(formData: FormData) {
             onYourOwn,
         }
     });
+
+    revalidatePath("/train")
 }
