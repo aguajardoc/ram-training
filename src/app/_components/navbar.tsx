@@ -5,6 +5,7 @@ import "../../styles/navbar.css"
 import type { Session } from "next-auth";
 import type { Role } from "generated/prisma";
 import { redirect } from "next/navigation";
+import LoginButton from "./login-button";
 
 const items = ["Train", "Leaderboard", "Sign Out", "Admin"];
 
@@ -18,7 +19,7 @@ function Navbar({ session, role } : Props) {
     const lastScrollY = useRef(0);
 
     if (!session) {
-        redirect("/sign-in");
+        return(<></>);
     }
 
     useEffect(() => {
