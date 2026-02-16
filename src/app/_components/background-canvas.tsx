@@ -15,7 +15,7 @@ function BackgroundCanvas() {
     game.width = window.innerWidth;
     game.height = window.innerHeight;
     // "#559cffff";
-    const FOREGROUND = "#646cff";
+    const FOREGROUND = "#646cff67";
     const BACKGROUND = "#1e1e1e";
     const FPS = 60;
     const SPEED = 0.025;
