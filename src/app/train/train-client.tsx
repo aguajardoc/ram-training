@@ -192,7 +192,7 @@ export default function TrainClient({ userId, levelMappings, enrolledTrackIds }:
 
         <div className="stat-card">
           <span className="stat-label">Think/Code Ratio</span>
-          <span className="stat-value">{(stats.thinkTime / stats.codeTime).toFixed(1)}</span>
+          <span className="stat-value">{(stats.thinkTime / (stats.codeTime || 1)).toFixed(1)}</span>
         </div>
       </div>
 
