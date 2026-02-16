@@ -13,10 +13,11 @@ async function Leaderboard() {
     if (!session) redirect("\sign-in")
 
 
-    const users = await db.user.findMany({
+    const rawCounts = await db.user.findMany({
         orderBy: 
             {solves: {
                 _count: "desc",
+                
             },
         },
         include: {
@@ -34,6 +35,8 @@ async function Leaderboard() {
         },
         take: 50,
     });
+
+    const users = rawCounts.sort((a, b) => (b._count.solves - a._count.solves));
 
     return (
         <div className="page">
