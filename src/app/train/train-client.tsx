@@ -1,11 +1,11 @@
 "use client";
 import { useState } from "react";
+import { useMemo } from "react";
 import { api } from "~/trpc/react";
 import LevelPicker from "../_components/level-picker";
 import "../../styles/level-picker.css";
 import "../../styles/globals.css";
 import type { ProblemDifficulty, ProblemType, Solve } from "generated/prisma";
-import { Fragment } from "react";
 import Problem from "../_components/problem";
 
 type Props = {
@@ -31,14 +31,57 @@ type FullProblem = {
 };
 
 export default function TrainClient({ userId, levelMappings, enrolledTrackIds }: Props) {
+  const trackId = enrolledTrackIds[0];
   const { data: problems, isLoading } = api.problem.getProblemsByTrack.useQuery(
-    { trackId: enrolledTrackIds[0] ?? ""},
-    { enabled: !!enrolledTrackIds[0] }
+    { trackId: trackId! },
+    { enabled: !!trackId }
   );
   const { data: hasChosenLevel, isLoading: isCheckingLevel } = api.user.hasChosenLevel.useQuery();
   const [editingLevel, setEditingLevel] = useState(false);
 
-  if (isLoading && (isCheckingLevel || !hasChosenLevel)) {
+  // Get user stats
+  const stats = useMemo(() => {
+    const initialStats = {
+      solvedCount: 0,
+      submitCount: 0,
+      readTime: 0,
+      thinkTime: 0,
+      codeTime: 0,
+      debugTime: 0,
+      totalTime: 0,
+      onYourOwnCount: 0,
+      perceivedDifficulty: 0,
+    };
+
+    if (!problems) return initialStats;
+
+    return problems.reduce((acc, p) => {
+      // Find the specific solve for this user
+      const userSolve = p.problem.solves.find((solve) => solve.userId === userId && solve.statusString !== "NO");
+
+      if (userSolve) {
+        acc.solvedCount++;
+        acc.submitCount += userSolve.submitCount;
+        acc.readTime += userSolve.readTimeMinutes;
+        acc.thinkTime += userSolve.thinkTimeMinutes;
+        acc.codeTime += userSolve.codeTimeMinutes;
+        acc.debugTime += userSolve.debugTimeMinutes;
+        
+        // Calculate total time for this specific problem
+        acc.totalTime += (userSolve.readTimeMinutes + userSolve.thinkTimeMinutes + userSolve.codeTimeMinutes + userSolve.debugTimeMinutes);
+        
+        if (userSolve.onYourOwn) {
+          acc.onYourOwnCount++;
+        }
+        
+        acc.perceivedDifficulty += userSolve.perceivedDifficulty;
+      }
+
+      return acc;
+    }, initialStats);
+  }, [problems, userId]);
+
+  if (isLoading && (isCheckingLevel || !hasChosenLevel || !trackId)) {
     return (
       <div className="loading">
         Loading...
@@ -46,7 +89,7 @@ export default function TrainClient({ userId, levelMappings, enrolledTrackIds }:
     );
   }
 
-  if (isLoading) {
+  if (isLoading && trackId) {
     return (
       <div className="loading">
         Fetching cool problems, please wait!
@@ -97,6 +140,61 @@ export default function TrainClient({ userId, levelMappings, enrolledTrackIds }:
   return (
     <div className="page">
       <h1 className="title">TRAINING</h1>
+
+      {/* Average counts for items */}
+      <div className="stats-grid">
+        {/* Main Progress */}
+        <div className="stat-card highlight">
+          <span className="stat-label">Problems Solved</span>
+          <span className="stat-value">{stats.solvedCount} <span className="stat-sub">/ {problems?.length || 0}</span></span>
+        </div>
+
+        {/* The Averages */}
+        <div className="stat-card">
+          <span className="stat-label">Avg Submit Count</span>
+          <span className="stat-value">{(stats.submitCount / (stats.solvedCount || 1)).toFixed(1)}</span>
+        </div>
+
+        <div className="stat-card">
+          <span className="stat-label">Avg Read Time</span>
+          <span className="stat-value">{(stats.readTime / (stats.solvedCount || 1)).toFixed(1)} min.</span>
+        </div>
+        
+        <div className="stat-card">
+          <span className="stat-label">Avg Think Time</span>
+          <span className="stat-value">{(stats.thinkTime / (stats.solvedCount || 1)).toFixed(1)} min.</span>
+        </div>
+
+        <div className="stat-card">
+          <span className="stat-label">Avg Code Time</span>
+          <span className="stat-value">{(stats.codeTime / (stats.solvedCount || 1)).toFixed(1)} min.</span>
+        </div>
+
+        <div className="stat-card">
+          <span className="stat-label">Avg Debug Time</span>
+          <span className="stat-value">{(stats.debugTime / (stats.solvedCount || 1)).toFixed(1)} min.</span>
+        </div>
+
+        <div className="stat-card">
+          <span className="stat-label">Avg Time/Problem</span>
+          <span className="stat-value">{(stats.totalTime / (stats.solvedCount || 1)).toFixed(1)} min.</span>
+        </div>
+
+        <div className="stat-card">
+          <span className="stat-label">Avg Difficulty</span>
+          <span className="stat-value">{(stats.perceivedDifficulty / (stats.solvedCount || 1)).toFixed(1)}</span>
+        </div>
+
+        <div className="stat-card">
+          <span className="stat-label">Solved Solo</span>
+          <span className="stat-value">{stats.onYourOwnCount} <span className="stat-sub">/ {problems?.length || 0}</span></span>
+        </div>
+
+        <div className="stat-card">
+          <span className="stat-label">Think/Code Ratio</span>
+          <span className="stat-value">{(stats.thinkTime / stats.codeTime).toFixed(1)}</span>
+        </div>
+      </div>
 
       {/* Module List */}
       {moduleList.map(m => (

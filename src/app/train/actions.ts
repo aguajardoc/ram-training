@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache";
 
 export async function addUserToTrack(formData : FormData) {
   const session = await auth();
-  if (!session?.user?.id) redirect("/train");
+  if (!session?.user?.id) redirect("/sign-in");
 
   const userId = formData.get("userId") as string;
   const trackId = formData.get("trackId") as string;
@@ -31,7 +31,7 @@ export async function addUserToTrack(formData : FormData) {
 
 export async function saveSolve(formData: FormData) {
     const session = await auth();
-    if (!session?.user?.id) throw new Error("Unauthorized");
+    if (!session?.user?.id) redirect("/sign-in");
 
     const statusString = formData.get("statusString") as string;
     const problemId = formData.get("problemId") as string;
@@ -76,5 +76,6 @@ export async function saveSolve(formData: FormData) {
         }
     });
 
-    revalidatePath("/train")
+    revalidatePath("/train");
+    redirect("/train");
 }

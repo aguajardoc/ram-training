@@ -178,3 +178,61 @@ input[type=number] {
   margin-bottom: 16px;
 }
 
+
+/* Stats Grid Layout */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); /* changed auto-fill to auto-fit */
+  gap: 1rem;
+  
+  /* Centering Magic */
+  justify-content: center;
+  max-width: 900px;       /* Keeps it looking tight */
+  margin: 0 auto 2rem;    /* Centers the container itself on the page */
+}
+
+/* Individual Card Styling */
+.stat-card {
+  background-color: rgba(255, 255, 255, 0.05); /* Subtle transparent background */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Typography */
+.stat-label {
+  font-size: 0.8rem;
+  color: #a1a1aa; /* Light gray text */
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.stat-sub {
+  font-size: 1rem;
+  color: #71717a;
+  font-weight: 400;
+}
+
+/* Optional: Make the first card stand out */
+.stat-card.highlight {
+  background-color: rgba(59, 130, 246, 0.1); /* Blue tint */
+  border-color: rgba(59, 130, 246, 0.3);
+}
