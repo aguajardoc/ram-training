@@ -58,4 +58,40 @@ export const problemRouter = createTRPCRouter({
         ],
       });
     }),
+
+  submitSolve: protectedProcedure
+    .input(
+      z.object({
+        problemId: z.string(),
+        statusString: z.string(),
+        submitCount: z.number().int().default(0),
+        readTimeMinutes: z.number().int().default(0),
+        thinkTimeMinutes: z.number().int().default(0),
+        codeTimeMinutes: z.number().int().default(0),
+        debugTimeMinutes: z.number().int().default(0),
+        perceivedDifficulty: z.number().int().default(0),
+        onYourOwn: z.boolean(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const userId = ctx.session.user.id;
+
+      const solve = await ctx.db.solve.upsert({
+        where: {
+          userId_problemId: {
+            userId: userId,
+            problemId: input.problemId,
+          },
+        },
+        create: {
+          userId: userId,
+          ...input,
+        },
+        update: {
+          ...input,
+        },
+      });
+
+      return solve;
+    }),
 })
