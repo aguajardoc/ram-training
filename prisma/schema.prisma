@@ -6,6 +6,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 enum ProblemDifficulty {
@@ -22,6 +23,16 @@ enum ProblemType {
 enum Role {
   USER
   ADMIN
+}
+
+enum ResourceType {
+  GENERAL
+  VIDEO
+  WEBSITE
+  DEMO
+  BOOK
+  ARTICLE
+  GITHUB
 }
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
@@ -79,6 +90,21 @@ model Module {
 
   moduleProblems  ModuleProblem[]
   levelModules    LevelModule[]
+  resources       Resource[]
+}
+
+model Resource {
+  id            String        @id @default(cuid())
+  moduleId      String
+  
+  name          String
+  link          String?
+
+  type          ResourceType  @default(GENERAL)
+  description   String?
+  
+
+  module        Module        @relation(fields: [moduleId], references: [id], onDelete: Cascade)
 }
 
 // Problems belong to modules
