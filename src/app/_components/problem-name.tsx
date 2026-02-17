@@ -12,7 +12,12 @@ function ProblemName({ problemName, problemURL, problemDifficulty } : Props) {
     
     return (
         <div className={`problem-name-wrapper ${classModifier}`}>
-            <a className="problem-name" href={problemURL}>
+            <a 
+                className="problem-name" 
+                href={problemURL}
+                target="_blank"
+                rel="noopener noreferrer"
+            >
                 {problemName}
             </a>
         </div>
