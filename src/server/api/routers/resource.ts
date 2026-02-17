@@ -4,6 +4,7 @@ import {
   publicProcedure,
   protectedProcedure,
 } from "../trpc"
+import { ResourceType } from "generated/prisma";
 
 export const resourceRouter = createTRPCRouter({
     getResourcesByModule: protectedProcedure
@@ -31,6 +32,30 @@ export const resourceRouter = createTRPCRouter({
                     },
                 },
             },
+        })
+    }),
+
+    addOrUpdateResourceToModule: protectedProcedure
+    .input(
+        z.object({
+            id: z.string().optional(),
+            moduleId: z.string(),
+            name: z.string(),
+            link: z.string(),
+            type: z.nativeEnum(ResourceType),
+            description: z.string(),
+        }),
+    )
+    .mutation(async ({ ctx, input }) => {
+        if (input.id) {
+            return ctx.db.resource.update({
+                where: { id: input.id },
+                data: input,
+            });
+        }
+
+        return ctx.db.resource.create({
+            data: input,
         })
     }),
 });
