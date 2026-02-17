@@ -1,0 +1,95 @@
+.resource-card {
+background-color: rgba(255, 255, 255, 0.05); /* Subtle transparent background */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 100%;
+}
+
+.resource-item {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.resource-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.resource-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.resource-type {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin-bottom: 6px;
+  width: fit-content;
+}
+
+.resource-type.general {
+  background-color: #feebe7;
+  color: #f4320b;
+}
+
+.resource-type.video {
+  background-color: #fef4e7;
+  color: #f07b00;
+}
+
+.resource-type.website {
+  background-color: #f1fee7;
+  color: #079c0a;
+}
+
+.resource-type.demo {
+  background-color: #e7fef4;
+  color: #079c5e;
+}
+
+.resource-type.book {
+  background-color: #e7f4fe;
+  color: #076f9c;
+}
+
+.resource-type.article {
+  background-color: #e7e7fe;
+  color: #0b13f4;
+}
+
+.resource-type.github {
+  background-color: #f7e7fe;
+  color: #aa0bf4;
+}
+
+.resource-description {
+  font-size: 14px;
+  color: #a1a1aa;
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+
+.resource-link {
+  font-size: 13px;
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.resource-link:hover {
+  text-decoration: underline;
+}
