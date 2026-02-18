@@ -153,6 +153,15 @@ exports.Prisma.ModuleScalarFieldEnum = {
   hidden: 'hidden'
 };
 
+exports.Prisma.ResourceScalarFieldEnum = {
+  id: 'id',
+  moduleId: 'moduleId',
+  name: 'name',
+  link: 'link',
+  type: 'type',
+  description: 'description'
+};
+
 exports.Prisma.ModuleProblemScalarFieldEnum = {
   id: 'id',
   moduleId: 'moduleId',
@@ -245,6 +254,16 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.ResourceType = exports.$Enums.ResourceType = {
+  GENERAL: 'GENERAL',
+  VIDEO: 'VIDEO',
+  WEBSITE: 'WEBSITE',
+  DEMO: 'DEMO',
+  BOOK: 'BOOK',
+  ARTICLE: 'ARTICLE',
+  GITHUB: 'GITHUB'
+};
+
 exports.ProblemType = exports.$Enums.ProblemType = {
   PRACTICE: 'PRACTICE',
   CONTEST: 'CONTEST'
@@ -267,6 +286,7 @@ exports.Prisma.ModelName = {
   TrackLevel: 'TrackLevel',
   LevelModule: 'LevelModule',
   Module: 'Module',
+  Resource: 'Resource',
   ModuleProblem: 'ModuleProblem',
   Solve: 'Solve',
   UserTrack: 'UserTrack',

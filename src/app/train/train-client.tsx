@@ -5,8 +5,10 @@ import { api } from "~/trpc/react";
 import LevelPicker from "../_components/level-picker";
 import "../../styles/level-picker.css";
 import "../../styles/globals.css";
+import "../../styles/resource.css"
 import type { ProblemDifficulty, ProblemType, Solve } from "generated/prisma";
 import Problem from "../_components/problem";
+import type { Resource } from "generated/prisma";
 
 type Props = {
   userId: string,
@@ -38,6 +40,10 @@ export default function TrainClient({ userId, levelMappings, enrolledTrackIds }:
   );
   const { data: hasChosenLevel, isLoading: isCheckingLevel } = api.user.hasChosenLevel.useQuery();
   const [editingLevel, setEditingLevel] = useState(false);
+  const { data: resources } = api.resource.getResourcesByTrack.useQuery(
+    { trackId: trackId! },
+    { enabled: !!trackId }
+  );
 
   // Get user stats
   const stats = useMemo(() => {
@@ -136,6 +142,18 @@ export default function TrainClient({ userId, levelMappings, enrolledTrackIds }:
     }
   ));
 
+  // Filter resources by module
+  const resourceMap = new Map<string, Resource[]>();
+
+  resources?.forEach(r => {
+    if (!resourceMap.has(r.moduleId)) {
+      resourceMap.set(r.moduleId, []);
+    }
+    resourceMap.get(r.moduleId)?.push(r);
+  });
+
+  console.log(resourceMap);
+
   // Render problems available to user
   return (
     <div className="page">
@@ -203,19 +221,39 @@ export default function TrainClient({ userId, levelMappings, enrolledTrackIds }:
           <h2 className="subtitle">
             {m.moduleName}
           </h2>
-          
-            {/* Problem List */}
-            {m.problems?.map((p) => (
-              <Problem
-                key={p.id}
-                problemId={p.problemId}
-                problemType={p.problemType}
-                problemName={p.problem.name}
-                problemURL={p.problem.url}
-                problemDifficulty={p.difficulty}
-                solveData={p.problem.solves}
-              />
+
+          {/* Module Resources */}
+          {(resourceMap?.get(m.moduleId)?.length ?? 0)> 0 && (
+            <div className="resource-card">
+            {resourceMap?.get(m.moduleId)?.map((r) => (
+              <div key={r.id} className="resource-item">
+                <span className="resource-name">{r.name}</span>
+                <span className={`resource-type ${(r.type).toLowerCase()}`}>{r.type}</span>
+                <span className="resource-description">{r.description}</span>
+                <a 
+                  className="resource-link" 
+                  href={r.link ?? "/"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >{r.link}</a>
+              </div>
             ))}
+          </div>
+          )}
+          
+          
+          {/* Problem List */}
+          {m.problems?.map((p) => (
+            <Problem
+              key={p.id}
+              problemId={p.problemId}
+              problemType={p.problemType}
+              problemName={p.problem.name}
+              problemURL={p.problem.url}
+              problemDifficulty={p.difficulty}
+              solveData={p.problem.solves}
+            />
+          ))}
         </div>
       ))}
 

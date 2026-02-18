@@ -40,6 +40,11 @@ export type LevelModule = $Result.DefaultSelection<Prisma.$LevelModulePayload>
  */
 export type Module = $Result.DefaultSelection<Prisma.$ModulePayload>
 /**
+ * Model Resource
+ * 
+ */
+export type Resource = $Result.DefaultSelection<Prisma.$ResourcePayload>
+/**
  * Model ModuleProblem
  * 
  */
@@ -108,6 +113,19 @@ export const Role: {
 
 export type Role = (typeof Role)[keyof typeof Role]
 
+
+export const ResourceType: {
+  GENERAL: 'GENERAL',
+  VIDEO: 'VIDEO',
+  WEBSITE: 'WEBSITE',
+  DEMO: 'DEMO',
+  BOOK: 'BOOK',
+  ARTICLE: 'ARTICLE',
+  GITHUB: 'GITHUB'
+};
+
+export type ResourceType = (typeof ResourceType)[keyof typeof ResourceType]
+
 }
 
 export type ProblemDifficulty = $Enums.ProblemDifficulty
@@ -121,6 +139,10 @@ export const ProblemType: typeof $Enums.ProblemType
 export type Role = $Enums.Role
 
 export const Role: typeof $Enums.Role
+
+export type ResourceType = $Enums.ResourceType
+
+export const ResourceType: typeof $Enums.ResourceType
 
 /**
  * ##  Prisma Client ʲˢ
@@ -289,6 +311,16 @@ export class PrismaClient<
     * ```
     */
   get module(): Prisma.ModuleDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.resource`: Exposes CRUD operations for the **Resource** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Resources
+    * const resources = await prisma.resource.findMany()
+    * ```
+    */
+  get resource(): Prisma.ResourceDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.moduleProblem`: Exposes CRUD operations for the **ModuleProblem** model.
@@ -815,6 +847,7 @@ export namespace Prisma {
     TrackLevel: 'TrackLevel',
     LevelModule: 'LevelModule',
     Module: 'Module',
+    Resource: 'Resource',
     ModuleProblem: 'ModuleProblem',
     Solve: 'Solve',
     UserTrack: 'UserTrack',
@@ -841,7 +874,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "problem" | "track" | "trackLevel" | "levelModule" | "module" | "moduleProblem" | "solve" | "userTrack" | "user" | "account" | "session" | "verificationToken" | "levelToTrack"
+      modelProps: "problem" | "track" | "trackLevel" | "levelModule" | "module" | "resource" | "moduleProblem" | "solve" | "userTrack" | "user" | "account" | "session" | "verificationToken" | "levelToTrack"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1212,6 +1245,80 @@ export namespace Prisma {
           count: {
             args: Prisma.ModuleCountArgs<ExtArgs>
             result: $Utils.Optional<ModuleCountAggregateOutputType> | number
+          }
+        }
+      }
+      Resource: {
+        payload: Prisma.$ResourcePayload<ExtArgs>
+        fields: Prisma.ResourceFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ResourceFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResourcePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ResourceFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResourcePayload>
+          }
+          findFirst: {
+            args: Prisma.ResourceFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResourcePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ResourceFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResourcePayload>
+          }
+          findMany: {
+            args: Prisma.ResourceFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResourcePayload>[]
+          }
+          create: {
+            args: Prisma.ResourceCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResourcePayload>
+          }
+          createMany: {
+            args: Prisma.ResourceCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ResourceCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResourcePayload>[]
+          }
+          delete: {
+            args: Prisma.ResourceDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResourcePayload>
+          }
+          update: {
+            args: Prisma.ResourceUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResourcePayload>
+          }
+          deleteMany: {
+            args: Prisma.ResourceDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ResourceUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ResourceUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResourcePayload>[]
+          }
+          upsert: {
+            args: Prisma.ResourceUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResourcePayload>
+          }
+          aggregate: {
+            args: Prisma.ResourceAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateResource>
+          }
+          groupBy: {
+            args: Prisma.ResourceGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ResourceGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ResourceCountArgs<ExtArgs>
+            result: $Utils.Optional<ResourceCountAggregateOutputType> | number
           }
         }
       }
@@ -1908,6 +2015,7 @@ export namespace Prisma {
     trackLevel?: TrackLevelOmit
     levelModule?: LevelModuleOmit
     module?: ModuleOmit
+    resource?: ResourceOmit
     moduleProblem?: ModuleProblemOmit
     solve?: SolveOmit
     userTrack?: UserTrackOmit
@@ -2109,11 +2217,13 @@ export namespace Prisma {
   export type ModuleCountOutputType = {
     moduleProblems: number
     levelModules: number
+    resources: number
   }
 
   export type ModuleCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     moduleProblems?: boolean | ModuleCountOutputTypeCountModuleProblemsArgs
     levelModules?: boolean | ModuleCountOutputTypeCountLevelModulesArgs
+    resources?: boolean | ModuleCountOutputTypeCountResourcesArgs
   }
 
   // Custom InputTypes
@@ -2139,6 +2249,13 @@ export namespace Prisma {
    */
   export type ModuleCountOutputTypeCountLevelModulesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: LevelModuleWhereInput
+  }
+
+  /**
+   * ModuleCountOutputType without action
+   */
+  export type ModuleCountOutputTypeCountResourcesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ResourceWhereInput
   }
 
 
@@ -6689,6 +6806,7 @@ export namespace Prisma {
     hidden?: boolean
     moduleProblems?: boolean | Module$moduleProblemsArgs<ExtArgs>
     levelModules?: boolean | Module$levelModulesArgs<ExtArgs>
+    resources?: boolean | Module$resourcesArgs<ExtArgs>
     _count?: boolean | ModuleCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["module"]>
 
@@ -6717,6 +6835,7 @@ export namespace Prisma {
   export type ModuleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     moduleProblems?: boolean | Module$moduleProblemsArgs<ExtArgs>
     levelModules?: boolean | Module$levelModulesArgs<ExtArgs>
+    resources?: boolean | Module$resourcesArgs<ExtArgs>
     _count?: boolean | ModuleCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ModuleIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -6727,6 +6846,7 @@ export namespace Prisma {
     objects: {
       moduleProblems: Prisma.$ModuleProblemPayload<ExtArgs>[]
       levelModules: Prisma.$LevelModulePayload<ExtArgs>[]
+      resources: Prisma.$ResourcePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -7129,6 +7249,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     moduleProblems<T extends Module$moduleProblemsArgs<ExtArgs> = {}>(args?: Subset<T, Module$moduleProblemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ModuleProblemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     levelModules<T extends Module$levelModulesArgs<ExtArgs> = {}>(args?: Subset<T, Module$levelModulesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LevelModulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    resources<T extends Module$resourcesArgs<ExtArgs> = {}>(args?: Subset<T, Module$resourcesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7598,6 +7719,30 @@ export namespace Prisma {
   }
 
   /**
+   * Module.resources
+   */
+  export type Module$resourcesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Resource
+     */
+    select?: ResourceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Resource
+     */
+    omit?: ResourceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResourceInclude<ExtArgs> | null
+    where?: ResourceWhereInput
+    orderBy?: ResourceOrderByWithRelationInput | ResourceOrderByWithRelationInput[]
+    cursor?: ResourceWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ResourceScalarFieldEnum | ResourceScalarFieldEnum[]
+  }
+
+  /**
    * Module without action
    */
   export type ModuleDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7613,6 +7758,1077 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ModuleInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Resource
+   */
+
+  export type AggregateResource = {
+    _count: ResourceCountAggregateOutputType | null
+    _min: ResourceMinAggregateOutputType | null
+    _max: ResourceMaxAggregateOutputType | null
+  }
+
+  export type ResourceMinAggregateOutputType = {
+    id: string | null
+    moduleId: string | null
+    name: string | null
+    link: string | null
+    type: $Enums.ResourceType | null
+    description: string | null
+  }
+
+  export type ResourceMaxAggregateOutputType = {
+    id: string | null
+    moduleId: string | null
+    name: string | null
+    link: string | null
+    type: $Enums.ResourceType | null
+    description: string | null
+  }
+
+  export type ResourceCountAggregateOutputType = {
+    id: number
+    moduleId: number
+    name: number
+    link: number
+    type: number
+    description: number
+    _all: number
+  }
+
+
+  export type ResourceMinAggregateInputType = {
+    id?: true
+    moduleId?: true
+    name?: true
+    link?: true
+    type?: true
+    description?: true
+  }
+
+  export type ResourceMaxAggregateInputType = {
+    id?: true
+    moduleId?: true
+    name?: true
+    link?: true
+    type?: true
+    description?: true
+  }
+
+  export type ResourceCountAggregateInputType = {
+    id?: true
+    moduleId?: true
+    name?: true
+    link?: true
+    type?: true
+    description?: true
+    _all?: true
+  }
+
+  export type ResourceAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Resource to aggregate.
+     */
+    where?: ResourceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Resources to fetch.
+     */
+    orderBy?: ResourceOrderByWithRelationInput | ResourceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ResourceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Resources from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Resources.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Resources
+    **/
+    _count?: true | ResourceCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ResourceMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ResourceMaxAggregateInputType
+  }
+
+  export type GetResourceAggregateType<T extends ResourceAggregateArgs> = {
+        [P in keyof T & keyof AggregateResource]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateResource[P]>
+      : GetScalarType<T[P], AggregateResource[P]>
+  }
+
+
+
+
+  export type ResourceGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ResourceWhereInput
+    orderBy?: ResourceOrderByWithAggregationInput | ResourceOrderByWithAggregationInput[]
+    by: ResourceScalarFieldEnum[] | ResourceScalarFieldEnum
+    having?: ResourceScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ResourceCountAggregateInputType | true
+    _min?: ResourceMinAggregateInputType
+    _max?: ResourceMaxAggregateInputType
+  }
+
+  export type ResourceGroupByOutputType = {
+    id: string
+    moduleId: string
+    name: string
+    link: string | null
+    type: $Enums.ResourceType
+    description: string | null
+    _count: ResourceCountAggregateOutputType | null
+    _min: ResourceMinAggregateOutputType | null
+    _max: ResourceMaxAggregateOutputType | null
+  }
+
+  type GetResourceGroupByPayload<T extends ResourceGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ResourceGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ResourceGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ResourceGroupByOutputType[P]>
+            : GetScalarType<T[P], ResourceGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ResourceSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    moduleId?: boolean
+    name?: boolean
+    link?: boolean
+    type?: boolean
+    description?: boolean
+    module?: boolean | ModuleDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["resource"]>
+
+  export type ResourceSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    moduleId?: boolean
+    name?: boolean
+    link?: boolean
+    type?: boolean
+    description?: boolean
+    module?: boolean | ModuleDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["resource"]>
+
+  export type ResourceSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    moduleId?: boolean
+    name?: boolean
+    link?: boolean
+    type?: boolean
+    description?: boolean
+    module?: boolean | ModuleDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["resource"]>
+
+  export type ResourceSelectScalar = {
+    id?: boolean
+    moduleId?: boolean
+    name?: boolean
+    link?: boolean
+    type?: boolean
+    description?: boolean
+  }
+
+  export type ResourceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "moduleId" | "name" | "link" | "type" | "description", ExtArgs["result"]["resource"]>
+  export type ResourceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    module?: boolean | ModuleDefaultArgs<ExtArgs>
+  }
+  export type ResourceIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    module?: boolean | ModuleDefaultArgs<ExtArgs>
+  }
+  export type ResourceIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    module?: boolean | ModuleDefaultArgs<ExtArgs>
+  }
+
+  export type $ResourcePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Resource"
+    objects: {
+      module: Prisma.$ModulePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      moduleId: string
+      name: string
+      link: string | null
+      type: $Enums.ResourceType
+      description: string | null
+    }, ExtArgs["result"]["resource"]>
+    composites: {}
+  }
+
+  type ResourceGetPayload<S extends boolean | null | undefined | ResourceDefaultArgs> = $Result.GetResult<Prisma.$ResourcePayload, S>
+
+  type ResourceCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ResourceFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ResourceCountAggregateInputType | true
+    }
+
+  export interface ResourceDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Resource'], meta: { name: 'Resource' } }
+    /**
+     * Find zero or one Resource that matches the filter.
+     * @param {ResourceFindUniqueArgs} args - Arguments to find a Resource
+     * @example
+     * // Get one Resource
+     * const resource = await prisma.resource.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ResourceFindUniqueArgs>(args: SelectSubset<T, ResourceFindUniqueArgs<ExtArgs>>): Prisma__ResourceClient<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Resource that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ResourceFindUniqueOrThrowArgs} args - Arguments to find a Resource
+     * @example
+     * // Get one Resource
+     * const resource = await prisma.resource.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ResourceFindUniqueOrThrowArgs>(args: SelectSubset<T, ResourceFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ResourceClient<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Resource that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResourceFindFirstArgs} args - Arguments to find a Resource
+     * @example
+     * // Get one Resource
+     * const resource = await prisma.resource.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ResourceFindFirstArgs>(args?: SelectSubset<T, ResourceFindFirstArgs<ExtArgs>>): Prisma__ResourceClient<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Resource that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResourceFindFirstOrThrowArgs} args - Arguments to find a Resource
+     * @example
+     * // Get one Resource
+     * const resource = await prisma.resource.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ResourceFindFirstOrThrowArgs>(args?: SelectSubset<T, ResourceFindFirstOrThrowArgs<ExtArgs>>): Prisma__ResourceClient<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Resources that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResourceFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Resources
+     * const resources = await prisma.resource.findMany()
+     * 
+     * // Get first 10 Resources
+     * const resources = await prisma.resource.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const resourceWithIdOnly = await prisma.resource.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ResourceFindManyArgs>(args?: SelectSubset<T, ResourceFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Resource.
+     * @param {ResourceCreateArgs} args - Arguments to create a Resource.
+     * @example
+     * // Create one Resource
+     * const Resource = await prisma.resource.create({
+     *   data: {
+     *     // ... data to create a Resource
+     *   }
+     * })
+     * 
+     */
+    create<T extends ResourceCreateArgs>(args: SelectSubset<T, ResourceCreateArgs<ExtArgs>>): Prisma__ResourceClient<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Resources.
+     * @param {ResourceCreateManyArgs} args - Arguments to create many Resources.
+     * @example
+     * // Create many Resources
+     * const resource = await prisma.resource.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ResourceCreateManyArgs>(args?: SelectSubset<T, ResourceCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Resources and returns the data saved in the database.
+     * @param {ResourceCreateManyAndReturnArgs} args - Arguments to create many Resources.
+     * @example
+     * // Create many Resources
+     * const resource = await prisma.resource.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Resources and only return the `id`
+     * const resourceWithIdOnly = await prisma.resource.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ResourceCreateManyAndReturnArgs>(args?: SelectSubset<T, ResourceCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Resource.
+     * @param {ResourceDeleteArgs} args - Arguments to delete one Resource.
+     * @example
+     * // Delete one Resource
+     * const Resource = await prisma.resource.delete({
+     *   where: {
+     *     // ... filter to delete one Resource
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ResourceDeleteArgs>(args: SelectSubset<T, ResourceDeleteArgs<ExtArgs>>): Prisma__ResourceClient<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Resource.
+     * @param {ResourceUpdateArgs} args - Arguments to update one Resource.
+     * @example
+     * // Update one Resource
+     * const resource = await prisma.resource.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ResourceUpdateArgs>(args: SelectSubset<T, ResourceUpdateArgs<ExtArgs>>): Prisma__ResourceClient<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Resources.
+     * @param {ResourceDeleteManyArgs} args - Arguments to filter Resources to delete.
+     * @example
+     * // Delete a few Resources
+     * const { count } = await prisma.resource.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ResourceDeleteManyArgs>(args?: SelectSubset<T, ResourceDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Resources.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResourceUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Resources
+     * const resource = await prisma.resource.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ResourceUpdateManyArgs>(args: SelectSubset<T, ResourceUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Resources and returns the data updated in the database.
+     * @param {ResourceUpdateManyAndReturnArgs} args - Arguments to update many Resources.
+     * @example
+     * // Update many Resources
+     * const resource = await prisma.resource.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Resources and only return the `id`
+     * const resourceWithIdOnly = await prisma.resource.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ResourceUpdateManyAndReturnArgs>(args: SelectSubset<T, ResourceUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Resource.
+     * @param {ResourceUpsertArgs} args - Arguments to update or create a Resource.
+     * @example
+     * // Update or create a Resource
+     * const resource = await prisma.resource.upsert({
+     *   create: {
+     *     // ... data to create a Resource
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Resource we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ResourceUpsertArgs>(args: SelectSubset<T, ResourceUpsertArgs<ExtArgs>>): Prisma__ResourceClient<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Resources.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResourceCountArgs} args - Arguments to filter Resources to count.
+     * @example
+     * // Count the number of Resources
+     * const count = await prisma.resource.count({
+     *   where: {
+     *     // ... the filter for the Resources we want to count
+     *   }
+     * })
+    **/
+    count<T extends ResourceCountArgs>(
+      args?: Subset<T, ResourceCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ResourceCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Resource.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResourceAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ResourceAggregateArgs>(args: Subset<T, ResourceAggregateArgs>): Prisma.PrismaPromise<GetResourceAggregateType<T>>
+
+    /**
+     * Group by Resource.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResourceGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ResourceGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ResourceGroupByArgs['orderBy'] }
+        : { orderBy?: ResourceGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ResourceGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetResourceGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Resource model
+   */
+  readonly fields: ResourceFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Resource.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ResourceClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    module<T extends ModuleDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ModuleDefaultArgs<ExtArgs>>): Prisma__ModuleClient<$Result.GetResult<Prisma.$ModulePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Resource model
+   */
+  interface ResourceFieldRefs {
+    readonly id: FieldRef<"Resource", 'String'>
+    readonly moduleId: FieldRef<"Resource", 'String'>
+    readonly name: FieldRef<"Resource", 'String'>
+    readonly link: FieldRef<"Resource", 'String'>
+    readonly type: FieldRef<"Resource", 'ResourceType'>
+    readonly description: FieldRef<"Resource", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Resource findUnique
+   */
+  export type ResourceFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Resource
+     */
+    select?: ResourceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Resource
+     */
+    omit?: ResourceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResourceInclude<ExtArgs> | null
+    /**
+     * Filter, which Resource to fetch.
+     */
+    where: ResourceWhereUniqueInput
+  }
+
+  /**
+   * Resource findUniqueOrThrow
+   */
+  export type ResourceFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Resource
+     */
+    select?: ResourceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Resource
+     */
+    omit?: ResourceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResourceInclude<ExtArgs> | null
+    /**
+     * Filter, which Resource to fetch.
+     */
+    where: ResourceWhereUniqueInput
+  }
+
+  /**
+   * Resource findFirst
+   */
+  export type ResourceFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Resource
+     */
+    select?: ResourceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Resource
+     */
+    omit?: ResourceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResourceInclude<ExtArgs> | null
+    /**
+     * Filter, which Resource to fetch.
+     */
+    where?: ResourceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Resources to fetch.
+     */
+    orderBy?: ResourceOrderByWithRelationInput | ResourceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Resources.
+     */
+    cursor?: ResourceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Resources from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Resources.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Resources.
+     */
+    distinct?: ResourceScalarFieldEnum | ResourceScalarFieldEnum[]
+  }
+
+  /**
+   * Resource findFirstOrThrow
+   */
+  export type ResourceFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Resource
+     */
+    select?: ResourceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Resource
+     */
+    omit?: ResourceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResourceInclude<ExtArgs> | null
+    /**
+     * Filter, which Resource to fetch.
+     */
+    where?: ResourceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Resources to fetch.
+     */
+    orderBy?: ResourceOrderByWithRelationInput | ResourceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Resources.
+     */
+    cursor?: ResourceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Resources from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Resources.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Resources.
+     */
+    distinct?: ResourceScalarFieldEnum | ResourceScalarFieldEnum[]
+  }
+
+  /**
+   * Resource findMany
+   */
+  export type ResourceFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Resource
+     */
+    select?: ResourceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Resource
+     */
+    omit?: ResourceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResourceInclude<ExtArgs> | null
+    /**
+     * Filter, which Resources to fetch.
+     */
+    where?: ResourceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Resources to fetch.
+     */
+    orderBy?: ResourceOrderByWithRelationInput | ResourceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Resources.
+     */
+    cursor?: ResourceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Resources from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Resources.
+     */
+    skip?: number
+    distinct?: ResourceScalarFieldEnum | ResourceScalarFieldEnum[]
+  }
+
+  /**
+   * Resource create
+   */
+  export type ResourceCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Resource
+     */
+    select?: ResourceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Resource
+     */
+    omit?: ResourceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResourceInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Resource.
+     */
+    data: XOR<ResourceCreateInput, ResourceUncheckedCreateInput>
+  }
+
+  /**
+   * Resource createMany
+   */
+  export type ResourceCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Resources.
+     */
+    data: ResourceCreateManyInput | ResourceCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Resource createManyAndReturn
+   */
+  export type ResourceCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Resource
+     */
+    select?: ResourceSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Resource
+     */
+    omit?: ResourceOmit<ExtArgs> | null
+    /**
+     * The data used to create many Resources.
+     */
+    data: ResourceCreateManyInput | ResourceCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResourceIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Resource update
+   */
+  export type ResourceUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Resource
+     */
+    select?: ResourceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Resource
+     */
+    omit?: ResourceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResourceInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Resource.
+     */
+    data: XOR<ResourceUpdateInput, ResourceUncheckedUpdateInput>
+    /**
+     * Choose, which Resource to update.
+     */
+    where: ResourceWhereUniqueInput
+  }
+
+  /**
+   * Resource updateMany
+   */
+  export type ResourceUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Resources.
+     */
+    data: XOR<ResourceUpdateManyMutationInput, ResourceUncheckedUpdateManyInput>
+    /**
+     * Filter which Resources to update
+     */
+    where?: ResourceWhereInput
+    /**
+     * Limit how many Resources to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Resource updateManyAndReturn
+   */
+  export type ResourceUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Resource
+     */
+    select?: ResourceSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Resource
+     */
+    omit?: ResourceOmit<ExtArgs> | null
+    /**
+     * The data used to update Resources.
+     */
+    data: XOR<ResourceUpdateManyMutationInput, ResourceUncheckedUpdateManyInput>
+    /**
+     * Filter which Resources to update
+     */
+    where?: ResourceWhereInput
+    /**
+     * Limit how many Resources to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResourceIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Resource upsert
+   */
+  export type ResourceUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Resource
+     */
+    select?: ResourceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Resource
+     */
+    omit?: ResourceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResourceInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Resource to update in case it exists.
+     */
+    where: ResourceWhereUniqueInput
+    /**
+     * In case the Resource found by the `where` argument doesn't exist, create a new Resource with this data.
+     */
+    create: XOR<ResourceCreateInput, ResourceUncheckedCreateInput>
+    /**
+     * In case the Resource was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ResourceUpdateInput, ResourceUncheckedUpdateInput>
+  }
+
+  /**
+   * Resource delete
+   */
+  export type ResourceDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Resource
+     */
+    select?: ResourceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Resource
+     */
+    omit?: ResourceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResourceInclude<ExtArgs> | null
+    /**
+     * Filter which Resource to delete.
+     */
+    where: ResourceWhereUniqueInput
+  }
+
+  /**
+   * Resource deleteMany
+   */
+  export type ResourceDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Resources to delete
+     */
+    where?: ResourceWhereInput
+    /**
+     * Limit how many Resources to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Resource without action
+   */
+  export type ResourceDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Resource
+     */
+    select?: ResourceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Resource
+     */
+    omit?: ResourceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResourceInclude<ExtArgs> | null
   }
 
 
@@ -16439,6 +17655,18 @@ export namespace Prisma {
   export type ModuleScalarFieldEnum = (typeof ModuleScalarFieldEnum)[keyof typeof ModuleScalarFieldEnum]
 
 
+  export const ResourceScalarFieldEnum: {
+    id: 'id',
+    moduleId: 'moduleId',
+    name: 'name',
+    link: 'link',
+    type: 'type',
+    description: 'description'
+  };
+
+  export type ResourceScalarFieldEnum = (typeof ResourceScalarFieldEnum)[keyof typeof ResourceScalarFieldEnum]
+
+
   export const ModuleProblemScalarFieldEnum: {
     id: 'id',
     moduleId: 'moduleId',
@@ -16616,6 +17844,20 @@ export namespace Prisma {
    * Reference to a field of type 'Boolean'
    */
   export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
+   * Reference to a field of type 'ResourceType'
+   */
+  export type EnumResourceTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ResourceType'>
+    
+
+
+  /**
+   * Reference to a field of type 'ResourceType[]'
+   */
+  export type ListEnumResourceTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ResourceType[]'>
     
 
 
@@ -16891,6 +18133,7 @@ export namespace Prisma {
     hidden?: BoolFilter<"Module"> | boolean
     moduleProblems?: ModuleProblemListRelationFilter
     levelModules?: LevelModuleListRelationFilter
+    resources?: ResourceListRelationFilter
   }
 
   export type ModuleOrderByWithRelationInput = {
@@ -16900,6 +18143,7 @@ export namespace Prisma {
     hidden?: SortOrder
     moduleProblems?: ModuleProblemOrderByRelationAggregateInput
     levelModules?: LevelModuleOrderByRelationAggregateInput
+    resources?: ResourceOrderByRelationAggregateInput
   }
 
   export type ModuleWhereUniqueInput = Prisma.AtLeast<{
@@ -16912,6 +18156,7 @@ export namespace Prisma {
     hidden?: BoolFilter<"Module"> | boolean
     moduleProblems?: ModuleProblemListRelationFilter
     levelModules?: LevelModuleListRelationFilter
+    resources?: ResourceListRelationFilter
   }, "id">
 
   export type ModuleOrderByWithAggregationInput = {
@@ -16932,6 +18177,66 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"Module"> | string
     launchDate?: DateTimeWithAggregatesFilter<"Module"> | Date | string
     hidden?: BoolWithAggregatesFilter<"Module"> | boolean
+  }
+
+  export type ResourceWhereInput = {
+    AND?: ResourceWhereInput | ResourceWhereInput[]
+    OR?: ResourceWhereInput[]
+    NOT?: ResourceWhereInput | ResourceWhereInput[]
+    id?: StringFilter<"Resource"> | string
+    moduleId?: StringFilter<"Resource"> | string
+    name?: StringFilter<"Resource"> | string
+    link?: StringNullableFilter<"Resource"> | string | null
+    type?: EnumResourceTypeFilter<"Resource"> | $Enums.ResourceType
+    description?: StringNullableFilter<"Resource"> | string | null
+    module?: XOR<ModuleScalarRelationFilter, ModuleWhereInput>
+  }
+
+  export type ResourceOrderByWithRelationInput = {
+    id?: SortOrder
+    moduleId?: SortOrder
+    name?: SortOrder
+    link?: SortOrderInput | SortOrder
+    type?: SortOrder
+    description?: SortOrderInput | SortOrder
+    module?: ModuleOrderByWithRelationInput
+  }
+
+  export type ResourceWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ResourceWhereInput | ResourceWhereInput[]
+    OR?: ResourceWhereInput[]
+    NOT?: ResourceWhereInput | ResourceWhereInput[]
+    moduleId?: StringFilter<"Resource"> | string
+    name?: StringFilter<"Resource"> | string
+    link?: StringNullableFilter<"Resource"> | string | null
+    type?: EnumResourceTypeFilter<"Resource"> | $Enums.ResourceType
+    description?: StringNullableFilter<"Resource"> | string | null
+    module?: XOR<ModuleScalarRelationFilter, ModuleWhereInput>
+  }, "id">
+
+  export type ResourceOrderByWithAggregationInput = {
+    id?: SortOrder
+    moduleId?: SortOrder
+    name?: SortOrder
+    link?: SortOrderInput | SortOrder
+    type?: SortOrder
+    description?: SortOrderInput | SortOrder
+    _count?: ResourceCountOrderByAggregateInput
+    _max?: ResourceMaxOrderByAggregateInput
+    _min?: ResourceMinOrderByAggregateInput
+  }
+
+  export type ResourceScalarWhereWithAggregatesInput = {
+    AND?: ResourceScalarWhereWithAggregatesInput | ResourceScalarWhereWithAggregatesInput[]
+    OR?: ResourceScalarWhereWithAggregatesInput[]
+    NOT?: ResourceScalarWhereWithAggregatesInput | ResourceScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Resource"> | string
+    moduleId?: StringWithAggregatesFilter<"Resource"> | string
+    name?: StringWithAggregatesFilter<"Resource"> | string
+    link?: StringNullableWithAggregatesFilter<"Resource"> | string | null
+    type?: EnumResourceTypeWithAggregatesFilter<"Resource"> | $Enums.ResourceType
+    description?: StringNullableWithAggregatesFilter<"Resource"> | string | null
   }
 
   export type ModuleProblemWhereInput = {
@@ -17667,6 +18972,7 @@ export namespace Prisma {
     hidden?: boolean
     moduleProblems?: ModuleProblemCreateNestedManyWithoutModuleInput
     levelModules?: LevelModuleCreateNestedManyWithoutModuleInput
+    resources?: ResourceCreateNestedManyWithoutModuleInput
   }
 
   export type ModuleUncheckedCreateInput = {
@@ -17676,6 +18982,7 @@ export namespace Prisma {
     hidden?: boolean
     moduleProblems?: ModuleProblemUncheckedCreateNestedManyWithoutModuleInput
     levelModules?: LevelModuleUncheckedCreateNestedManyWithoutModuleInput
+    resources?: ResourceUncheckedCreateNestedManyWithoutModuleInput
   }
 
   export type ModuleUpdateInput = {
@@ -17685,6 +18992,7 @@ export namespace Prisma {
     hidden?: BoolFieldUpdateOperationsInput | boolean
     moduleProblems?: ModuleProblemUpdateManyWithoutModuleNestedInput
     levelModules?: LevelModuleUpdateManyWithoutModuleNestedInput
+    resources?: ResourceUpdateManyWithoutModuleNestedInput
   }
 
   export type ModuleUncheckedUpdateInput = {
@@ -17694,6 +19002,7 @@ export namespace Prisma {
     hidden?: BoolFieldUpdateOperationsInput | boolean
     moduleProblems?: ModuleProblemUncheckedUpdateManyWithoutModuleNestedInput
     levelModules?: LevelModuleUncheckedUpdateManyWithoutModuleNestedInput
+    resources?: ResourceUncheckedUpdateManyWithoutModuleNestedInput
   }
 
   export type ModuleCreateManyInput = {
@@ -17715,6 +19024,68 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     launchDate?: DateTimeFieldUpdateOperationsInput | Date | string
     hidden?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type ResourceCreateInput = {
+    id?: string
+    name: string
+    link?: string | null
+    type?: $Enums.ResourceType
+    description?: string | null
+    module: ModuleCreateNestedOneWithoutResourcesInput
+  }
+
+  export type ResourceUncheckedCreateInput = {
+    id?: string
+    moduleId: string
+    name: string
+    link?: string | null
+    type?: $Enums.ResourceType
+    description?: string | null
+  }
+
+  export type ResourceUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    link?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumResourceTypeFieldUpdateOperationsInput | $Enums.ResourceType
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    module?: ModuleUpdateOneRequiredWithoutResourcesNestedInput
+  }
+
+  export type ResourceUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    moduleId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    link?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumResourceTypeFieldUpdateOperationsInput | $Enums.ResourceType
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ResourceCreateManyInput = {
+    id?: string
+    moduleId: string
+    name: string
+    link?: string | null
+    type?: $Enums.ResourceType
+    description?: string | null
+  }
+
+  export type ResourceUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    link?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumResourceTypeFieldUpdateOperationsInput | $Enums.ResourceType
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ResourceUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    moduleId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    link?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumResourceTypeFieldUpdateOperationsInput | $Enums.ResourceType
+    description?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ModuleProblemCreateInput = {
@@ -18513,6 +19884,16 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
+  export type ResourceListRelationFilter = {
+    every?: ResourceWhereInput
+    some?: ResourceWhereInput
+    none?: ResourceWhereInput
+  }
+
+  export type ResourceOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type ModuleCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
@@ -18554,6 +19935,88 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type EnumResourceTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.ResourceType | EnumResourceTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ResourceType[] | ListEnumResourceTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ResourceType[] | ListEnumResourceTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumResourceTypeFilter<$PrismaModel> | $Enums.ResourceType
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
+  export type ResourceCountOrderByAggregateInput = {
+    id?: SortOrder
+    moduleId?: SortOrder
+    name?: SortOrder
+    link?: SortOrder
+    type?: SortOrder
+    description?: SortOrder
+  }
+
+  export type ResourceMaxOrderByAggregateInput = {
+    id?: SortOrder
+    moduleId?: SortOrder
+    name?: SortOrder
+    link?: SortOrder
+    type?: SortOrder
+    description?: SortOrder
+  }
+
+  export type ResourceMinOrderByAggregateInput = {
+    id?: SortOrder
+    moduleId?: SortOrder
+    name?: SortOrder
+    link?: SortOrder
+    type?: SortOrder
+    description?: SortOrder
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type EnumResourceTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ResourceType | EnumResourceTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ResourceType[] | ListEnumResourceTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ResourceType[] | ListEnumResourceTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumResourceTypeWithAggregatesFilter<$PrismaModel> | $Enums.ResourceType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumResourceTypeFilter<$PrismaModel>
+    _max?: NestedEnumResourceTypeFilter<$PrismaModel>
   }
 
   export type EnumProblemTypeFilter<$PrismaModel = never> = {
@@ -18635,29 +20098,9 @@ export namespace Prisma {
     _max?: NestedEnumProblemDifficultyFilter<$PrismaModel>
   }
 
-  export type StringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
-  }
-
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
   }
 
   export type SolveUserIdProblemIdCompoundUniqueInput = {
@@ -18735,24 +20178,6 @@ export namespace Prisma {
     codeTimeMinutes?: SortOrder
     debugTimeMinutes?: SortOrder
     perceivedDifficulty?: SortOrder
-  }
-
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type UserTrackUserIdTrackIdCompoundUniqueInput = {
@@ -19278,6 +20703,13 @@ export namespace Prisma {
     connect?: LevelModuleWhereUniqueInput | LevelModuleWhereUniqueInput[]
   }
 
+  export type ResourceCreateNestedManyWithoutModuleInput = {
+    create?: XOR<ResourceCreateWithoutModuleInput, ResourceUncheckedCreateWithoutModuleInput> | ResourceCreateWithoutModuleInput[] | ResourceUncheckedCreateWithoutModuleInput[]
+    connectOrCreate?: ResourceCreateOrConnectWithoutModuleInput | ResourceCreateOrConnectWithoutModuleInput[]
+    createMany?: ResourceCreateManyModuleInputEnvelope
+    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+  }
+
   export type ModuleProblemUncheckedCreateNestedManyWithoutModuleInput = {
     create?: XOR<ModuleProblemCreateWithoutModuleInput, ModuleProblemUncheckedCreateWithoutModuleInput> | ModuleProblemCreateWithoutModuleInput[] | ModuleProblemUncheckedCreateWithoutModuleInput[]
     connectOrCreate?: ModuleProblemCreateOrConnectWithoutModuleInput | ModuleProblemCreateOrConnectWithoutModuleInput[]
@@ -19290,6 +20722,13 @@ export namespace Prisma {
     connectOrCreate?: LevelModuleCreateOrConnectWithoutModuleInput | LevelModuleCreateOrConnectWithoutModuleInput[]
     createMany?: LevelModuleCreateManyModuleInputEnvelope
     connect?: LevelModuleWhereUniqueInput | LevelModuleWhereUniqueInput[]
+  }
+
+  export type ResourceUncheckedCreateNestedManyWithoutModuleInput = {
+    create?: XOR<ResourceCreateWithoutModuleInput, ResourceUncheckedCreateWithoutModuleInput> | ResourceCreateWithoutModuleInput[] | ResourceUncheckedCreateWithoutModuleInput[]
+    connectOrCreate?: ResourceCreateOrConnectWithoutModuleInput | ResourceCreateOrConnectWithoutModuleInput[]
+    createMany?: ResourceCreateManyModuleInputEnvelope
+    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -19328,6 +20767,20 @@ export namespace Prisma {
     deleteMany?: LevelModuleScalarWhereInput | LevelModuleScalarWhereInput[]
   }
 
+  export type ResourceUpdateManyWithoutModuleNestedInput = {
+    create?: XOR<ResourceCreateWithoutModuleInput, ResourceUncheckedCreateWithoutModuleInput> | ResourceCreateWithoutModuleInput[] | ResourceUncheckedCreateWithoutModuleInput[]
+    connectOrCreate?: ResourceCreateOrConnectWithoutModuleInput | ResourceCreateOrConnectWithoutModuleInput[]
+    upsert?: ResourceUpsertWithWhereUniqueWithoutModuleInput | ResourceUpsertWithWhereUniqueWithoutModuleInput[]
+    createMany?: ResourceCreateManyModuleInputEnvelope
+    set?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    disconnect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    delete?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    update?: ResourceUpdateWithWhereUniqueWithoutModuleInput | ResourceUpdateWithWhereUniqueWithoutModuleInput[]
+    updateMany?: ResourceUpdateManyWithWhereWithoutModuleInput | ResourceUpdateManyWithWhereWithoutModuleInput[]
+    deleteMany?: ResourceScalarWhereInput | ResourceScalarWhereInput[]
+  }
+
   export type ModuleProblemUncheckedUpdateManyWithoutModuleNestedInput = {
     create?: XOR<ModuleProblemCreateWithoutModuleInput, ModuleProblemUncheckedCreateWithoutModuleInput> | ModuleProblemCreateWithoutModuleInput[] | ModuleProblemUncheckedCreateWithoutModuleInput[]
     connectOrCreate?: ModuleProblemCreateOrConnectWithoutModuleInput | ModuleProblemCreateOrConnectWithoutModuleInput[]
@@ -19354,6 +20807,42 @@ export namespace Prisma {
     update?: LevelModuleUpdateWithWhereUniqueWithoutModuleInput | LevelModuleUpdateWithWhereUniqueWithoutModuleInput[]
     updateMany?: LevelModuleUpdateManyWithWhereWithoutModuleInput | LevelModuleUpdateManyWithWhereWithoutModuleInput[]
     deleteMany?: LevelModuleScalarWhereInput | LevelModuleScalarWhereInput[]
+  }
+
+  export type ResourceUncheckedUpdateManyWithoutModuleNestedInput = {
+    create?: XOR<ResourceCreateWithoutModuleInput, ResourceUncheckedCreateWithoutModuleInput> | ResourceCreateWithoutModuleInput[] | ResourceUncheckedCreateWithoutModuleInput[]
+    connectOrCreate?: ResourceCreateOrConnectWithoutModuleInput | ResourceCreateOrConnectWithoutModuleInput[]
+    upsert?: ResourceUpsertWithWhereUniqueWithoutModuleInput | ResourceUpsertWithWhereUniqueWithoutModuleInput[]
+    createMany?: ResourceCreateManyModuleInputEnvelope
+    set?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    disconnect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    delete?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    update?: ResourceUpdateWithWhereUniqueWithoutModuleInput | ResourceUpdateWithWhereUniqueWithoutModuleInput[]
+    updateMany?: ResourceUpdateManyWithWhereWithoutModuleInput | ResourceUpdateManyWithWhereWithoutModuleInput[]
+    deleteMany?: ResourceScalarWhereInput | ResourceScalarWhereInput[]
+  }
+
+  export type ModuleCreateNestedOneWithoutResourcesInput = {
+    create?: XOR<ModuleCreateWithoutResourcesInput, ModuleUncheckedCreateWithoutResourcesInput>
+    connectOrCreate?: ModuleCreateOrConnectWithoutResourcesInput
+    connect?: ModuleWhereUniqueInput
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
+  export type EnumResourceTypeFieldUpdateOperationsInput = {
+    set?: $Enums.ResourceType
+  }
+
+  export type ModuleUpdateOneRequiredWithoutResourcesNestedInput = {
+    create?: XOR<ModuleCreateWithoutResourcesInput, ModuleUncheckedCreateWithoutResourcesInput>
+    connectOrCreate?: ModuleCreateOrConnectWithoutResourcesInput
+    upsert?: ModuleUpsertWithoutResourcesInput
+    connect?: ModuleWhereUniqueInput
+    update?: XOR<XOR<ModuleUpdateToOneWithWhereWithoutResourcesInput, ModuleUpdateWithoutResourcesInput>, ModuleUncheckedUpdateWithoutResourcesInput>
   }
 
   export type ModuleCreateNestedOneWithoutModuleProblemsInput = {
@@ -19402,10 +20891,6 @@ export namespace Prisma {
     create?: XOR<ProblemCreateWithoutSolvesInput, ProblemUncheckedCreateWithoutSolvesInput>
     connectOrCreate?: ProblemCreateOrConnectWithoutSolvesInput
     connect?: ProblemWhereUniqueInput
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
   }
 
   export type UserUpdateOneRequiredWithoutSolvesNestedInput = {
@@ -19767,6 +21252,65 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedEnumResourceTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.ResourceType | EnumResourceTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ResourceType[] | ListEnumResourceTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ResourceType[] | ListEnumResourceTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumResourceTypeFilter<$PrismaModel> | $Enums.ResourceType
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedEnumResourceTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ResourceType | EnumResourceTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ResourceType[] | ListEnumResourceTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ResourceType[] | ListEnumResourceTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumResourceTypeWithAggregatesFilter<$PrismaModel> | $Enums.ResourceType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumResourceTypeFilter<$PrismaModel>
+    _max?: NestedEnumResourceTypeFilter<$PrismaModel>
+  }
+
   export type NestedEnumProblemTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.ProblemType | EnumProblemTypeFieldRefInput<$PrismaModel>
     in?: $Enums.ProblemType[] | ListEnumProblemTypeFieldRefInput<$PrismaModel>
@@ -19799,48 +21343,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumProblemDifficultyFilter<$PrismaModel>
     _max?: NestedEnumProblemDifficultyFilter<$PrismaModel>
-  }
-
-  export type NestedStringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
-  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedEnumRoleFilter<$PrismaModel = never> = {
@@ -20236,6 +21738,7 @@ export namespace Prisma {
     launchDate: Date | string
     hidden?: boolean
     moduleProblems?: ModuleProblemCreateNestedManyWithoutModuleInput
+    resources?: ResourceCreateNestedManyWithoutModuleInput
   }
 
   export type ModuleUncheckedCreateWithoutLevelModulesInput = {
@@ -20244,6 +21747,7 @@ export namespace Prisma {
     launchDate: Date | string
     hidden?: boolean
     moduleProblems?: ModuleProblemUncheckedCreateNestedManyWithoutModuleInput
+    resources?: ResourceUncheckedCreateNestedManyWithoutModuleInput
   }
 
   export type ModuleCreateOrConnectWithoutLevelModulesInput = {
@@ -20293,6 +21797,7 @@ export namespace Prisma {
     launchDate?: DateTimeFieldUpdateOperationsInput | Date | string
     hidden?: BoolFieldUpdateOperationsInput | boolean
     moduleProblems?: ModuleProblemUpdateManyWithoutModuleNestedInput
+    resources?: ResourceUpdateManyWithoutModuleNestedInput
   }
 
   export type ModuleUncheckedUpdateWithoutLevelModulesInput = {
@@ -20301,6 +21806,7 @@ export namespace Prisma {
     launchDate?: DateTimeFieldUpdateOperationsInput | Date | string
     hidden?: BoolFieldUpdateOperationsInput | boolean
     moduleProblems?: ModuleProblemUncheckedUpdateManyWithoutModuleNestedInput
+    resources?: ResourceUncheckedUpdateManyWithoutModuleNestedInput
   }
 
   export type ModuleProblemCreateWithoutModuleInput = {
@@ -20351,6 +21857,32 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type ResourceCreateWithoutModuleInput = {
+    id?: string
+    name: string
+    link?: string | null
+    type?: $Enums.ResourceType
+    description?: string | null
+  }
+
+  export type ResourceUncheckedCreateWithoutModuleInput = {
+    id?: string
+    name: string
+    link?: string | null
+    type?: $Enums.ResourceType
+    description?: string | null
+  }
+
+  export type ResourceCreateOrConnectWithoutModuleInput = {
+    where: ResourceWhereUniqueInput
+    create: XOR<ResourceCreateWithoutModuleInput, ResourceUncheckedCreateWithoutModuleInput>
+  }
+
+  export type ResourceCreateManyModuleInputEnvelope = {
+    data: ResourceCreateManyModuleInput | ResourceCreateManyModuleInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ModuleProblemUpsertWithWhereUniqueWithoutModuleInput = {
     where: ModuleProblemWhereUniqueInput
     update: XOR<ModuleProblemUpdateWithoutModuleInput, ModuleProblemUncheckedUpdateWithoutModuleInput>
@@ -20383,12 +21915,93 @@ export namespace Prisma {
     data: XOR<LevelModuleUpdateManyMutationInput, LevelModuleUncheckedUpdateManyWithoutModuleInput>
   }
 
+  export type ResourceUpsertWithWhereUniqueWithoutModuleInput = {
+    where: ResourceWhereUniqueInput
+    update: XOR<ResourceUpdateWithoutModuleInput, ResourceUncheckedUpdateWithoutModuleInput>
+    create: XOR<ResourceCreateWithoutModuleInput, ResourceUncheckedCreateWithoutModuleInput>
+  }
+
+  export type ResourceUpdateWithWhereUniqueWithoutModuleInput = {
+    where: ResourceWhereUniqueInput
+    data: XOR<ResourceUpdateWithoutModuleInput, ResourceUncheckedUpdateWithoutModuleInput>
+  }
+
+  export type ResourceUpdateManyWithWhereWithoutModuleInput = {
+    where: ResourceScalarWhereInput
+    data: XOR<ResourceUpdateManyMutationInput, ResourceUncheckedUpdateManyWithoutModuleInput>
+  }
+
+  export type ResourceScalarWhereInput = {
+    AND?: ResourceScalarWhereInput | ResourceScalarWhereInput[]
+    OR?: ResourceScalarWhereInput[]
+    NOT?: ResourceScalarWhereInput | ResourceScalarWhereInput[]
+    id?: StringFilter<"Resource"> | string
+    moduleId?: StringFilter<"Resource"> | string
+    name?: StringFilter<"Resource"> | string
+    link?: StringNullableFilter<"Resource"> | string | null
+    type?: EnumResourceTypeFilter<"Resource"> | $Enums.ResourceType
+    description?: StringNullableFilter<"Resource"> | string | null
+  }
+
+  export type ModuleCreateWithoutResourcesInput = {
+    id?: string
+    name: string
+    launchDate: Date | string
+    hidden?: boolean
+    moduleProblems?: ModuleProblemCreateNestedManyWithoutModuleInput
+    levelModules?: LevelModuleCreateNestedManyWithoutModuleInput
+  }
+
+  export type ModuleUncheckedCreateWithoutResourcesInput = {
+    id?: string
+    name: string
+    launchDate: Date | string
+    hidden?: boolean
+    moduleProblems?: ModuleProblemUncheckedCreateNestedManyWithoutModuleInput
+    levelModules?: LevelModuleUncheckedCreateNestedManyWithoutModuleInput
+  }
+
+  export type ModuleCreateOrConnectWithoutResourcesInput = {
+    where: ModuleWhereUniqueInput
+    create: XOR<ModuleCreateWithoutResourcesInput, ModuleUncheckedCreateWithoutResourcesInput>
+  }
+
+  export type ModuleUpsertWithoutResourcesInput = {
+    update: XOR<ModuleUpdateWithoutResourcesInput, ModuleUncheckedUpdateWithoutResourcesInput>
+    create: XOR<ModuleCreateWithoutResourcesInput, ModuleUncheckedCreateWithoutResourcesInput>
+    where?: ModuleWhereInput
+  }
+
+  export type ModuleUpdateToOneWithWhereWithoutResourcesInput = {
+    where?: ModuleWhereInput
+    data: XOR<ModuleUpdateWithoutResourcesInput, ModuleUncheckedUpdateWithoutResourcesInput>
+  }
+
+  export type ModuleUpdateWithoutResourcesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    launchDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    hidden?: BoolFieldUpdateOperationsInput | boolean
+    moduleProblems?: ModuleProblemUpdateManyWithoutModuleNestedInput
+    levelModules?: LevelModuleUpdateManyWithoutModuleNestedInput
+  }
+
+  export type ModuleUncheckedUpdateWithoutResourcesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    launchDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    hidden?: BoolFieldUpdateOperationsInput | boolean
+    moduleProblems?: ModuleProblemUncheckedUpdateManyWithoutModuleNestedInput
+    levelModules?: LevelModuleUncheckedUpdateManyWithoutModuleNestedInput
+  }
+
   export type ModuleCreateWithoutModuleProblemsInput = {
     id?: string
     name: string
     launchDate: Date | string
     hidden?: boolean
     levelModules?: LevelModuleCreateNestedManyWithoutModuleInput
+    resources?: ResourceCreateNestedManyWithoutModuleInput
   }
 
   export type ModuleUncheckedCreateWithoutModuleProblemsInput = {
@@ -20397,6 +22010,7 @@ export namespace Prisma {
     launchDate: Date | string
     hidden?: boolean
     levelModules?: LevelModuleUncheckedCreateNestedManyWithoutModuleInput
+    resources?: ResourceUncheckedCreateNestedManyWithoutModuleInput
   }
 
   export type ModuleCreateOrConnectWithoutModuleProblemsInput = {
@@ -20440,6 +22054,7 @@ export namespace Prisma {
     launchDate?: DateTimeFieldUpdateOperationsInput | Date | string
     hidden?: BoolFieldUpdateOperationsInput | boolean
     levelModules?: LevelModuleUpdateManyWithoutModuleNestedInput
+    resources?: ResourceUpdateManyWithoutModuleNestedInput
   }
 
   export type ModuleUncheckedUpdateWithoutModuleProblemsInput = {
@@ -20448,6 +22063,7 @@ export namespace Prisma {
     launchDate?: DateTimeFieldUpdateOperationsInput | Date | string
     hidden?: BoolFieldUpdateOperationsInput | boolean
     levelModules?: LevelModuleUncheckedUpdateManyWithoutModuleNestedInput
+    resources?: ResourceUncheckedUpdateManyWithoutModuleNestedInput
   }
 
   export type ProblemUpsertWithoutModuleProblemsInput = {
@@ -21227,6 +22843,14 @@ export namespace Prisma {
     order?: number
   }
 
+  export type ResourceCreateManyModuleInput = {
+    id?: string
+    name: string
+    link?: string | null
+    type?: $Enums.ResourceType
+    description?: string | null
+  }
+
   export type ModuleProblemUpdateWithoutModuleInput = {
     id?: StringFieldUpdateOperationsInput | string
     order?: IntFieldUpdateOperationsInput | number
@@ -21267,6 +22891,30 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     trackLevelId?: StringFieldUpdateOperationsInput | string
     order?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ResourceUpdateWithoutModuleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    link?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumResourceTypeFieldUpdateOperationsInput | $Enums.ResourceType
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ResourceUncheckedUpdateWithoutModuleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    link?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumResourceTypeFieldUpdateOperationsInput | $Enums.ResourceType
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ResourceUncheckedUpdateManyWithoutModuleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    link?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumResourceTypeFieldUpdateOperationsInput | $Enums.ResourceType
+    description?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SolveCreateManyUserInput = {
