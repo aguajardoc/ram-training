@@ -169,20 +169,20 @@ function Problem({ problemId, problemType, problemName, problemURL, problemDiffi
     });
 
     const handleSave = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    solveMutation.mutate({
-      problemId: problemId,
-      statusString: solvedStatus,
-      submitCount: values.submissions,
-      readTimeMinutes: values.read,
-      thinkTimeMinutes: values.think,
-      codeTimeMinutes: values.code,
-      debugTimeMinutes: values.debug,
-      perceivedDifficulty: values.perceivedDifficulty,
-      onYourOwn: onYourOwn,
-    });
-  };
+        e.preventDefault();
+        
+        solveMutation.mutate({
+            problemId: problemId,
+            statusString: solvedStatus,
+            submitCount: values.submissions,
+            readTimeMinutes: values.read,
+            thinkTimeMinutes: values.think,
+            codeTimeMinutes: values.code,
+            debugTimeMinutes: values.debug,
+            perceivedDifficulty: values.perceivedDifficulty,
+            onYourOwn: onYourOwn,
+        });
+    };
 
     const handleClick = () => setCommenting(true);
 

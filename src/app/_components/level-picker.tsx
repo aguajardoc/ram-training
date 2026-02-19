@@ -1,6 +1,7 @@
 "use client"
 import { useState } from "react";
-import { addUserToTrack } from "../train/actions";
+import { api } from "~/trpc/react";
+import { useRouter } from "next/navigation";
 
 type Props = {
     userId: string,
@@ -126,10 +127,29 @@ const RequirementsIcon = () => (
 );
 
 function LevelPicker({ userId, mappings, enrolledTrackIds } : Props) {
+    const router = useRouter();
+    const utils = api.useUtils();
     const [idx, setIdx] = useState(0);
+
+    const [optimisticIds, setOptimisticIds] = useState<String[]>([]);
 
     const prev = () => setIdx((i) => (i - 1 + levels.length) % levels.length);
     const next = () => setIdx((i) => (i + 1) % levels.length);
+
+    const userTrackMutation = api.user.addUserToTrack.useMutation({
+        onSuccess: async (data, variables) => {
+            setOptimisticIds((prev) => [...prev, variables.trackId]);
+            router.refresh();
+        },
+        onError: (error) => {
+            alert(`Failed to save: ${error.message}`);
+        }
+    })
+
+    const handleEnroll = (trackId: string) => {
+        if (!trackId) return;
+        userTrackMutation.mutate({ trackId });
+    };
 
     return (
         <div className="empty-page">
@@ -161,7 +181,7 @@ function LevelPicker({ userId, mappings, enrolledTrackIds } : Props) {
                             {levels.map((level, i) => {
                                 const activeTrack = mappings.find((m) => m.levelId === level.id);
                                 const trackId = activeTrack?.trackId || "";
-                                const isEnrolled = enrolledTrackIds.includes(trackId);
+                                const isEnrolled = enrolledTrackIds.includes(trackId) || optimisticIds.includes(trackId);
                                 
                                 return (
                                     <div
@@ -193,22 +213,11 @@ function LevelPicker({ userId, mappings, enrolledTrackIds } : Props) {
                                         </div>
                                         </div>
 
-                                        <form action={addUserToTrack} className="enroll-form">
-                                            <input 
-                                                type="hidden"
-                                                name="userId"
-                                                value={userId}
-                                            />
-                                            <input
-                                                type="hidden"
-                                                name="trackId"
-                                                value={trackId}
-                                            />
-
+                                        <div className="enroll-action"> 
                                             <button 
-                                                type="submit" 
+                                                onClick={() => handleEnroll(trackId)}
                                                 className="journey-btn"
-                                                disabled={!trackId || isEnrolled}
+                                                disabled={!trackId || isEnrolled || userTrackMutation.isPending}
                                                 style={{ 
                                                     opacity: (!trackId || isEnrolled) ? 0.5 : 1, 
                                                     cursor: (!trackId || isEnrolled) ? 'not-allowed' : 'pointer' 
@@ -216,10 +225,12 @@ function LevelPicker({ userId, mappings, enrolledTrackIds } : Props) {
                                             >
                                                 <span className="btn-glow" />
                                                 <span className="btn-text">
-                                                    {isEnrolled ? "Already in it!" : "Are you ready for it?"}
+                                                    {userTrackMutation.isPending && i === idx ? "Loading..." : 
+                                                     isEnrolled ? "Already in it!" : "Are you ready for it?"}
                                                 </span>
                                             </button>
-                                        </form>
+                                        </div>
+                                        
                                     </div>
                                 )})
                             }
