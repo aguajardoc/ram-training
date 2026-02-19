@@ -1,4 +1,5 @@
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
+import { z } from "zod";
 
 export const userRouter = createTRPCRouter({
   hasChosenLevel: protectedProcedure.query(async ({ ctx }) => {
@@ -10,4 +11,28 @@ export const userRouter = createTRPCRouter({
 
     return !!level;
   }),
+
+  addUserToTrack: protectedProcedure
+  .input(
+    z.object( {
+      trackId: z.string(),
+    })
+  )
+  .mutation(async ({ ctx, input }) => {
+    const userId = ctx.session.user.id;
+
+    await ctx.db.userTrack.deleteMany({
+      where: {
+        userId: userId,
+      }
+    })
+
+    return await ctx.db.userTrack.create({
+      data: {
+        userId,
+        trackId: input.trackId,
+      }
+    })
+  }),
+  
 });
