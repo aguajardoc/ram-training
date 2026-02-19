@@ -122,6 +122,7 @@
 }
 
 .select {
+  color-scheme: dark;
   display: flex;
   text-align: center;
   padding: 6px;
