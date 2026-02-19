@@ -37,6 +37,7 @@ async function Leaderboard() {
     });
 
     const users = rawCounts.sort((a, b) => (b._count.solves - a._count.solves));
+    const userId = session.user.id;
 
     return (
         <div className="page">
@@ -53,16 +54,20 @@ async function Leaderboard() {
             </div>
             
             {/* Display users */}
-            {users.map((u, i) => (
-            <div key={u.id}>
-                <LeaderboardEntry
-                    key={u.id}
-                    name={u.name}
-                    place={i} // 0-index because we are programmers haha get it
-                    solveCount={u._count.solves}
-                />
-            </div>
-            ))}
+            {users.map((u, i) => {
+                const isUser = userId === u.id;
+
+                return (
+                <div key={u.id}>
+                    <LeaderboardEntry
+                        key={u.id}
+                        name={u.name}
+                        place={i} // 0-index because we are programmers haha get it
+                        solveCount={u._count.solves}
+                        isUser={isUser}
+                    />
+                </div>
+            )})}
         </div>
     );
 

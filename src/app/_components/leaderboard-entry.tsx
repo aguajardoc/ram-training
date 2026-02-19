@@ -2,6 +2,7 @@ type Props = {
     name: String | null,
     place: number,
     solveCount: number,
+    isUser: boolean,
 };
 
 function podiumClass(place: number) {
@@ -11,9 +12,9 @@ function podiumClass(place: number) {
   return "";
 }
 
-function LeaderboardEntry({ name, place, solveCount } : Props) {
+function LeaderboardEntry({ name, place, solveCount, isUser } : Props) {
     return (
-        <div className="leaderboard-entry">
+        <div className={`leaderboard-entry ${isUser.toString()}`}>
             {/* Place */}
             <div className={`entry ${podiumClass(place)}`}>
                 <span className="medal">{place}</span>
