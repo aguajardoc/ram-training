@@ -142,6 +142,7 @@ export async function deleteModuleProblem(id: string) {
   redirect("/admin");
 }
 
+// TODO: Phase out
 export async function deleteUser(id: string) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
@@ -151,6 +152,8 @@ export async function deleteUser(id: string) {
   redirect("/admin");
 }
 
+
+// TODO: Phase out
 export async function addUserToTrack(userId: string, trackId: string) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
@@ -225,6 +228,8 @@ export async function deleteModuleFromLevel(formData: FormData) {
   })
 }
 
+
+// TODO: Phase out
 export async function deleteUserFromTrack(userId: string, trackId: string) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");

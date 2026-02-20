@@ -34,5 +34,29 @@ export const userRouter = createTRPCRouter({
       }
     })
   }),
+
+  deleteUser: protectedProcedure
+  .mutation(async ({ ctx }) => {
+    const id = ctx.session.user.id;
+
+    await ctx.db.user.deleteMany({ where: { id }});
+  }),
+
+  deleteUserFromTrack: protectedProcedure
+  .input(
+    z.object( {
+      trackId: z.string(),
+    })
+  )
+  .mutation(async ({ ctx, input }) => {
+    const userId = ctx.session.user.id;
+
+    await ctx.db.userTrack.deleteMany({
+      where: {
+        userId: userId,
+        trackId: input.trackId,
+      }
+    })
+  }),
   
 });
