@@ -4,6 +4,7 @@ import { db } from "~/server/db";
 import { redirect } from "next/navigation";
 import type { ProblemDifficulty, ProblemType } from "generated/prisma";
 
+// TODO: Phase out
 export async function createProblem(formData: FormData) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
@@ -47,7 +48,7 @@ export async function createModuleProblem(formData: FormData) {
   redirect("/admin");
 }
 
-
+// TODO: Phase out
 export async function updateProblem(formData: FormData) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
@@ -120,6 +121,8 @@ export async function updateModule(formData: FormData) {
   redirect("/admin");
 }
 
+
+// TODO: Phase out
 export async function deleteProblem(id: string) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
