@@ -12,7 +12,7 @@ export const userRouter = createTRPCRouter({
     return !!level;
   }),
 
-  addUserToTrack: protectedProcedure
+  addToTrack: protectedProcedure
   .input(
     z.object( {
       trackId: z.string(),
@@ -35,14 +35,14 @@ export const userRouter = createTRPCRouter({
     })
   }),
 
-  deleteUser: protectedProcedure
+  delete: protectedProcedure
   .mutation(async ({ ctx }) => {
     const id = ctx.session.user.id;
 
     await ctx.db.user.deleteMany({ where: { id }});
   }),
 
-  deleteUserFromTrack: protectedProcedure
+  deleteFromTrack: protectedProcedure
   .input(
     z.object( {
       trackId: z.string(),
