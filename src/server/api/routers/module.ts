@@ -76,4 +76,19 @@ export const moduleRouter = createTRPCRouter({
             }
         })
     }),
+
+    delete: protectedProcedure
+    .input(
+        z.object({
+            id: z.string(),
+        })
+    )
+    .mutation(async ({ ctx, input }) => {
+        const id = input.id;
+
+        await ctx.db.levelModule.deleteMany({ where: { moduleId: id }});
+
+        return ctx.db.module.delete({ where: { id }});
+    }),
+    
 });
