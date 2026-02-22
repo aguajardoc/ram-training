@@ -105,6 +105,7 @@ export async function changeDifficulty(id: string, newDiff: number) {
   redirect("/admin");
 }
 
+// TODO: Phase out
 export async function updateModule(formData: FormData) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
@@ -281,6 +282,7 @@ export async function deleteTrackLevel(id: string) {
   redirect("/admin");
 }
 
+// TODO: Phase out
 export async function createModule(formData: FormData) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
@@ -296,6 +298,7 @@ export async function createModule(formData: FormData) {
   redirect("/admin")
 }
 
+// TODO: Phase out
 export async function createTrack(formData: FormData) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
@@ -319,6 +322,7 @@ export async function createLevel(formData: FormData) {
   redirect("/admin")
 }
 
+// TODO: Phase out
 export async function duplicateModule(id: string) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
