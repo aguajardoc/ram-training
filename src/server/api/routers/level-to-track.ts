@@ -32,4 +32,20 @@ export const levelToTrackRouter = createTRPCRouter({
         })
     }),
 
+    delete: protectedProcedure
+    .input(
+        z.object({
+            id: z.string(),
+        })
+    )
+    .mutation(async ({ ctx, input }) => {
+        const id = input.id;
+
+        return ctx.db.levelToTrack.deleteMany({
+            where: {
+                id: id,
+            }
+        })
+    }),
+
 });
