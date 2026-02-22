@@ -360,6 +360,7 @@ export async function duplicateModule(id: string) {
   redirect("/admin");
 }
 
+// TODO: Phase out
 export async function updateLevelMapping(formData: FormData) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
