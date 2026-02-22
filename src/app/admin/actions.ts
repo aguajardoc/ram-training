@@ -68,6 +68,7 @@ export async function updateProblem(formData: FormData) {
   redirect("/admin");
 }
 
+// TODO: Phase out
 export async function updateTrackName(formData: FormData) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
@@ -261,6 +262,7 @@ export async function deleteModule(id: string) {
   redirect("/admin");
 }
 
+// TODO: Phase out
 export async function deleteTrack(id: string) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
