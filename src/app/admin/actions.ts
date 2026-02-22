@@ -182,6 +182,7 @@ export async function addUserToTrack(userId: string, trackId: string) {
   redirect("/admin");
 }
 
+// TODO: Phase out
 export async function addModuleToLevel(formData: FormData) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
@@ -208,6 +209,7 @@ export async function addModuleToLevel(formData: FormData) {
   })
 }
 
+// TODO: Phase out
 export async function deleteModuleFromLevel(formData: FormData) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
@@ -252,6 +254,7 @@ export async function deleteUserFromTrack(userId: string, trackId: string) {
   redirect("/admin");
 }
 
+// TODO: Phase out
 export async function deleteModule(id: string) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
