@@ -276,6 +276,7 @@ export async function deleteTrack(id: string) {
   redirect("/admin");
 }
 
+// TODO: Phase out
 export async function deleteTrackLevel(id: string) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
@@ -313,6 +314,7 @@ export async function createTrack(formData: FormData) {
   redirect("/admin")
 }
 
+// TODO: Phase out
 export async function createLevel(formData: FormData) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
