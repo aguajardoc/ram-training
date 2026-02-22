@@ -7,7 +7,7 @@ import {
 import { ProblemDifficulty, ProblemType } from "generated/prisma";
 import { TRPCError } from "@trpc/server";
 
-export const problemRouter = createTRPCRouter({
+export const moduleProblemRouter = createTRPCRouter({
     upsert: protectedProcedure
     .input(
         z.object({
