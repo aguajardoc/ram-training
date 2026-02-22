@@ -19,6 +19,7 @@ export async function createProblem(formData: FormData) {
   redirect("/admin");
 }
 
+// TODO: Phase out
 export async function createModuleProblem(formData: FormData) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
@@ -84,6 +85,7 @@ export async function updateTrackName(formData: FormData) {
   redirect("/admin");
 }
 
+// TODO: Phase out
 export async function changeDifficulty(id: string, newDiff: number) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
@@ -136,6 +138,7 @@ export async function deleteProblem(id: string) {
   redirect("/admin");
 }
 
+// TODO: Phase out
 export async function deleteModuleProblem(id: string) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
