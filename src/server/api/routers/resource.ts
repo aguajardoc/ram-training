@@ -35,7 +35,7 @@ export const resourceRouter = createTRPCRouter({
         })
     }),
 
-    addOrUpdateResourceToModule: protectedProcedure
+    upsertResourceToModule: protectedProcedure
     .input(
         z.object({
             id: z.string().optional(),
