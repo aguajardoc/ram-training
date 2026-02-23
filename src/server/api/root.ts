@@ -1,7 +1,14 @@
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
+
+import { levelModuleRouter } from "./routers/level-module";
+import { levelToTrackRouter } from "./routers/level-to-track";
+import { moduleProblemRouter } from "./routers/module-problem";
+import { moduleRouter } from "./routers/module";
 import { problemRouter } from "./routers/problem";
-import { userRouter } from "./routers/user";
 import { resourceRouter } from "./routers/resource";
+import { trackLevelRouter } from "./routers/track-level";
+import { trackRouter } from "./routers/track";
+import { userRouter } from "./routers/user";
 
 /**
  * This is the primary router for your server.
@@ -9,9 +16,15 @@ import { resourceRouter } from "./routers/resource";
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
-  user: userRouter,
+  levelModule: levelModuleRouter,
+  levelToTrack: levelToTrackRouter,
+  moduleProblem: moduleProblemRouter,
+  module: moduleRouter,
   problem: problemRouter,
-  resource: resourceRouter,
+  resource: resourceRouter,  
+  trackLevel: trackLevelRouter,
+  track: trackRouter,
+  user: userRouter,
 });
 
 // export type definition of API
