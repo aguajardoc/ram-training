@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <limits>
 #include "json.hpp"
 
 using json = nlohmann::json;
@@ -100,38 +101,44 @@ void to_json(json& j, const Face& f) {
     j = f.connected_indices;
 }
 
-void normalize(std::vector<Vertex>& vertices) {
-    // Get minimum value
-    float minimum_value = 1000;
-    for (Vertex& v : vertices) {
-        minimum_value = std::min({minimum_value, v.x, v.y, v.z});
+void normalize(std::vector<Vertex>& vertices, float target_range = 0.4f) {
+    if (vertices.empty()) return;
+
+    // Get bounding box limits
+    float min_x = std::numeric_limits<float>::max();
+    float min_y = min_x, min_z = min_x;
+    float max_x = std::numeric_limits<float>::lowest();
+    float max_y = max_x, max_z = max_x;
+
+    for (const auto& v : vertices) {
+        min_x = std::min(min_x, v.x);
+        min_y = std::min(min_y, v.y);
+        min_z = std::min(min_z, v.z);
+        
+        max_x = std::max(max_x, v.x);
+        max_y = std::max(max_y, v.y);
+        max_z = std::max(max_z, v.z);
     }
 
-    // Subtract minimum
-    for (Vertex& v : vertices) {
-        v.x -= minimum_value;
-        v.y -= minimum_value;
-        v.z -= minimum_value;
-    }
+    // Calculate exact center
+    float center_x = (min_x + max_x) / 2.0f;
+    float center_y = (min_y + max_y) / 2.0f;
+    float center_z = (min_z + max_z) / 2.0f;
+
+    // Get the largest dimension to maintain aspect ratio
+    float max_size = std::max({max_x - min_x, max_y - min_y, max_z - min_z});
     
-    // Get maximum value
-    float maximum_value = 0;
-    for (Vertex& v : vertices) {
-        maximum_value = std::max({maximum_value, std::abs(v.x), std::abs(v.y), std::abs(v.z)});
-    }
+    // Prevent division by zero if all vertices are at the exact same point
+    if (max_size == 0.0f) return; 
 
-    // Divide all by 2 * maximum (range 0 to 0.5)
-    for (Vertex& v : vertices) {
-        v.x /= 2.0*maximum_value;
-        v.y /= 2.0*maximum_value;
-        v.z /= 2.0*maximum_value;
-    }
+    // Scale factor to map the max extent to the target range
+    float scale = target_range / (max_size / 2.0f);
 
-    // Subtract 0.25 (range -0.25 to 0.25)
-    for (Vertex& v : vertices) {
-        v.x-=0.25;
-        v.y-=0.25;
-        v.z-=0.25;
+    // Center at 0,0,0 and scale
+    for (auto& v : vertices) {
+        v.x = (v.x - center_x) * scale;
+        v.y = (v.y - center_y) * scale;
+        v.z = (v.z - center_z) * scale;
     }
 }
 
