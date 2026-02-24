@@ -10,7 +10,7 @@ using json = nlohmann::json;
 struct Vertex {
     float x, y, z;
 
-    Vertex(int _x, int _y, int _z) : x(_x), y(_y), z(_z) {}
+    Vertex(float _x, float _y, float _z) : x(_x), y(_y), z(_z) {}
 };
 
 struct Face {
