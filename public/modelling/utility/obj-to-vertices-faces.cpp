@@ -100,6 +100,41 @@ void to_json(json& j, const Face& f) {
     j = f.connected_indices;
 }
 
+void normalize(std::vector<Vertex>& vertices) {
+    // Get minimum value
+    float minimum_value = 1000;
+    for (Vertex& v : vertices) {
+        minimum_value = std::min({minimum_value, v.x, v.y, v.z});
+    }
+
+    // Subtract minimum
+    for (Vertex& v : vertices) {
+        v.x -= minimum_value;
+        v.y -= minimum_value;
+        v.z -= minimum_value;
+    }
+    
+    // Get maximum value
+    float maximum_value = 0;
+    for (Vertex& v : vertices) {
+        maximum_value = std::max({maximum_value, std::abs(v.x), std::abs(v.y), std::abs(v.z)});
+    }
+
+    // Divide all by 2 * maximum (range 0 to 0.5)
+    for (Vertex& v : vertices) {
+        v.x /= 2.0*maximum_value;
+        v.y /= 2.0*maximum_value;
+        v.z /= 2.0*maximum_value;
+    }
+
+    // Subtract 0.25 (range -0.25 to 0.25)
+    for (Vertex& v : vertices) {
+        v.x-=0.25;
+        v.y-=0.25;
+        v.z-=0.25;
+    }
+}
+
 int main() {
     // Get input file name
     std::string input_file_name;
@@ -137,6 +172,9 @@ int main() {
         }
         // Else it is ignored
     }
+
+    // Process vertices
+    normalize(vertices);
 
     // Write to JSON
     json model;
