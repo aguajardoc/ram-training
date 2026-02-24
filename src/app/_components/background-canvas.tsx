@@ -1,20 +1,45 @@
 "use client"
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import "../../styles/canvas.css"
+
+interface ModelData {
+  vs: { x: number, y: number, z: number }[];
+  fs: number[][];
+}
 
 function BackgroundCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
+  const [vs, setVs] = useState<ModelData['vs']>([]);
+  const [fs, setFs] = useState<ModelData['fs']>([]);
+
+  const loadRandomModel = async () => {
+    const models = ['real-penger', 'cube', 'floppy-disks', 'duck', 'crane'];
+    const randomName = models[Math.floor(Math.random() * models.length)];
+    try {
+      const response = await fetch(`/modelling/models/${randomName}.json`);
+      const data: ModelData = await response.json();
+      setVs(data.vs);
+      setFs(data.fs);
+    } catch (err) {
+      console.error("Fetch failed", err);
+    }
+  };
+
+  useEffect(() => {
+    loadRandomModel();
+  }, []);
+
   useEffect(() => {
     const game = canvasRef.current;
-    if (!game) return;
+    if (!game || vs.length === 0 || fs.length === 0) return;
 
     const ctx = game.getContext("2d");
     if (!ctx) return;
 
     game.width = window.innerWidth;
     game.height = window.innerHeight;
-    // "#559cffff";
+    
     const FOREGROUND = "#646cff67";
     const BACKGROUND = "#1e1e1e";
     const FPS = 60;
@@ -23,27 +48,8 @@ function BackgroundCanvas() {
     const dt = SPEED / FPS;
     const CAMERA_Z = 0.75;
 
-    const vs = [
-      { x: 0.25, y: 0.25, z: 0.25 },
-      { x: -0.25, y: 0.25, z: 0.25 },
-      { x: -0.25, y: -0.25, z: 0.25 },
-      { x: 0.25, y: -0.25, z: 0.25 },
-      { x: 0.25, y: 0.25, z: -0.25 },
-      { x: -0.25, y: 0.25, z: -0.25 },
-      { x: -0.25, y: -0.25, z: -0.25 },
-      { x: 0.25, y: -0.25, z: -0.25 },
-    ];
-
-    const fs = [
-      [0, 1, 2, 3],
-      [4, 5, 6, 7],
-      [0, 4],
-      [1, 5],
-      [2, 6],
-      [3, 7],
-    ];
-
     let angle = 0;
+    let animationId: number; 
 
     function clear() {
       if (!ctx || !game) return;
@@ -51,8 +57,8 @@ function BackgroundCanvas() {
       ctx.fillRect(0, 0, game.width, game.height);
     }
 
-    function screen(p: { x: number; y: number }) {
-      if (!ctx || !game) return;
+    function screen(p: { x: number; y: number } | undefined) {
+      if (!ctx || !game || !p) return undefined;
       return {
         x: game.width / 2 + p.x * MODEL_SIZE,
         y: game.height / 2 - p.y * MODEL_SIZE,
@@ -61,10 +67,6 @@ function BackgroundCanvas() {
 
     function project(p: { x: number; y: number; z: number }) {
       return { x: p.x / (p.z + CAMERA_Z), y: p.y / (p.z + CAMERA_Z) };
-    }
-
-    function translateZ(p: { x: number; y: number; z: number }, dz: number) {
-      return { ...p, z: p.z + dz };
     }
 
     function rotateXZ(p: { x: number; y: number; z: number }, a: number) {
@@ -77,8 +79,8 @@ function BackgroundCanvas() {
       };
     }
 
-    function line(p1: any, p2: any) {
-      if (!ctx || !game) return;
+    function line(p1: { x: number; y: number } | undefined, p2: { x: number; y: number } | undefined) {
+      if (!ctx || !game || !p1 || !p2) return;
       ctx.lineWidth = 3;
       ctx.strokeStyle = FOREGROUND;
       ctx.beginPath();
@@ -93,10 +95,10 @@ function BackgroundCanvas() {
 
       for (const f of fs) {
         for (let i = 0; i < f.length; i++) {
-          const a = vs[f[i]!];
-          const b = vs[f[(i + 1) % f.length]!];
+          const a = vs[f[i] as number];
+          const b = vs[f[(i + 1) % f.length] as number];
 
-          if (!a || !b) return;
+          if (!a || !b) continue; 
 
           line(
             screen(project(rotateXZ(a, angle))),
@@ -105,19 +107,24 @@ function BackgroundCanvas() {
         }
       }
 
-      requestAnimationFrame(frame);
+      animationId = requestAnimationFrame(frame);
     }
 
     frame();
 
     const onResize = () => {
+      if (!game) return;
       game.width = window.innerWidth;
       game.height = window.innerHeight;
     };
 
     window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, []);
+    
+    return () => {
+      window.removeEventListener("resize", onResize);
+      cancelAnimationFrame(animationId); 
+    };
+  }, [vs, fs]);
 
   return (
     <canvas
