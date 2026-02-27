@@ -14,7 +14,7 @@ function BackgroundCanvas() {
   const [fs, setFs] = useState<ModelData['fs']>([]);
 
   const loadRandomModel = async () => {
-    const models = ['real-penger', 'cube', 'floppy-disks', 'duck', 'crane'];
+    const models = ['real-penger', 'cube', 'duck', 'crane'];
     const randomName = models[Math.floor(Math.random() * models.length)];
     try {
       const response = await fetch(`/modelling/models/${randomName}.json`);
