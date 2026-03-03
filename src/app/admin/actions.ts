@@ -4,6 +4,7 @@ import { db } from "~/server/db";
 import { redirect } from "next/navigation";
 import type { ProblemDifficulty, ProblemType } from "generated/prisma";
 
+// TODO: Phase out
 export async function createProblem(formData: FormData) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
@@ -18,6 +19,7 @@ export async function createProblem(formData: FormData) {
   redirect("/admin");
 }
 
+// TODO: Phase out
 export async function createModuleProblem(formData: FormData) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
@@ -47,7 +49,7 @@ export async function createModuleProblem(formData: FormData) {
   redirect("/admin");
 }
 
-
+// TODO: Phase out
 export async function updateProblem(formData: FormData) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
@@ -66,6 +68,7 @@ export async function updateProblem(formData: FormData) {
   redirect("/admin");
 }
 
+// TODO: Phase out
 export async function updateTrackName(formData: FormData) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
@@ -83,6 +86,7 @@ export async function updateTrackName(formData: FormData) {
   redirect("/admin");
 }
 
+// TODO: Phase out
 export async function changeDifficulty(id: string, newDiff: number) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
@@ -101,6 +105,7 @@ export async function changeDifficulty(id: string, newDiff: number) {
   redirect("/admin");
 }
 
+// TODO: Phase out
 export async function updateModule(formData: FormData) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
@@ -120,6 +125,8 @@ export async function updateModule(formData: FormData) {
   redirect("/admin");
 }
 
+
+// TODO: Phase out
 export async function deleteProblem(id: string) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
@@ -133,6 +140,7 @@ export async function deleteProblem(id: string) {
   redirect("/admin");
 }
 
+// TODO: Phase out
 export async function deleteModuleProblem(id: string) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
@@ -142,6 +150,7 @@ export async function deleteModuleProblem(id: string) {
   redirect("/admin");
 }
 
+// TODO: Phase out
 export async function deleteUser(id: string) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
@@ -151,6 +160,8 @@ export async function deleteUser(id: string) {
   redirect("/admin");
 }
 
+
+// TODO: Phase out
 export async function addUserToTrack(userId: string, trackId: string) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
@@ -171,6 +182,7 @@ export async function addUserToTrack(userId: string, trackId: string) {
   redirect("/admin");
 }
 
+// TODO: Phase out
 export async function addModuleToLevel(formData: FormData) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
@@ -197,6 +209,7 @@ export async function addModuleToLevel(formData: FormData) {
   })
 }
 
+// TODO: Phase out
 export async function deleteModuleFromLevel(formData: FormData) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
@@ -225,6 +238,8 @@ export async function deleteModuleFromLevel(formData: FormData) {
   })
 }
 
+
+// TODO: Phase out
 export async function deleteUserFromTrack(userId: string, trackId: string) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
@@ -239,6 +254,7 @@ export async function deleteUserFromTrack(userId: string, trackId: string) {
   redirect("/admin");
 }
 
+// TODO: Phase out
 export async function deleteModule(id: string) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
@@ -250,6 +266,7 @@ export async function deleteModule(id: string) {
   redirect("/admin");
 }
 
+// TODO: Phase out
 export async function deleteTrack(id: string) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
@@ -259,6 +276,7 @@ export async function deleteTrack(id: string) {
   redirect("/admin");
 }
 
+// TODO: Phase out
 export async function deleteTrackLevel(id: string) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
@@ -268,6 +286,7 @@ export async function deleteTrackLevel(id: string) {
   redirect("/admin");
 }
 
+// TODO: Phase out
 export async function createModule(formData: FormData) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
@@ -283,6 +302,7 @@ export async function createModule(formData: FormData) {
   redirect("/admin")
 }
 
+// TODO: Phase out
 export async function createTrack(formData: FormData) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
@@ -294,6 +314,7 @@ export async function createTrack(formData: FormData) {
   redirect("/admin")
 }
 
+// TODO: Phase out
 export async function createLevel(formData: FormData) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
@@ -306,6 +327,7 @@ export async function createLevel(formData: FormData) {
   redirect("/admin")
 }
 
+// TODO: Phase out
 export async function duplicateModule(id: string) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");
@@ -338,6 +360,7 @@ export async function duplicateModule(id: string) {
   redirect("/admin");
 }
 
+// TODO: Phase out
 export async function updateLevelMapping(formData: FormData) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/");

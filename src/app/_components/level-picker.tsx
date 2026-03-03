@@ -136,7 +136,7 @@ function LevelPicker({ userId, mappings, enrolledTrackIds } : Props) {
     const prev = () => setIdx((i) => (i - 1 + levels.length) % levels.length);
     const next = () => setIdx((i) => (i + 1) % levels.length);
 
-    const userTrackMutation = api.user.addUserToTrack.useMutation({
+    const userTrackMutation = api.user.addToTrack.useMutation({
         onSuccess: async (data, variables) => {
             setOptimisticIds((prev) => [...prev, variables.trackId]);
             router.refresh();
