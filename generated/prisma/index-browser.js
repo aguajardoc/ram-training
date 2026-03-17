@@ -150,7 +150,8 @@ exports.Prisma.ModuleScalarFieldEnum = {
   id: 'id',
   name: 'name',
   launchDate: 'launchDate',
-  hidden: 'hidden'
+  hidden: 'hidden',
+  period: 'period'
 };
 
 exports.Prisma.ResourceScalarFieldEnum = {

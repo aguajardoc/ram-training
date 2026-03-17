@@ -6654,8 +6654,18 @@ export namespace Prisma {
 
   export type AggregateModule = {
     _count: ModuleCountAggregateOutputType | null
+    _avg: ModuleAvgAggregateOutputType | null
+    _sum: ModuleSumAggregateOutputType | null
     _min: ModuleMinAggregateOutputType | null
     _max: ModuleMaxAggregateOutputType | null
+  }
+
+  export type ModuleAvgAggregateOutputType = {
+    period: number | null
+  }
+
+  export type ModuleSumAggregateOutputType = {
+    period: number | null
   }
 
   export type ModuleMinAggregateOutputType = {
@@ -6663,6 +6673,7 @@ export namespace Prisma {
     name: string | null
     launchDate: Date | null
     hidden: boolean | null
+    period: number | null
   }
 
   export type ModuleMaxAggregateOutputType = {
@@ -6670,6 +6681,7 @@ export namespace Prisma {
     name: string | null
     launchDate: Date | null
     hidden: boolean | null
+    period: number | null
   }
 
   export type ModuleCountAggregateOutputType = {
@@ -6677,15 +6689,25 @@ export namespace Prisma {
     name: number
     launchDate: number
     hidden: number
+    period: number
     _all: number
   }
 
+
+  export type ModuleAvgAggregateInputType = {
+    period?: true
+  }
+
+  export type ModuleSumAggregateInputType = {
+    period?: true
+  }
 
   export type ModuleMinAggregateInputType = {
     id?: true
     name?: true
     launchDate?: true
     hidden?: true
+    period?: true
   }
 
   export type ModuleMaxAggregateInputType = {
@@ -6693,6 +6715,7 @@ export namespace Prisma {
     name?: true
     launchDate?: true
     hidden?: true
+    period?: true
   }
 
   export type ModuleCountAggregateInputType = {
@@ -6700,6 +6723,7 @@ export namespace Prisma {
     name?: true
     launchDate?: true
     hidden?: true
+    period?: true
     _all?: true
   }
 
@@ -6741,6 +6765,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: ModuleAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ModuleSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: ModuleMinAggregateInputType
@@ -6771,6 +6807,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: ModuleCountAggregateInputType | true
+    _avg?: ModuleAvgAggregateInputType
+    _sum?: ModuleSumAggregateInputType
     _min?: ModuleMinAggregateInputType
     _max?: ModuleMaxAggregateInputType
   }
@@ -6780,7 +6818,10 @@ export namespace Prisma {
     name: string
     launchDate: Date
     hidden: boolean
+    period: number
     _count: ModuleCountAggregateOutputType | null
+    _avg: ModuleAvgAggregateOutputType | null
+    _sum: ModuleSumAggregateOutputType | null
     _min: ModuleMinAggregateOutputType | null
     _max: ModuleMaxAggregateOutputType | null
   }
@@ -6804,6 +6845,7 @@ export namespace Prisma {
     name?: boolean
     launchDate?: boolean
     hidden?: boolean
+    period?: boolean
     moduleProblems?: boolean | Module$moduleProblemsArgs<ExtArgs>
     levelModules?: boolean | Module$levelModulesArgs<ExtArgs>
     resources?: boolean | Module$resourcesArgs<ExtArgs>
@@ -6815,6 +6857,7 @@ export namespace Prisma {
     name?: boolean
     launchDate?: boolean
     hidden?: boolean
+    period?: boolean
   }, ExtArgs["result"]["module"]>
 
   export type ModuleSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6822,6 +6865,7 @@ export namespace Prisma {
     name?: boolean
     launchDate?: boolean
     hidden?: boolean
+    period?: boolean
   }, ExtArgs["result"]["module"]>
 
   export type ModuleSelectScalar = {
@@ -6829,9 +6873,10 @@ export namespace Prisma {
     name?: boolean
     launchDate?: boolean
     hidden?: boolean
+    period?: boolean
   }
 
-  export type ModuleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "launchDate" | "hidden", ExtArgs["result"]["module"]>
+  export type ModuleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "launchDate" | "hidden" | "period", ExtArgs["result"]["module"]>
   export type ModuleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     moduleProblems?: boolean | Module$moduleProblemsArgs<ExtArgs>
     levelModules?: boolean | Module$levelModulesArgs<ExtArgs>
@@ -6853,6 +6898,7 @@ export namespace Prisma {
       name: string
       launchDate: Date
       hidden: boolean
+      period: number
     }, ExtArgs["result"]["module"]>
     composites: {}
   }
@@ -7283,6 +7329,7 @@ export namespace Prisma {
     readonly name: FieldRef<"Module", 'String'>
     readonly launchDate: FieldRef<"Module", 'DateTime'>
     readonly hidden: FieldRef<"Module", 'Boolean'>
+    readonly period: FieldRef<"Module", 'Int'>
   }
     
 
@@ -17649,7 +17696,8 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     launchDate: 'launchDate',
-    hidden: 'hidden'
+    hidden: 'hidden',
+    period: 'period'
   };
 
   export type ModuleScalarFieldEnum = (typeof ModuleScalarFieldEnum)[keyof typeof ModuleScalarFieldEnum]
@@ -18131,6 +18179,7 @@ export namespace Prisma {
     name?: StringFilter<"Module"> | string
     launchDate?: DateTimeFilter<"Module"> | Date | string
     hidden?: BoolFilter<"Module"> | boolean
+    period?: IntFilter<"Module"> | number
     moduleProblems?: ModuleProblemListRelationFilter
     levelModules?: LevelModuleListRelationFilter
     resources?: ResourceListRelationFilter
@@ -18141,6 +18190,7 @@ export namespace Prisma {
     name?: SortOrder
     launchDate?: SortOrder
     hidden?: SortOrder
+    period?: SortOrder
     moduleProblems?: ModuleProblemOrderByRelationAggregateInput
     levelModules?: LevelModuleOrderByRelationAggregateInput
     resources?: ResourceOrderByRelationAggregateInput
@@ -18154,6 +18204,7 @@ export namespace Prisma {
     name?: StringFilter<"Module"> | string
     launchDate?: DateTimeFilter<"Module"> | Date | string
     hidden?: BoolFilter<"Module"> | boolean
+    period?: IntFilter<"Module"> | number
     moduleProblems?: ModuleProblemListRelationFilter
     levelModules?: LevelModuleListRelationFilter
     resources?: ResourceListRelationFilter
@@ -18164,9 +18215,12 @@ export namespace Prisma {
     name?: SortOrder
     launchDate?: SortOrder
     hidden?: SortOrder
+    period?: SortOrder
     _count?: ModuleCountOrderByAggregateInput
+    _avg?: ModuleAvgOrderByAggregateInput
     _max?: ModuleMaxOrderByAggregateInput
     _min?: ModuleMinOrderByAggregateInput
+    _sum?: ModuleSumOrderByAggregateInput
   }
 
   export type ModuleScalarWhereWithAggregatesInput = {
@@ -18177,6 +18231,7 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"Module"> | string
     launchDate?: DateTimeWithAggregatesFilter<"Module"> | Date | string
     hidden?: BoolWithAggregatesFilter<"Module"> | boolean
+    period?: IntWithAggregatesFilter<"Module"> | number
   }
 
   export type ResourceWhereInput = {
@@ -18970,6 +19025,7 @@ export namespace Prisma {
     name: string
     launchDate: Date | string
     hidden?: boolean
+    period?: number
     moduleProblems?: ModuleProblemCreateNestedManyWithoutModuleInput
     levelModules?: LevelModuleCreateNestedManyWithoutModuleInput
     resources?: ResourceCreateNestedManyWithoutModuleInput
@@ -18980,6 +19036,7 @@ export namespace Prisma {
     name: string
     launchDate: Date | string
     hidden?: boolean
+    period?: number
     moduleProblems?: ModuleProblemUncheckedCreateNestedManyWithoutModuleInput
     levelModules?: LevelModuleUncheckedCreateNestedManyWithoutModuleInput
     resources?: ResourceUncheckedCreateNestedManyWithoutModuleInput
@@ -18990,6 +19047,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     launchDate?: DateTimeFieldUpdateOperationsInput | Date | string
     hidden?: BoolFieldUpdateOperationsInput | boolean
+    period?: IntFieldUpdateOperationsInput | number
     moduleProblems?: ModuleProblemUpdateManyWithoutModuleNestedInput
     levelModules?: LevelModuleUpdateManyWithoutModuleNestedInput
     resources?: ResourceUpdateManyWithoutModuleNestedInput
@@ -19000,6 +19058,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     launchDate?: DateTimeFieldUpdateOperationsInput | Date | string
     hidden?: BoolFieldUpdateOperationsInput | boolean
+    period?: IntFieldUpdateOperationsInput | number
     moduleProblems?: ModuleProblemUncheckedUpdateManyWithoutModuleNestedInput
     levelModules?: LevelModuleUncheckedUpdateManyWithoutModuleNestedInput
     resources?: ResourceUncheckedUpdateManyWithoutModuleNestedInput
@@ -19010,6 +19069,7 @@ export namespace Prisma {
     name: string
     launchDate: Date | string
     hidden?: boolean
+    period?: number
   }
 
   export type ModuleUpdateManyMutationInput = {
@@ -19017,6 +19077,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     launchDate?: DateTimeFieldUpdateOperationsInput | Date | string
     hidden?: BoolFieldUpdateOperationsInput | boolean
+    period?: IntFieldUpdateOperationsInput | number
   }
 
   export type ModuleUncheckedUpdateManyInput = {
@@ -19024,6 +19085,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     launchDate?: DateTimeFieldUpdateOperationsInput | Date | string
     hidden?: BoolFieldUpdateOperationsInput | boolean
+    period?: IntFieldUpdateOperationsInput | number
   }
 
   export type ResourceCreateInput = {
@@ -19899,6 +19961,11 @@ export namespace Prisma {
     name?: SortOrder
     launchDate?: SortOrder
     hidden?: SortOrder
+    period?: SortOrder
+  }
+
+  export type ModuleAvgOrderByAggregateInput = {
+    period?: SortOrder
   }
 
   export type ModuleMaxOrderByAggregateInput = {
@@ -19906,6 +19973,7 @@ export namespace Prisma {
     name?: SortOrder
     launchDate?: SortOrder
     hidden?: SortOrder
+    period?: SortOrder
   }
 
   export type ModuleMinOrderByAggregateInput = {
@@ -19913,6 +19981,11 @@ export namespace Prisma {
     name?: SortOrder
     launchDate?: SortOrder
     hidden?: SortOrder
+    period?: SortOrder
+  }
+
+  export type ModuleSumOrderByAggregateInput = {
+    period?: SortOrder
   }
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -21737,6 +21810,7 @@ export namespace Prisma {
     name: string
     launchDate: Date | string
     hidden?: boolean
+    period?: number
     moduleProblems?: ModuleProblemCreateNestedManyWithoutModuleInput
     resources?: ResourceCreateNestedManyWithoutModuleInput
   }
@@ -21746,6 +21820,7 @@ export namespace Prisma {
     name: string
     launchDate: Date | string
     hidden?: boolean
+    period?: number
     moduleProblems?: ModuleProblemUncheckedCreateNestedManyWithoutModuleInput
     resources?: ResourceUncheckedCreateNestedManyWithoutModuleInput
   }
@@ -21796,6 +21871,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     launchDate?: DateTimeFieldUpdateOperationsInput | Date | string
     hidden?: BoolFieldUpdateOperationsInput | boolean
+    period?: IntFieldUpdateOperationsInput | number
     moduleProblems?: ModuleProblemUpdateManyWithoutModuleNestedInput
     resources?: ResourceUpdateManyWithoutModuleNestedInput
   }
@@ -21805,6 +21881,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     launchDate?: DateTimeFieldUpdateOperationsInput | Date | string
     hidden?: BoolFieldUpdateOperationsInput | boolean
+    period?: IntFieldUpdateOperationsInput | number
     moduleProblems?: ModuleProblemUncheckedUpdateManyWithoutModuleNestedInput
     resources?: ResourceUncheckedUpdateManyWithoutModuleNestedInput
   }
@@ -21948,6 +22025,7 @@ export namespace Prisma {
     name: string
     launchDate: Date | string
     hidden?: boolean
+    period?: number
     moduleProblems?: ModuleProblemCreateNestedManyWithoutModuleInput
     levelModules?: LevelModuleCreateNestedManyWithoutModuleInput
   }
@@ -21957,6 +22035,7 @@ export namespace Prisma {
     name: string
     launchDate: Date | string
     hidden?: boolean
+    period?: number
     moduleProblems?: ModuleProblemUncheckedCreateNestedManyWithoutModuleInput
     levelModules?: LevelModuleUncheckedCreateNestedManyWithoutModuleInput
   }
@@ -21982,6 +22061,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     launchDate?: DateTimeFieldUpdateOperationsInput | Date | string
     hidden?: BoolFieldUpdateOperationsInput | boolean
+    period?: IntFieldUpdateOperationsInput | number
     moduleProblems?: ModuleProblemUpdateManyWithoutModuleNestedInput
     levelModules?: LevelModuleUpdateManyWithoutModuleNestedInput
   }
@@ -21991,6 +22071,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     launchDate?: DateTimeFieldUpdateOperationsInput | Date | string
     hidden?: BoolFieldUpdateOperationsInput | boolean
+    period?: IntFieldUpdateOperationsInput | number
     moduleProblems?: ModuleProblemUncheckedUpdateManyWithoutModuleNestedInput
     levelModules?: LevelModuleUncheckedUpdateManyWithoutModuleNestedInput
   }
@@ -22000,6 +22081,7 @@ export namespace Prisma {
     name: string
     launchDate: Date | string
     hidden?: boolean
+    period?: number
     levelModules?: LevelModuleCreateNestedManyWithoutModuleInput
     resources?: ResourceCreateNestedManyWithoutModuleInput
   }
@@ -22009,6 +22091,7 @@ export namespace Prisma {
     name: string
     launchDate: Date | string
     hidden?: boolean
+    period?: number
     levelModules?: LevelModuleUncheckedCreateNestedManyWithoutModuleInput
     resources?: ResourceUncheckedCreateNestedManyWithoutModuleInput
   }
@@ -22053,6 +22136,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     launchDate?: DateTimeFieldUpdateOperationsInput | Date | string
     hidden?: BoolFieldUpdateOperationsInput | boolean
+    period?: IntFieldUpdateOperationsInput | number
     levelModules?: LevelModuleUpdateManyWithoutModuleNestedInput
     resources?: ResourceUpdateManyWithoutModuleNestedInput
   }
@@ -22062,6 +22146,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     launchDate?: DateTimeFieldUpdateOperationsInput | Date | string
     hidden?: BoolFieldUpdateOperationsInput | boolean
+    period?: IntFieldUpdateOperationsInput | number
     levelModules?: LevelModuleUncheckedUpdateManyWithoutModuleNestedInput
     resources?: ResourceUncheckedUpdateManyWithoutModuleNestedInput
   }
