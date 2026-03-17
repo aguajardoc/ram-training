@@ -61,7 +61,10 @@ export const problemRouter = createTRPCRouter({
           }
         },
         module: {
-          select: { name: true }
+          select: { 
+            name: true,
+            period: true,
+          }
         }
       },
       orderBy: [

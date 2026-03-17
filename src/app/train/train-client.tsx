@@ -23,7 +23,10 @@ type FullProblem = {
     url: string; 
     solves: Solve[];
   };
-  module: { name: string; };
+  module: { 
+    name: string;
+    period: number;
+  };
   id: string;
   problemId: string;
   moduleId: string;
@@ -44,6 +47,7 @@ export default function TrainClient({ userId, levelMappings, enrolledTrackIds }:
     { trackId: trackId! },
     { enabled: !!trackId }
   );
+  const [currentPeriod, setCurrentPeriod] = useState(1);
 
   // Get user stats
   const stats = useMemo(() => {
@@ -65,7 +69,7 @@ export default function TrainClient({ userId, levelMappings, enrolledTrackIds }:
       // Find the specific solve for this user
       const userSolve = p.problem.solves.find((solve) => solve.userId === userId && solve.statusString !== "NO");
 
-      if (userSolve) {
+      if (userSolve && p.module.period === currentPeriod) {
         acc.solvedCount++;
         acc.submitCount += userSolve.submitCount;
         acc.readTime += userSolve.readTimeMinutes;
@@ -137,6 +141,7 @@ export default function TrainClient({ userId, levelMappings, enrolledTrackIds }:
   const moduleList = Array.from(moduleMap, ([moduleId, problems]) => (
     {
       moduleId,
+      period: problems[0]?.module.period,
       moduleName: problems[0]?.module.name,
       problems: problems.sort((a, b) => a.order - b.order),
     }
@@ -215,7 +220,11 @@ export default function TrainClient({ userId, levelMappings, enrolledTrackIds }:
       </div>
 
       {/* Module List */}
-      {moduleList.map(m => (
+      {moduleList.map(m => {
+        if (m.period != currentPeriod) {
+          return <></>;
+        }
+        return (
         <div key={m.moduleId} className="module">
           {/* Module Name */}
           <h2 className="subtitle">
@@ -255,7 +264,7 @@ export default function TrainClient({ userId, levelMappings, enrolledTrackIds }:
             />
           ))}
         </div>
-      ))}
+      )})}
 
       {/* Change Level */}
       <button 
