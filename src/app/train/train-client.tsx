@@ -35,6 +35,18 @@ type FullProblem = {
   difficulty: ProblemDifficulty;
 };
 
+type PeriodStats = {
+  solvedCount: number;
+  submitCount: number;
+  readTime: number;
+  thinkTime: number;
+  codeTime: number;
+  debugTime: number;
+  totalTime: number;
+  onYourOwnCount: number;
+  perceivedDifficulty: number;
+};
+
 export default function TrainClient({ userId, levelMappings, enrolledTrackIds }: Props) {
   const trackId = enrolledTrackIds[0];
   const { data: problems, isLoading } = api.problem.getProblemsByTrack.useQuery(
@@ -49,12 +61,9 @@ export default function TrainClient({ userId, levelMappings, enrolledTrackIds }:
   );
   const [currentPeriod, setCurrentPeriod] = useState(1);
 
-  // Period count
-  let maxPeriod = 1;
-
   // Get user stats
   const stats = useMemo(() => {
-    const initialStats = {
+    const getInitialStats = (): PeriodStats => ({
       solvedCount: 0,
       submitCount: 0,
       readTime: 0,
@@ -64,35 +73,46 @@ export default function TrainClient({ userId, levelMappings, enrolledTrackIds }:
       totalTime: 0,
       onYourOwnCount: 0,
       perceivedDifficulty: 0,
-    };
+    });
 
-    if (!problems) return initialStats;
+    if (!problems) return [];
 
-    return problems.reduce((acc, p) => {
+    return problems.reduce<PeriodStats[]>((acc, p) => {
       // Find the specific solve for this user
       const userSolve = p.problem.solves.find((solve) => solve.userId === userId && solve.statusString !== "NO");
+      const problemPeriod = p.module.period;
 
-      if (userSolve && p.module.period === currentPeriod) {
-        acc.solvedCount++;
-        acc.submitCount += userSolve.submitCount;
-        acc.readTime += userSolve.readTimeMinutes;
-        acc.thinkTime += userSolve.thinkTimeMinutes;
-        acc.codeTime += userSolve.codeTimeMinutes;
-        acc.debugTime += userSolve.debugTimeMinutes;
+      if (!acc[problemPeriod]) {
+        acc[problemPeriod] = getInitialStats();
+      }
+
+      if (userSolve) {
+        const periodStats = acc[problemPeriod];
+
+        periodStats.solvedCount++;
+        periodStats.submitCount += userSolve.submitCount;
+        periodStats.readTime += userSolve.readTimeMinutes;
+        periodStats.thinkTime += userSolve.thinkTimeMinutes;
+        periodStats.codeTime += userSolve.codeTimeMinutes;
+        periodStats.debugTime += userSolve.debugTimeMinutes;
         
         // Calculate total time for this specific problem
-        acc.totalTime += (userSolve.readTimeMinutes + userSolve.thinkTimeMinutes + userSolve.codeTimeMinutes + userSolve.debugTimeMinutes);
+        periodStats.totalTime += (userSolve.readTimeMinutes + userSolve.thinkTimeMinutes + userSolve.codeTimeMinutes + userSolve.debugTimeMinutes);
         
         if (userSolve.onYourOwn) {
-          acc.onYourOwnCount++;
+          periodStats.onYourOwnCount++;
         }
         
-        acc.perceivedDifficulty += userSolve.perceivedDifficulty;
+        periodStats.perceivedDifficulty += userSolve.perceivedDifficulty;
       }
 
       return acc;
-    }, initialStats);
+    }, []);
   }, [problems, userId]);
+
+  // Period-related variables
+  let maxPeriod = 1;
+  let periodProblemCount = new Array();
 
   if (isLoading && (isCheckingLevel || !hasChosenLevel || !trackId)) {
     return (
@@ -135,6 +155,14 @@ export default function TrainClient({ userId, levelMappings, enrolledTrackIds }:
 
   problems?.forEach(p => {
     maxPeriod = Math.max(maxPeriod, p.module.period);
+
+    if (!periodProblemCount[p.module.period]) {
+      periodProblemCount[p.module.period] = 1;
+    }
+    else {
+      periodProblemCount[p.module.period]++;
+    }
+
     if (!moduleMap.has(p.moduleId)) {
       moduleMap.set(p.moduleId, []);
     }
@@ -189,53 +217,53 @@ export default function TrainClient({ userId, levelMappings, enrolledTrackIds }:
         {/* Main Progress */}
         <div className="stat-card highlight">
           <span className="stat-label">Problems Solved</span>
-          <span className="stat-value">{stats.solvedCount} <span className="stat-sub">/ {problems?.length || 0}</span></span>
+          <span className="stat-value">{stats[currentPeriod]?.solvedCount} <span className="stat-sub">/ {periodProblemCount[currentPeriod] || 0}</span></span>
         </div>
 
         {/* The Averages */}
         <div className="stat-card">
           <span className="stat-label">Avg Submit Count</span>
-          <span className="stat-value">{(stats.submitCount / (stats.solvedCount || 1)).toFixed(1)}</span>
+          <span className="stat-value">{(stats[currentPeriod]?.submitCount ?? 0 / (stats[currentPeriod]?.solvedCount || 1)).toFixed(1)}</span>
         </div>
 
         <div className="stat-card">
           <span className="stat-label">Avg Read Time</span>
-          <span className="stat-value">{(stats.readTime / (stats.solvedCount || 1)).toFixed(1)} min.</span>
+          <span className="stat-value">{(stats[currentPeriod]?.readTime ?? 0 / (stats[currentPeriod]?.solvedCount || 1)).toFixed(1)} min.</span>
         </div>
         
         <div className="stat-card">
           <span className="stat-label">Avg Think Time</span>
-          <span className="stat-value">{(stats.thinkTime / (stats.solvedCount || 1)).toFixed(1)} min.</span>
+          <span className="stat-value">{(stats[currentPeriod]?.thinkTime ?? 0 / (stats[currentPeriod]?.solvedCount || 1)).toFixed(1)} min.</span>
         </div>
 
         <div className="stat-card">
           <span className="stat-label">Avg Code Time</span>
-          <span className="stat-value">{(stats.codeTime / (stats.solvedCount || 1)).toFixed(1)} min.</span>
+          <span className="stat-value">{(stats[currentPeriod]?.codeTime ?? 0 / (stats[currentPeriod]?.solvedCount || 1)).toFixed(1)} min.</span>
         </div>
 
         <div className="stat-card">
           <span className="stat-label">Avg Debug Time</span>
-          <span className="stat-value">{(stats.debugTime / (stats.solvedCount || 1)).toFixed(1)} min.</span>
+          <span className="stat-value">{(stats[currentPeriod]?.debugTime ?? 0 / (stats[currentPeriod]?.solvedCount || 1)).toFixed(1)} min.</span>
         </div>
 
         <div className="stat-card">
           <span className="stat-label">Avg Time/Problem</span>
-          <span className="stat-value">{(stats.totalTime / (stats.solvedCount || 1)).toFixed(1)} min.</span>
+          <span className="stat-value">{(stats[currentPeriod]?.totalTime ?? 0 / (stats[currentPeriod]?.solvedCount || 1)).toFixed(1)} min.</span>
         </div>
 
         <div className="stat-card">
           <span className="stat-label">Avg Difficulty</span>
-          <span className="stat-value">{(stats.perceivedDifficulty / (stats.solvedCount || 1)).toFixed(1)}</span>
+          <span className="stat-value">{(stats[currentPeriod]?.perceivedDifficulty ?? 0 / (stats[currentPeriod]?.solvedCount || 1)).toFixed(1)}</span>
         </div>
 
         <div className="stat-card">
           <span className="stat-label">Solved Solo</span>
-          <span className="stat-value">{stats.onYourOwnCount} <span className="stat-sub">/ {problems?.length || 0}</span></span>
+          <span className="stat-value">{stats[currentPeriod]?.onYourOwnCount} <span className="stat-sub">/ {periodProblemCount[currentPeriod] || 0}</span></span>
         </div>
 
         <div className="stat-card">
           <span className="stat-label">Think/Code Ratio</span>
-          <span className="stat-value">{(stats.thinkTime / (stats.codeTime || 1)).toFixed(1)}</span>
+          <span className="stat-value">{(stats[currentPeriod]?.thinkTime ?? 0 / (stats[currentPeriod]?.codeTime || 1)).toFixed(1)}</span>
         </div>
       </div>
 
