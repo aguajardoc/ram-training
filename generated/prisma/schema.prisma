@@ -87,6 +87,7 @@ model Module {
   name       String
   launchDate DateTime
   hidden     Boolean  @default(false)
+  period     Int      @default(1)
 
   moduleProblems ModuleProblem[]
   levelModules   LevelModule[]
