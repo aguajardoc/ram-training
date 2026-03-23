@@ -49,6 +49,9 @@ export default function TrainClient({ userId, levelMappings, enrolledTrackIds }:
   );
   const [currentPeriod, setCurrentPeriod] = useState(1);
 
+  // Period count
+  let maxPeriod = 1;
+
   // Get user stats
   const stats = useMemo(() => {
     const initialStats = {
@@ -131,6 +134,7 @@ export default function TrainClient({ userId, levelMappings, enrolledTrackIds }:
   const moduleMap = new Map<string, FullProblem[]>();
 
   problems?.forEach(p => {
+    maxPeriod = Math.max(maxPeriod, p.module.period);
     if (!moduleMap.has(p.moduleId)) {
       moduleMap.set(p.moduleId, []);
     }
@@ -138,14 +142,14 @@ export default function TrainClient({ userId, levelMappings, enrolledTrackIds }:
     moduleMap.get(p.moduleId)?.push(p);
   });
 
-  const moduleList = Array.from(moduleMap, ([moduleId, problems]) => (
-    {
+  const moduleList = Array.from(moduleMap, ([moduleId, problems]) => {
+    return ({
       moduleId,
       period: problems[0]?.module.period,
       moduleName: problems[0]?.module.name,
       problems: problems.sort((a, b) => a.order - b.order),
-    }
-  ));
+    });
+  });
 
   // Filter resources by module
   const resourceMap = new Map<string, Resource[]>();
@@ -157,12 +161,28 @@ export default function TrainClient({ userId, levelMappings, enrolledTrackIds }:
     resourceMap.get(r.moduleId)?.push(r);
   });
 
-  console.log(resourceMap);
-
   // Render problems available to user
   return (
     <div className="page">
       <h1 className="title">TRAINING</h1>
+
+      {/* Period selector */}
+      <div className="period-picker">
+        {Array.from({ length: maxPeriod }, (_, index) => {
+          const i = index + 1; // index starts at 0, so add 1
+          const isActive = i === currentPeriod;
+
+          return (
+            <div 
+              key={i} 
+              className={`period-btn ${isActive ? 'active' : ''}`}
+              onClick={() => setCurrentPeriod(i)}
+            >
+              Period {i}
+            </div>
+          );
+        })}
+      </div>
 
       {/* Average counts for items */}
       <div className="stats-grid">
@@ -222,7 +242,7 @@ export default function TrainClient({ userId, levelMappings, enrolledTrackIds }:
       {/* Module List */}
       {moduleList.map(m => {
         if (m.period != currentPeriod) {
-          return <></>;
+          return <div key={m.moduleId}></div>;
         }
         return (
         <div key={m.moduleId} className="module">
