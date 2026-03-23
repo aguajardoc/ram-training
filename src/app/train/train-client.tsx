@@ -268,7 +268,9 @@ export default function TrainClient({ userId, levelMappings, enrolledTrackIds }:
       </div>
 
       {/* Module List */}
-      {moduleList.map(m => {
+      {moduleList
+        .filter(m => m.period === currentPeriod)
+        .map(m => {
         if (m.period != currentPeriod) {
           return <div key={m.moduleId}></div>;
         }
